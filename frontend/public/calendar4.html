@@ -75,7 +75,12 @@
 				          <div class="form-container" align="center">
 				            <label class="form-label" id="valueFromMyButton" for="name">Event name</label>
 				            <input class="input" type="text" id="name" maxlength="36">
-				            <label class="form-label" id="valueFromMyButton" for="count">Number of people to invite</label>
+							<label class="form-label" id="valueFromMyButton" for="startTime">Availiable Time</label>
+							<input class="input" type="time" id="startTime" name="startTime">
+							<label class="form-label" id="valueFromMyButton" for="endTime">End Time</label>
+							<input class="input" type="time" id="endTime" name="endTime">
+							
+				            <label class="form-label" id="valueFromMyButton" for="count">People Attending</label>
 				            <input class="input" type="number" id="count" min="0" max="1000000" maxlength="7">
 				            <input type="button" value="Cancel" class="button" id="cancel-button">
 				            <input type="button" value="OK" class="button button-white" id="ok-button">

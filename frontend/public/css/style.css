@@ -242,6 +242,11 @@ label {
   margin-bottom: 0.5rem;
 }
 
+#editAll {
+  float: right;
+  position: relative;
+}
+
 button {
   border-radius: 0;
 }

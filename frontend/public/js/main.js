@@ -193,6 +193,7 @@
             $(".events-container").append(event_card);
         }
         else {
+
             // Go through and add each event as a card to the events container
             for (var i = 0; i < events.length; i++) {
                 var event_card = $("<div class='event-card'></div>");

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -24,26 +27,31 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>JoinIn!</title>
     <link rel = "stylesheet" href = "StyleSheet.css">
-  </head>
-  <body onload = "callNote()">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+</head>
+<body>
+    <!--The form to login into-->
+
     <script src = "script.js"></script>
-    <object id="C4" type="text/html" data="calendar4.html" ></object>>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  
-
-
-  </body>
+    
+    <body>
+        <div class="login-page">
+          <div class="form">
+            <div class="login">
+              <div class="login-header">
+                <h3>LOGIN</h3>
+                <p>Enter your info to start scheduling!</p>
+              </div>
+            </div>
+            <!--Entering information to login-->
+            <form class="login-form">
+              <input type="text" placeholder="username" id="username"/>
+              <input type="password" placeholder="password" id="password"/>
+              <button id = "loginButton">login</button>
+              <p class="message">Not registered? <a href="createAccount.html">Create an account</a></p>
+            </form>
+          </div>
+        </div>
+    </body>
+</body>
 </html>

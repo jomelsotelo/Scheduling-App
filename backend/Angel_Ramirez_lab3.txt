@@ -1,0 +1,1235 @@
+Script started on Tue 17 Oct 2023 07:59:21 PM PDT
+]0;angelramirez-garcia@ecs-pa-coding1:~[?1034h[angelramirez-garcia@ecs-pa-coding1 ~]$ md[Kkdir lab3[K[K[K[K[K[K[K[K[K[Kcd sc[K[Kcsc60
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60[angelramirez-garcia@ecs-pa-coding1 csc60]$ mkdir lab3
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60[angelramirez-garcia@ecs-pa-coding1 csc60]$ cd lab3
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ pwd
+/home/student/angelramirez-garcia/csc60/lab3
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ k[Kmkdir aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ cd aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ pwd
+/home/student/angelramirez-garcia/csc60/lab3/aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cd ..
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ ped[K[Kwd
+/home/student/angelramirez-garcia/csc60/lab3
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ ls > file2[K1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ at[K[Kcat file1
+aaa
+file1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ less ca[K[Kfile1
+[?1049h[?1h=aaa
+file1
+[7mfile1 (END)[27m[K[K[?1l>[?1049l]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ file *
+aaa:   directory
+file1: ASCII text
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ wc file1
+ 2  2 10 file1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ wc *
+wc: aaa: Is a directory
+      0       0       0 aaa
+      2       2      10 file1
+      2       2      10 total
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ grep lab4 file1 [K
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ grep file file1
+[01;31m[Kfile[m[K1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ cp file1 file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ ls
+[0m[38;5;27maaa[0m  file1  file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ cd aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ pwd
+/home/student/angelramirez-garcia/csc60/lab3/aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cp ../file1 .
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls
+file1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ mv file1 file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls
+file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ mv ../file1 .
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cd ..
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ pwd
+/home/student/angelramirez-garcia/csc60/lab3
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ ls
+[0m[38;5;27maaa[0m  file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3[angelramirez-garcia@ecs-pa-coding1 lab3]$ cd aaa
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls
+file1  file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cmp ile[K[K[K[K file1 file1[K2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ diff file1 aaalist
+diff: aaalist: No such file or directory
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls > aaalist [K
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls
+aaalist  file1  file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cmp file1 aaalist
+file1 aaalist differ: byte 4, line 1
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ diff file1 aaalist
+1c1
+< aaa
+---
+> aaalist
+2a3
+> file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ rm -i file1
+rm: remove regular file ‘file1’? y
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ls
+aaalist  file2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ps u
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+angelra+  1895  0.0  0.0 126384  2224 pts/8    Ss   19:50   0:00 -bash
+angelra+  4063  0.0  0.0 114300   828 pts/8    S+   19:59   0:00 script Angel_Ramirez_lab3.txt
+angelra+  4065  0.0  0.0 114308   404 pts/8    S+   19:59   0:00 script Angel_Ramirez_lab3.txt
+angelra+  4066  0.0  0.0 126388  2232 pts/12   Ss   19:59   0:00 bash -i
+angelra+  5218  0.0  0.0 166156  1984 pts/12   R+   20:06   0:00 ps u
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ps -I[Ki[KI
+error: unsupported SysV option
+
+Usage:
+ ps [options]
+
+ Try 'ps --help <simple|list|output|threads|misc|all>'
+  or 'ps --help <s|l|o|t|m|a>'
+ for additional help text.
+
+For more details see ps(1).
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ !!
+ps -I
+error: unsupported SysV option
+
+Usage:
+ ps [options]
+
+ Try 'ps --help <simple|list|output|threads|misc|all>'
+  or 'ps --help <s|l|o|t|m|a>'
+ for additional help text.
+
+For more details see ps(1).
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ ps -![K1[K[K[K[K[Kps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S 85183859 4066 4065  0 80   0 - 31597 do_wai pts/12   00:00:00 bash
+0 R 85183859 7172 4066  0 80   0 - 38332 -      pts/12   00:00:00 ps
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ !!
+ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S 85183859 4066 4065  0 80   0 - 31597 do_wai pts/12   00:00:00 bash
+0 R 85183859 7194 4066  0 80   0 - 38332 -      pts/12   00:00:00 ps
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab3/aaa[angelramirez-garcia@ecs-pa-coding1 aaa]$ cd ../..
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60[angelramirez-garcia@ecs-pa-coding1 csc60]$ pwd
+/home/student/angelramirez-garcia/csc60
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60[angelramirez-garcia@ecs-pa-coding1 csc60]$ cd lab2
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ head lab2.c
+/*-------------*/
+/*Angel Ramirez*/
+/*Lab 2        */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    printf("Lab 2.\n\n");
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ head -20 lab2.c
+/*-------------*/
+/*Angel Ramirez*/
+/*Lab 2        */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    printf("Lab 2.\n\n");
+    printf("Hello World\n");
+    printf("Hi, Angel Ramirez\n\n");
+    printf("I can accept failure, everyone fails at something, but I cant accept not trying.\n" "-Michael Jordan\n\n");
+
+    return EXIT_SUCCESS;
+}
+
+/*-------------*/
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ tail lab2.c
+{
+    printf("Lab 2.\n\n");
+    printf("Hello World\n");
+    printf("Hi, Angel Ramirez\n\n");
+    printf("I can accept failure, everyone fails at something, but I cant accept not trying.\n" "-Michael Jordan\n\n");
+
+    return EXIT_SUCCESS;
+}
+
+/*-------------*/
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ tail 02[K[K-20 lab2.c
+/*-------------*/
+/*Angel Ramirez*/
+/*Lab 2        */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    printf("Lab 2.\n\n");
+    printf("Hello World\n");
+    printf("Hi, Angel Ramirez\n\n");
+    printf("I can accept failure, everyone fails at something, but I cant accept not trying.\n" "-Michael Jordan\n\n");
+
+    return EXIT_SUCCESS;
+}
+
+/*-------------*/
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ ls -al[K[K[K[K[K[Ks -al | less
+bash: s: command not found
+[?1049h[?1h=[K[7m(END)[27m[K[K[?1l>[?1049l]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ history
+    1  2023-02-15 14:05:39 curl devincook.com/csc/35/csc35.o > csc35.o
+    2  2023-02-15 14:08:39 nano lab2.asm
+    3  2023-02-15 14:18:59 as -o lab2.o lab2.asm
+    4  2023-02-15 14:19:25 nano.lab2.asm
+    5  2023-02-15 14:19:32 nano lab2.asm
+    6  2023-02-15 14:21:32 as -o lab2.o lab2.asm
+    7  2023-02-15 14:22:26 ld -o a.out lab2.o csc35.o
+    8  2023-02-15 14:23:00 ./a.out
+    9  2023-02-15 14:26:26 nano lab2.asm
+   10  2023-02-15 14:35:53 as -o lab2.o lab2.asm
+   11  2023-02-15 14:36:07 nano lab2.asm
+   12  2023-02-15 14:37:54 as -o lab2.o lab2.asm
+   13  2023-02-15 14:38:17 ld -o a.out lab2.o csc35.o
+   14  2023-02-15 14:38:30 ./a.out
+   15  2023-02-15 14:38:46 nano lab2.asm
+   16  2023-02-15 14:40:17 as -o lab2.o lab2.asm
+   17  2023-02-15 14:40:40 ld -o a.out lab2.o csc35.o
+   18  2023-02-15 14:40:51 ./a.out
+   19  2023-02-15 14:41:01 nano lab2.asm
+   20  2023-02-15 14:42:23 as -o lab2.o lab2.asm
+   21  2023-02-15 14:42:40 nano lab2.asm
+   22  2023-02-15 14:43:08 as -o lab2.o lab2.asm
+   23  2023-02-15 14:43:24 ld -o a.out lab2.o lab2.asm
+   24  2023-02-15 14:44:02 ld -o a.out lab2.o csc35.o
+   25  2023-02-15 14:44:14 ./a.out
+   26  2023-02-15 14:44:49 nano lab2.asm
+   27  2023-02-15 14:50:16 as -o lab2.o lab2.asm
+   28  2023-02-15 14:51:02 nano lab.asm
+   29  2023-02-15 14:51:38 nano lab2.asm
+   30  2023-02-15 14:52:51 as -o lab2.o lab2.asm
+   31  2023-02-15 14:53:17 ld -o a.out lab2.o csc35.o
+   32  2023-02-15 14:53:29 ./a.out
+   33  2023-02-15 14:55:01 nano lab.asm
+   34  2023-02-15 14:55:21 nano lab2.asm
+   35  2023-02-15 14:59:51 as -o lab2.o lab2.asm
+   36  2023-02-15 15:00:14 ld -o a.out lab2.o csc35.o
+   37  2023-02-15 15:00:21 ./a.out
+   38  2023-02-15 15:00:45 nano lab.asm
+   39  2023-02-15 15:00:57 nano lab2.asm
+   40  2023-02-15 15:04:34 as -o lab2.o lab2.asm
+   41  2023-02-15 15:05:03 ld -o a.out lab2.o csc35.o
+   42  2023-02-15 15:05:21 ./a.out
+   43  2023-02-15 15:07:17 nano lab2.asm
+   44  2023-02-15 15:07:49 alpine
+   45  2023-02-22 14:04:23 nano lab3.asm
+   46  2023-02-22 14:26:24 as -o lab3.o lab3.asm
+   47  2023-02-22 14:26:34 nano lab3.asm
+   48  2023-02-22 14:29:00 as -o lab3.o lab3.asm
+   49  2023-02-22 14:29:14 nano lab3.asm
+   50  2023-02-22 14:32:58 as -o lab3.o lab3.asm
+   51  2023-02-22 14:33:41 ld -o a.out lab3.o csc35.o
+   52  2023-02-22 14:33:54 ./a.out
+   53  2023-02-22 14:34:40 nano lab3.asm
+   54  2023-02-22 14:35:42 as -o lab3.o lab3.asm
+   55  2023-02-22 14:35:46 ld -o a.out lab3.o csc35.o
+   56  2023-02-22 14:35:52 ./a.out
+   57  2023-02-22 14:36:25 nano lab3.asm
+   58  2023-02-22 14:38:33 as -o lab3.o lab3.asm
+   59  2023-02-22 14:38:36 ld -o a.out lab3.o csc35.o
+   60  2023-02-22 14:38:41 ./a.out
+   61  2023-02-22 14:38:56 nano lab3.asm
+   62  2023-02-22 14:39:54 as -o lab3.o lab3.asm
+   63  2023-02-22 14:39:58 ld -o a.out lab3.o csc35.o
+   64  2023-02-22 14:40:03 ./a.out
+   65  2023-02-22 14:40:23 nano lab3.asm
+   66  2023-02-22 14:41:11 as -o lab3.o lab3.asm
+   67  2023-02-22 14:41:15 ld -o a.out lab3.o csc35.o
+   68  2023-02-22 14:41:19 ./a.out
+   69  2023-02-22 14:41:39 alpine
+   70  2023-02-22 14:43:03 nano lab3.asm
+   71  2023-03-15 14:01:56 nano lab4.asm
+   72  2023-03-15 14:32:09 ld -o a.out lab4.o csc35.o
+   73  2023-03-15 14:32:41 nano lab4.asm
+   74  2023-03-15 14:33:21 ld -o lab4.o csc35.o
+   75  2023-03-15 14:34:39 ls
+   76  2023-03-15 14:35:25 as -o lab4.o lab4.asm
+   77  2023-03-15 14:35:35 nano lab4.asm
+   78  2023-03-15 14:35:51 as -o lab4.o lab4.asm
+   79  2023-03-15 14:36:01 ld -o a.out lab4.o csc35.o
+   80  2023-03-15 14:36:15 nano lab4.asm
+   81  2023-03-15 14:36:45 nano lab3.asm
+   82  2023-03-15 14:37:58 ./a.out
+   83  2023-03-15 14:38:15 nano lab4.asm
+   84  2023-03-15 14:46:15 as -o lab4.o lab4.asm
+   85  2023-03-15 14:46:28 ld -o a.out lab4.o csc35.o
+   86  2023-03-15 14:46:32 ./a.out
+   87  2023-03-15 14:48:54 nano lab4.asm
+   88  2023-03-15 14:51:40 as -o lab4.o lab4.asm
+   89  2023-03-15 14:51:54 nano lab4.asm
+   90  2023-03-15 14:52:25 as -o lab4.o lab4.asm
+   91  2023-03-15 14:52:32 ld -o a.out lab4.o csc35.o
+   92  2023-03-15 14:52:37 ./a.out
+   93  2023-03-15 14:54:01 nano lab4.asm
+   94  2023-03-15 14:55:16 as -o lab4.o lab4.asm
+   95  2023-03-15 14:55:21 ld -o a.out lab4.o csc35.o
+   96  2023-03-15 14:55:26 ./a.out
+   97  2023-03-15 14:56:50 nano lab4.asm
+   98  2023-03-15 14:58:22 as -o lab4.o lab4.asm
+   99  2023-03-15 14:58:25 ld -o a.out lab4.o csc35.o
+  100  2023-03-15 14:58:39 nano lab4.asm
+  101  2023-03-15 15:00:45 as -o lab4.o lab4.asm
+  102  2023-03-15 15:00:47 ld -o a.out lab4.o csc35.o
+  103  2023-03-15 15:00:53 ./a.out
+  104  2023-03-15 15:01:04 nano lab4.asm
+  105  2023-03-15 15:04:50 as -o lab4.o lab4.asm
+  106  2023-03-15 15:04:54 ld -o a.out lab4.o csc35.o
+  107  2023-03-15 15:04:57 ./a.out
+  108  2023-03-15 15:06:39 nano lab4.asm
+  109  2023-03-15 15:08:03 as -o lab4.o lab4.asm
+  110  2023-03-15 15:08:06 ld -o a.out lab4.o csc35.o
+  111  2023-03-15 15:08:08 ./a.out
+  112  2023-03-15 15:08:22 nano lab4.asm
+  113  2023-03-15 15:24:03 as -o lab4.o lab4.asm
+  114  2023-03-15 15:24:17 nano lab4.asm
+  115  2023-03-15 15:24:54 as -o lab4.o lab4.asm
+  116  2023-03-15 15:25:11 nano lab4.asm
+  117  2023-03-15 15:26:07 as -o lab4.o lab4.asm
+  118  2023-03-15 15:26:14 ld -o a.out lab4.o csc35.o
+  119  2023-03-15 15:26:30 nano lab4.asm
+  120  2023-03-15 15:26:40 ./a.out
+  121  2023-03-15 15:27:03 nano lab4.asm
+  122  2023-03-15 15:28:51 as -o lab4.o lab4.asm
+  123  2023-03-15 15:28:56 ld -o a.out lab4.o csc35.o
+  124  2023-03-15 15:29:07 nano lab4.asm
+  125  2023-03-15 15:29:35 as -o lab4.o lab4.asm
+  126  2023-03-15 15:29:39 ld -o a.out lab4.o csc35.o
+  127  2023-03-15 15:29:46 ./a.out
+  128  2023-03-15 15:30:33 nano lab4.asm
+  129  2023-03-15 15:38:25 as -o lab4.o lab4.asm
+  130  2023-03-15 15:38:27 ld -o a.out lab4.o csc35.o
+  131  2023-03-15 15:38:30 ./a.out
+  132  2023-03-15 15:38:44 alpine
+  133  2023-04-05 14:00:15 May12003MMMMM
+  134  2023-04-05 14:00:38 clear
+  135  2023-04-05 14:01:04 nano lab6.asm
+  136  2023-04-05 14:31:37 as -o lab5.o lab5.asm
+  137  2023-04-05 14:31:59 as -o lab6.o lab6.asm
+  138  2023-04-05 14:32:18 nano lab6.asm
+  139  2023-04-05 14:34:13 nano lab4.asm
+  140  2023-04-05 14:34:28 nano lab6.asm
+  141  2023-04-05 14:35:26 as -o lab6.o lab6.asm
+  142  2023-04-05 14:35:44 ld -o a.out lab6.o csc35.o
+  143  2023-04-05 14:35:54 ./a.out
+  144  2023-04-05 14:36:12 nano lab6.asm
+  145  2023-04-05 14:39:58 as -o lab6.o lab6.asm
+  146  2023-04-05 14:40:00 ld -o a.out lab6.o csc35.o
+  147  2023-04-05 14:40:03 ./a.out
+  148  2023-04-05 14:40:16 nano lab6.asm
+  149  2023-04-05 14:40:51 as -o lab6.o lab6.asm
+  150  2023-04-05 14:40:59 nano lab6.asm
+  151  2023-04-05 14:43:51 as -o lab6.o lab6.asm
+  152  2023-04-05 14:43:56 ld -o a.out lab6.o csc35.o
+  153  2023-04-05 14:44:01 ./a.out
+  154  2023-04-05 14:44:43 nano lab4.asm
+  155  2023-04-05 14:44:52 nano lab6.asm
+  156  2023-04-05 14:46:23 as -o lab6.o lab6.asm
+  157  2023-04-05 14:46:27 ld -o a.out lab6.o csc35.o
+  158  2023-04-05 14:46:34 ./a.out
+  159  2023-04-05 14:46:59 nano lab6.asm
+  160  2023-04-05 14:48:56 as -o lab6.o lab6.asm
+  161  2023-04-05 14:48:58 ld -o a.out lab6.o csc35.o
+  162  2023-04-05 14:49:00 ./a.out
+  163  2023-04-05 14:49:12 nano lab6.asm
+  164  2023-04-05 14:51:48 as -o lab6.o lab6.asm
+  165  2023-04-05 14:51:51 ld -o a.out lab6.o csc35.o
+  166  2023-04-05 14:51:53 ./a.out
+  167  2023-04-05 14:52:04 nano lab4.asm
+  168  2023-04-05 14:52:17 as -o lab6.o lab6.asm
+  169  2023-04-05 14:52:18 ld -o a.out lab6.o csc35.o
+  170  2023-04-05 14:52:21 ./a.out
+  171  2023-04-05 14:52:36 nano lab6.asm
+  172  2023-04-05 14:56:58 as -o lab6.o lab6.asm
+  173  2023-04-05 14:57:00 ld -o a.out lab6.o csc35.o
+  174  2023-04-05 14:57:02 ./a.out
+  175  2023-04-05 14:57:16 nano lab6.asm
+  176  2023-04-05 14:57:58 as -o lab6.o lab6.asm
+  177  2023-04-05 14:57:59 ld -o a.out lab6.o csc35.o
+  178  2023-04-05 14:58:01 ./a.out
+  179  2023-04-05 14:58:19 nano lab6.asm
+  180  2023-04-05 15:00:33 as -o lab6.o lab6.asm
+  181  2023-04-05 15:00:35 ld -o a.out lab6.o csc35.o
+  182  2023-04-05 15:00:37 ./a.out
+  183  2023-04-05 15:00:44 nano lab6.asm
+  184  2023-04-05 15:04:59 as -o lab6.o lab6.asm
+  185  2023-04-05 15:05:01 ld -o a.out lab6.o csc35.o
+  186  2023-04-05 15:05:03 ./a.out
+  187  2023-04-05 15:05:13 nano lab6.asm
+  188  2023-04-05 15:07:09 as -o lab6.o lab6.asm
+  189  2023-04-05 15:07:30 nano lab6.asm
+  190  2023-04-05 15:11:45 as -o lab6.o lab6.asm
+  191  2023-04-05 15:11:48 ld -o a.out lab6.o csc35.o
+  192  2023-04-05 15:11:51 ./a.out
+  193  2023-04-05 15:12:01 nano lab6.asm
+  194  2023-04-05 15:12:31 as -o lab6.o lab6.asm
+  195  2023-04-05 15:12:33 ld -o a.out lab6.o csc35.o
+  196  2023-04-05 15:12:35 ./a.out
+  197  2023-04-05 15:14:46 nano lab6.asm
+  198  2023-04-05 15:17:07 as -o lab6.o lab6.asm
+  199  2023-04-05 15:17:08 ld -o a.out lab6.o csc35.o
+  200  2023-04-05 15:17:10 ./a.out
+  201  2023-04-05 15:17:29 nano lab6.asm
+  202  2023-04-05 15:18:22 as -o lab6.o lab6.asm
+  203  2023-04-05 15:18:24 ld -o a.out lab6.o csc35.o
+  204  2023-04-05 15:18:26 ./a.out
+  205  2023-04-05 15:19:13 nano lab6.asm
+  206  2023-04-05 15:19:58 as -o lab6.o lab6.asm
+  207  2023-04-05 15:19:59 ld -o a.out lab6.o csc35.o
+  208  2023-04-05 15:20:02 ./a.out
+  209  2023-04-05 15:20:23 nano lab6.asm
+  210  2023-04-05 15:28:40 as -o lab6.o lab6.asm
+  211  2023-04-05 15:28:41 ld -o a.out lab6.o csc35.o
+  212  2023-04-05 15:28:43 ./a.out
+  213  2023-04-05 15:29:05 nano lab6.asm
+  214  2023-04-05 15:35:06 as -o lab6.o lab6.asm
+  215  2023-04-05 15:35:08 ld -o a.out lab6.o csc35.o
+  216  2023-04-05 15:35:10 ./a.out
+  217  2023-04-05 15:35:43 nano lab6.asm
+  218  2023-04-05 15:49:49 as -o lab6.o lab6.asm
+  219  2023-04-05 15:50:01 nano lab6.asm
+  220  2023-04-05 15:52:08 as -o lab6.o lab6.asm
+  221  2023-04-05 15:52:21 nano lab6.asm
+  222  2023-04-05 15:54:15 as -o lab6.o lab6.asm
+  223  2023-04-05 15:54:33 nano lab6.asm
+  224  2023-04-05 15:55:33 as -o lab6.o lab6.asm
+  225  2023-04-05 15:55:38 ld -o a.out lab6.o csc35.o
+  226  2023-04-05 15:55:48 ./a.out
+  227  2023-04-05 15:56:47 nano lab6.asm
+  228  2023-04-05 16:04:25 as -o lab6.o lab6.asm
+  229  2023-04-05 16:04:27 ld -o a.out lab6.o csc35.o
+  230  2023-04-05 16:04:29 ./a.out
+  231  2023-04-05 16:05:27 nano lab6.asm
+  232  2023-04-05 16:06:10 ./a.out
+  233  2023-04-05 16:06:46 nano lab6.asm
+  234  2023-04-05 16:08:01 ./a.out
+  235  2023-04-05 16:08:27 nano lab6.asm
+  236  2023-04-05 16:11:11 as -o lab6.o lab6.asm
+  237  2023-04-05 16:11:15 ld -o a.out lab6.o csc35.o
+  238  2023-04-05 16:11:19 ./a.out
+  239  2023-04-05 16:11:56 nano lab6.asm
+  240  2023-04-05 16:22:28 as -o lab6.o lab6.asm
+  241  2023-04-05 16:22:31 ld -o a.out lab6.o csc35.o
+  242  2023-04-05 16:22:43 nano lab6.asm
+  243  2023-04-05 16:23:10 as -o lab6.o lab6.asm
+  244  2023-04-05 16:23:11 ld -o a.out lab6.o csc35.o
+  245  2023-04-05 16:23:16 ./a.out
+  246  2023-04-05 16:24:28 nano lab6.asm
+  247  2023-04-05 16:27:00 as -o lab6.o lab6.asm
+  248  2023-04-05 16:27:02 ld -o a.out lab6.o csc35.o
+  249  2023-04-05 16:27:04 ./a.out
+  250  2023-04-05 16:28:31 nano lab6.asm
+  251  2023-04-05 16:29:12 as -o lab6.o lab6.asm
+  252  2023-04-05 16:29:14 ld -o a.out lab6.o csc35.o
+  253  2023-04-05 16:29:16 ./a.out
+  254  2023-04-05 16:30:49 alpine
+  255  2023-04-19 13:57:49 May12003SACSTATE
+  256  2023-04-19 13:57:49 May12003SACSTATEaaaaa
+  257  2023-04-19 13:58:01 May12003SACSTATE
+  258  2023-04-19 13:58:04 clear
+  259  2023-04-19 13:58:24 nano lab7.asm
+  260  2023-04-19 14:14:14 as -o lab7.o lab7.asm
+  261  2023-04-19 14:14:24 nano lab7.asm
+  262  2023-04-19 14:14:50 nano lab6.asm
+  263  2023-04-19 14:15:09 nano lab7.asm
+  264  2023-04-19 14:15:42 as -o lab7.o lab7.asm
+  265  2023-04-19 14:16:06 ld -o a.out lab7.o csc35.o
+  266  2023-04-19 14:16:23 ./a.out
+  267  2023-04-19 14:16:40 nano lab7.asm
+  268  2023-04-19 14:27:05 as -o lab7.o lab7.asm
+  269  2023-04-19 14:27:07 ld -o a.out lab7.o csc35.o
+  270  2023-04-19 14:27:26 ./a.out
+  271  2023-04-19 14:27:32 nano lab7.asm
+  272  2023-04-19 14:27:50 as -o lab7.o lab7.asm
+  273  2023-04-19 14:27:52 ld -o a.out lab7.o csc35.o
+  274  2023-04-19 14:27:54 ./a.out
+  275  2023-04-19 14:28:14 nano lab7.asm
+  276  2023-04-19 14:39:23 as -o lab7.o lab7.asm
+  277  2023-04-19 14:39:40 nano lab7.asm
+  278  2023-04-19 14:44:46 as -o lab7.o lab7.asm
+  279  2023-04-19 14:45:05 nano lab7.asm
+  280  2023-04-19 14:45:52 as -o lab7.o lab7.asm
+  281  2023-04-19 14:46:11 nano lab6.asm
+  282  2023-04-19 14:46:41 nano lab7.asm
+  283  2023-04-19 14:51:16 as -o lab7.o lab7.asm
+  284  2023-04-19 14:51:28 nano lab7.asm
+  285  2023-04-19 14:57:00 as -o lab7.o lab7.asm
+  286  2023-04-19 14:57:10 ld -o a.out lab7.o csc35.o
+  287  2023-04-19 14:57:20 ./a.out
+  288  2023-04-19 14:58:58 nano lab7.asm
+  289  2023-04-19 15:06:42 as -o lab7.o lab7.asm
+  290  2023-04-19 15:06:51 nano lab7.asm
+  291  2023-04-19 15:07:13 as -o lab7.o lab7.asm
+  292  2023-04-19 15:07:16 ld -o a.out lab7.o csc35.o
+  293  2023-04-19 15:07:19 ./a.out
+  294  2023-04-19 15:08:47 nano lab7.asm
+  295  2023-04-19 15:10:18 as -o lab7.o lab7.asm
+  296  2023-04-19 15:10:20 ld -o a.out lab7.o csc35.o
+  297  2023-04-19 15:10:24 ./a.out
+  298  2023-04-19 15:10:57 nano lab7.asm
+  299  2023-04-19 15:12:53 as -o lab7.o lab7.asm
+  300  2023-04-19 15:12:55 ld -o a.out lab7.o csc35.o
+  301  2023-04-19 15:12:57 ./a.out
+  302  2023-04-19 15:13:14 nano lab7.asm
+  303  2023-04-19 15:15:39 as -o lab7.o lab7.asm
+  304  2023-04-19 15:15:41 ld -o a.out lab7.o csc35.o
+  305  2023-04-19 15:15:43 ./a.out
+  306  2023-04-19 15:18:13 nano lab7.asm
+  307  2023-04-19 15:19:44 alpine
+  308  2023-04-19 15:22:17 ./a.out
+  309  2023-04-19 15:22:59 clear
+  310  2023-04-19 15:23:15 nano lab7.asm
+  311  2023-04-19 15:25:03 clear
+  312  2023-04-26 14:01:50 nano lab8.asm
+  313  2023-04-26 14:15:35 as -o lab8.o lab8.asm
+  314  2023-04-26 14:15:46 ld -o a.out lab8.o csc35.o
+  315  2023-04-26 14:15:52 ./a.out
+  316  2023-04-26 14:16:14 nano lab8.asm
+  317  2023-04-26 14:19:42 as -o lab8.o lab8.asm
+  318  2023-04-26 14:19:43 ld -o a.out lab8.o csc35.o
+  319  2023-04-26 14:19:46 ./a.out
+  320  2023-04-26 14:20:16 nano lab8.asm
+  321  2023-04-26 14:22:31 as -o lab8.o lab8.asm
+  322  2023-04-26 14:22:32 ld -o a.out lab8.o csc35.o
+  323  2023-04-26 14:22:34 ./a.out
+  324  2023-04-26 14:22:42 nano lab8.asm
+  325  2023-04-26 14:23:38 as -o lab8.o lab8.asm
+  326  2023-04-26 14:23:45 nano lab8.asm
+  327  2023-04-26 14:24:01 as -o lab8.o lab8.asm
+  328  2023-04-26 14:24:04 ld -o a.out lab8.o csc35.o
+  329  2023-04-26 14:24:08 ./a.out
+  330  2023-04-26 14:24:16 nano lab8.asm
+  331  2023-04-26 14:29:16 as -o lab8.o lab8.asm
+  332  2023-04-26 14:29:17 ld -o a.out lab8.o csc35.o
+  333  2023-04-26 14:29:19 ./a.out
+  334  2023-04-26 14:29:29 nano lab8.asm
+  335  2023-04-26 15:12:25 as -o lab8.o lab8.asm
+  336  2023-04-26 15:12:27 ld -o a.out lab8.o csc35.o
+  337  2023-04-26 15:12:40 nano lab8.asm
+  338  2023-04-26 15:13:33 as -o lab8.o lab8.asm
+  339  2023-04-26 15:13:35 ld -o a.out lab8.o csc35.o
+  340  2023-04-26 15:13:41 ./a.out
+  341  2023-04-26 15:15:44 nano lab8.asm
+  342  2023-04-26 15:17:21 as -o lab8.o lab8.asm
+  343  2023-04-26 15:17:22 ld -o a.out lab8.o csc35.o
+  344  2023-04-26 15:17:24 ./a.out
+  345  2023-04-26 15:18:06 nano lab8.asm
+  346  2023-04-26 15:18:33 as -o lab8.o lab8.asm
+  347  2023-04-26 15:18:35 ld -o a.out lab8.o csc35.o
+  348  2023-04-26 15:18:37 ./a.out
+  349  2023-04-26 15:19:23 nano lab8.asm
+  350  2023-04-26 15:21:35 as -o lab8.o lab8.asm
+  351  2023-04-26 15:21:36 ld -o a.out lab8.o csc35.o
+  352  2023-04-26 15:21:38 ./a.out
+  353  2023-04-26 15:22:18 nano lab8.asm
+  354  2023-04-26 15:22:37 as -o lab8.o lab8.asm
+  355  2023-04-26 15:22:39 ld -o a.out lab8.o csc35.o
+  356  2023-04-26 15:22:42 ./a.out
+  357  2023-04-26 15:23:16 nano lab8.asm
+  358  2023-04-26 15:29:12 as -o lab8.o lab8.asm
+  359  2023-04-26 15:29:14 ld -o a.out lab8.o csc35.o
+  360  2023-04-26 15:29:18 ./a.out
+  361  2023-04-26 15:29:45 nano lab8.asm
+  362  2023-04-26 15:32:15 ./a.out
+  363  2023-04-26 15:32:24 2
+  364  2023-04-26 15:32:59 alpine
+  365  2023-04-26 15:34:24 clear
+  366  2023-04-30 23:36:29 nano lab8.asm
+  367  2023-04-30 23:38:57 ./a.out
+  368  2023-04-30 23:39:36 clear
+  369  2023-04-30 23:39:58 nano practice.asm
+  370  2023-04-30 23:45:15 as -o practice.o practice.asm
+  371  2023-04-30 23:45:25 ld -o a.out practice.o csc35.o
+  372  2023-04-30 23:45:29 ./a.out
+  373  2023-05-01 01:13:43 nano prac2.asm
+  374  2023-05-01 01:21:09 as -o prac2.o prac2.asm
+  375  2023-05-01 01:21:19 ld -o a.out prac2.o csc35.o
+  376  2023-05-01 01:21:24 ./a.out
+  377  2023-05-01 01:22:13 nano prac2.asm
+  378  2023-05-01 01:23:09 as -o prac2.o prac2.asm
+  379  2023-05-01 01:23:11 ld -o a.out prac2.o csc35.o
+  380  2023-05-01 01:23:13 ./a.out
+  381  2023-05-01 01:23:30 66
+  382  2023-05-01 01:23:36 ./a.out
+  383  2023-05-01 01:24:23 ./a.out1000
+  384  2023-05-01 01:24:28 ./a.out
+  385  2023-05-01 01:24:48 clear
+  386  2023-05-01 01:58:25 nano prac3.asm
+  387  2023-05-01 02:09:17 as -o prac3.o prac3.asm
+  388  2023-05-01 02:09:27 ld -o a.out prac3.o csc35.o
+  389  2023-05-01 02:09:31 ./a.out
+  390  2023-05-01 02:10:30 nano prac3.asm
+  391  2023-05-01 02:27:33 clear
+  392  2023-05-01 02:27:39 as -o prac3.o prac3.asm
+  393  2023-05-01 02:27:42 ld -o a.out prac3.o csc35.o
+  394  2023-05-01 02:27:46 ./a.out
+  395  2023-05-01 02:30:36 clear
+  396  2023-05-03 13:59:09 nano lab9.asm
+  397  2023-05-03 14:13:09 as -o lab9.o lab9.asm
+  398  2023-05-03 14:13:22 ld -o a.out lab9.o csc35.o
+  399  2023-05-03 14:13:25 ./a.out
+  400  2023-05-03 14:13:58 nano lab9.asm
+  401  2023-05-03 14:16:31 as -o lab9.o lab9.asm
+  402  2023-05-03 14:16:41 nano lab9.asm
+  403  2023-05-03 14:17:34 as -o lab9.o lab9.asm
+  404  2023-05-03 14:17:42 nano lab9.asm
+  405  2023-05-03 14:23:47 as -o lab9.o lab9.asm
+  406  2023-05-03 14:23:52 ld -o a.out lab9.o csc35.o
+  407  2023-05-03 14:23:57 ./a.out
+  408  2023-05-03 14:24:21 nano lab9.asm
+  409  2023-05-03 14:25:18 as -o lab9.o lab9.asm
+  410  2023-05-03 14:25:20 ld -o a.out lab9.o csc35.o
+  411  2023-05-03 14:25:21 ./a.out
+  412  2023-05-03 14:25:35 nano lab9.asm
+  413  2023-05-03 14:29:05 as -o lab9.o lab9.asm
+  414  2023-05-03 14:29:07 ld -o a.out lab9.o csc35.o
+  415  2023-05-03 14:29:08 ./a.out
+  416  2023-05-03 14:29:20 nano lab9.asm
+  417  2023-05-03 14:31:29 as -o lab9.o lab9.asm
+  418  2023-05-03 14:31:32 ld -o a.out lab9.o csc35.o
+  419  2023-05-03 14:31:34 ./a.out
+  420  2023-05-03 14:31:49 nano lab9.asm
+  421  2023-05-03 14:34:55 as -o lab9.o lab9.asm
+  422  2023-05-03 14:34:56 ld -o a.out lab9.o csc35.o
+  423  2023-05-03 14:34:58 ./a.out
+  424  2023-05-03 14:35:12 nano lab9.asm
+  425  2023-05-03 14:36:58 as -o lab9.o lab9.asm
+  426  2023-05-03 14:36:59 ld -o a.out lab9.o csc35.o
+  427  2023-05-03 14:37:01 ./a.out
+  428  2023-05-03 14:37:11 nano lab9.asm
+  429  2023-05-03 14:37:59 ./a.out
+  430  2023-05-03 14:38:18 nano lab9.asm
+  431  2023-05-03 14:45:36 ./a.out
+  432  2023-05-03 14:45:49 alpine
+  433  2023-05-03 14:46:39 clear
+  434  2023-05-10 14:04:48 nano lab6.asm
+  435  2023-05-10 14:05:26 as -o lab6.o lab6.asm
+  436  2023-05-10 14:05:34 ld -o a.out lab6.o csc35.o
+  437  2023-05-10 14:05:38 ./a.out
+  438  2023-05-10 14:06:18 alpine
+  439  2023-05-10 14:21:08 clear
+  440  2023-05-11 15:04:19 nano final.asm
+  441  2023-05-11 15:10:38 as -o final.o final.asm
+  442  2023-05-11 15:10:52 ld -o a.out final.o csc35.o
+  443  2023-05-11 15:11:00 ./a.out
+  444  2023-05-11 15:11:10 nano final.asm
+  445  2023-05-11 15:22:02 as -o final.o final.asm
+  446  2023-05-11 15:22:03 ld -o a.out final.o csc35.o
+  447  2023-05-11 15:22:05 ./a.out
+  448  2023-05-11 15:22:45 nano final.asm
+  449  2023-05-11 15:23:17 as -o final.o final.asm
+  450  2023-05-11 15:23:18 ld -o a.out final.o csc35.o
+  451  2023-05-11 15:23:20 ./a.out
+  452  2023-05-11 15:23:28 nano final.asm
+  453  2023-05-11 15:25:24 as -o final.o final.asm
+  454  2023-05-11 15:25:26 ld -o a.out final.o csc35.o
+  455  2023-05-11 15:25:28 ./a.out
+  456  2023-05-11 15:25:41 nano final.asm
+  457  2023-05-11 15:26:02 as -o final.o final.asm
+  458  2023-05-11 15:26:04 ld -o a.out final.o csc35.o
+  459  2023-05-11 15:26:07 ./a.out
+  460  2023-05-11 15:29:12 nano final.asm
+  461  2023-05-11 16:16:15 ld -o a.out final.o csc35.o
+  462  2023-05-11 16:16:23 ./a.out
+  463  2023-05-11 16:19:45 nano final.asm
+  464  2023-05-11 16:38:03 as -o final.o final.asm
+  465  2023-05-11 16:38:05 ld -o a.out final.o csc35.o
+  466  2023-05-11 16:38:06 ./a.out
+  467  2023-05-11 16:38:24 nano final.asm
+  468  2023-05-11 16:39:11 as -o final.o final.asm
+  469  2023-05-11 16:39:13 ld -o a.out final.o csc35.o
+  470  2023-05-11 16:39:18 ./a.out
+  471  2023-05-11 16:39:44 nano final.asm
+  472  2023-05-11 16:48:55 as -o final.o final.asm
+  473  2023-05-11 16:48:56 ld -o a.out final.o csc35.o
+  474  2023-05-11 16:49:05 nano final.asm
+  475  2023-05-11 16:50:15 as -o final.o final.asm
+  476  2023-05-11 16:50:17 ld -o a.out final.o csc35.o
+  477  2023-05-11 16:50:21 ./a.out
+  478  2023-05-11 16:51:52 nano final.asm
+  479  2023-05-11 17:03:26 as -o final.o final.asm
+  480  2023-05-11 17:03:40 nano final.asm
+  481  2023-05-11 17:04:07 as -o final.o final.asm
+  482  2023-05-11 17:04:09 ld -o a.out final.o csc35.o
+  483  2023-05-11 17:04:13 ./a.out
+  484  2023-05-11 17:04:50 nano final.asm
+  485  2023-05-11 17:06:40 as -o final.o final.asm
+  486  2023-05-11 17:06:42 ld -o a.out final.o csc35.o
+  487  2023-05-11 17:06:44 ./a.out
+  488  2023-05-11 17:06:55 nano final.asm
+  489  2023-05-11 17:07:11 as -o final.o final.asm
+  490  2023-05-11 17:07:13 ld -o a.out final.o csc35.o
+  491  2023-05-11 17:07:15 ./a.out
+  492  2023-05-11 17:08:14 nano final.asm
+  493  2023-05-11 17:09:16 as -o final.o final.asm
+  494  2023-05-11 17:09:18 ld -o a.out final.o csc35.o
+  495  2023-05-11 17:09:20 ./a.out
+  496  2023-05-11 17:10:39 nano final.asm
+  497  2023-05-11 17:38:53 as -o final.o final.asm
+  498  2023-05-11 17:38:55 ld -o a.out final.o csc35.o
+  499  2023-05-11 17:38:57 ./a.out
+  500  2023-05-11 17:39:30 nano final.asm
+  501  2023-05-11 17:39:54 as -o final.o final.asm
+  502  2023-05-11 17:39:56 ld -o a.out final.o csc35.o
+  503  2023-05-11 17:39:58 ./a.out
+  504  2023-05-11 17:41:11 nano final.asm
+  505  2023-05-11 17:57:45 as -o final.o final.asm
+  506  2023-05-11 17:57:47 ld -o a.out final.o csc35.o
+  507  2023-05-11 17:57:49 ./a.out
+  508  2023-05-11 17:58:15 nano final.asm
+  509  2023-05-11 17:59:05 as -o final.o final.asm
+  510  2023-05-11 17:59:07 ld -o a.out final.o csc35.o
+  511  2023-05-11 17:59:13 ./a.out
+  512  2023-05-11 17:59:31 nano final.asm
+  513  2023-05-11 18:01:00 as -o final.o final.asm
+  514  2023-05-11 18:01:10 nano final.asm
+  515  2023-05-11 18:03:29 as -o final.o final.asm
+  516  2023-05-11 18:03:33 ld -o a.out final.o csc35.o
+  517  2023-05-11 18:03:36 ./a.out
+  518  2023-05-11 18:03:43 nano final.asm
+  519  2023-05-11 18:06:36 as -o final.o final.asm
+  520  2023-05-11 18:06:37 ld -o a.out final.o csc35.o
+  521  2023-05-11 18:06:39 ./a.out
+  522  2023-05-11 18:09:30 nano final.asm
+  523  2023-05-11 18:50:04 as -o final.o final.asm
+  524  2023-05-11 18:50:05 ld -o a.out final.o csc35.o
+  525  2023-05-11 18:50:16 nano final.asm
+  526  2023-05-11 18:51:02 as -o final.o final.asm
+  527  2023-05-11 18:51:03 ld -o a.out final.o csc35.o
+  528  2023-05-11 18:51:07 ./a.out
+  529  2023-05-11 18:52:05 nano final.asm
+  530  2023-05-11 19:03:55 exit
+  531  2023-05-11 19:04:43 clear
+  532  2023-05-11 19:06:38 nano final.asm
+  533  2023-05-11 19:52:08 as -o final.o final.asm
+  534  2023-05-11 19:52:16 ld -o a.out final.o csc35.o
+  535  2023-05-11 19:53:02 nano final.asm
+  536  2023-05-11 19:54:32 as -o final.o final.asm
+  537  2023-05-11 19:54:34 ld -o a.out final.o csc35.o
+  538  2023-05-11 19:54:39 ./a.out
+  539  2023-05-11 19:55:18 nano final.asm
+  540  2023-05-11 20:03:01 as -o final.o final.asm
+  541  2023-05-11 20:03:06 ld -o a.out final.o csc35.o
+  542  2023-05-11 20:03:19 nano final.asm
+  543  2023-05-11 20:16:45 exit
+  544  2023-05-12 17:43:14 nano final.asm
+  545  2023-05-12 17:43:34 ./a.out
+  546  2023-05-12 17:43:39 as -o final.o final.asm
+  547  2023-05-12 17:43:41 ld -o a.out final.o csc35.o
+  548  2023-05-12 17:43:44 ./a.out
+  549  2023-05-12 17:45:41 nano final.asm
+  550  2023-05-12 17:46:22 as -o final.o final.asm
+  551  2023-05-12 17:46:23 ld -o a.out final.o csc35.o
+  552  2023-05-12 17:46:25 ./a.out
+  553  2023-05-12 17:46:29 1
+  554  2023-05-12 17:46:39 nano final.asm
+  555  2023-05-12 17:56:00 as -o final.o final.asm
+  556  2023-05-12 17:56:03 ld -o a.out final.o csc35.o
+  557  2023-05-12 17:56:06 ./a.out
+  558  2023-05-12 17:56:32 nano final.asm
+  559  2023-05-12 17:58:03 as -o final.o final.asm
+  560  2023-05-12 17:58:05 ld -o a.out final.o csc35.o
+  561  2023-05-12 17:58:07 ./a.out
+  562  2023-05-12 17:58:35 nano final.asm
+  563  2023-05-12 18:00:30 as -o final.o final.asm
+  564  2023-05-12 18:00:32 ld -o a.out final.o csc35.o
+  565  2023-05-12 18:00:35 ./a.out
+  566  2023-05-12 18:00:47 nano final.asm
+  567  2023-05-12 18:10:47 as -o final.o final.asm
+  568  2023-05-12 18:10:48 ld -o a.out final.o csc35.o
+  569  2023-05-12 18:10:50 ./a.out
+  570  2023-05-12 18:11:15 nano final.asm
+  571  2023-05-12 18:35:20 as -o final.o final.asm
+  572  2023-05-12 18:35:21 ld -o a.out final.o csc35.o
+  573  2023-05-12 18:35:23 ./a.out
+  574  2023-05-12 18:35:34 nano final.asm
+  575  2023-05-12 18:36:27 as -o final.o final.asm
+  576  2023-05-12 18:36:30 ld -o a.out final.o csc35.o
+  577  2023-05-12 18:36:31 ./a.out
+  578  2023-05-12 18:38:04 nano final.asm
+  579  2023-05-12 18:39:08 as -o final.o final.asm
+  580  2023-05-12 18:39:09 ld -o a.out final.o csc35.o
+  581  2023-05-12 18:39:11 ./a.out
+  582  2023-05-12 18:39:44 nano final.asm
+  583  2023-05-12 18:42:53 as -o final.o final.asm
+  584  2023-05-12 18:42:55 ld -o a.out final.o csc35.o
+  585  2023-05-12 18:43:04 nano final.asm
+  586  2023-05-12 18:43:36 as -o final.o final.asm
+  587  2023-05-12 18:43:40 ld -o a.out final.o csc35.o
+  588  2023-05-12 18:43:42 ./a.out
+  589  2023-05-12 18:44:01 nano final.asm
+  590  2023-05-12 18:45:25 as -o final.o final.asm
+  591  2023-05-12 18:45:27 ld -o a.out final.o csc35.o
+  592  2023-05-12 18:45:30 ./a.out
+  593  2023-05-12 18:46:21 nano final.asm
+  594  2023-05-12 18:57:39 as -o final.o final.asm
+  595  2023-05-12 18:57:42 ld -o a.out final.o csc35.o
+  596  2023-05-12 18:57:44 ./a.out
+  597  2023-05-12 19:00:37 nano final.asm
+  598  2023-05-12 19:02:10 as -o final.o final.asm
+  599  2023-05-12 19:02:11 ld -o a.out final.o csc35.o
+  600  2023-05-12 19:02:13 ./a.out
+  601  2023-05-12 19:02:27 nano final.asm
+  602  2023-05-12 19:05:01 as -o final.o final.asm
+  603  2023-05-12 19:05:02 ld -o a.out final.o csc35.o
+  604  2023-05-12 19:05:04 ./a.out
+  605  2023-05-12 19:05:30 nano final.asm
+  606  2023-05-12 19:07:53 as -o final.o final.asm
+  607  2023-05-12 19:07:55 ld -o a.out final.o csc35.o
+  608  2023-05-12 19:07:57 ./a.out
+  609  2023-05-12 19:08:30 nano final.asm
+  610  2023-05-12 19:11:48 as -o final.o final.asm
+  611  2023-05-12 19:11:49 ld -o a.out final.o csc35.o
+  612  2023-05-12 19:11:51 ./a.out
+  613  2023-05-12 19:12:15 nano final.asm
+  614  2023-05-12 19:15:24 as -o final.o final.asm
+  615  2023-05-12 19:15:25 ld -o a.out final.o csc35.o
+  616  2023-05-12 19:15:27 ./a.out
+  617  2023-05-12 19:16:21 1
+  618  2023-05-12 19:17:11 nano final.asm
+  619  2023-05-12 19:33:58 as -o final.o final.asm
+  620  2023-05-12 19:34:01 ld -o a.out final.o csc35.o
+  621  2023-05-12 19:34:05 ./a.out
+  622  2023-05-12 19:35:30 1
+  623  2023-05-12 19:35:34 nano final.asm
+  624  2023-05-12 19:50:00 as -o final.o final.asm
+  625  2023-05-12 19:50:02 ld -o a.out final.o csc35.o
+  626  2023-05-12 19:50:04 ./a.out
+  627  2023-05-12 19:50:21 nano final.asm
+  628  2023-05-12 19:54:24 as -o final.o final.asm
+  629  2023-05-12 19:54:26 ld -o a.out final.o csc35.o
+  630  2023-05-12 19:54:28 ./a.out
+  631  2023-05-12 19:55:14 nano final.asm
+  632  2023-05-12 19:59:22 as -o final.o final.asm
+  633  2023-05-12 19:59:25 ld -o a.out final.o csc35.o
+  634  2023-05-12 19:59:27 ./a.out
+  635  2023-05-12 19:59:49 nano final.asm
+  636  2023-05-12 20:04:51 as -o final.o final.asm
+  637  2023-05-12 20:04:52 ld -o a.out final.o csc35.o
+  638  2023-05-12 20:04:55 ./a.out
+  639  2023-05-12 20:05:28 nano final.asm
+  640  2023-05-12 20:13:18 as -o final.o final.asm
+  641  2023-05-12 20:13:20 ld -o a.out final.o csc35.o
+  642  2023-05-12 20:13:28 nano final.asm
+  643  2023-05-12 20:14:21 as -o final.o final.asm
+  644  2023-05-12 20:14:23 ld -o a.out final.o csc35.o
+  645  2023-05-12 20:14:25 ./a.out
+  646  2023-05-12 20:14:56 nano final.asm
+  647  2023-05-12 20:15:24 as -o final.o final.asm
+  648  2023-05-12 20:15:26 ld -o a.out final.o csc35.o
+  649  2023-05-12 20:15:49 nano final.asm
+  650  2023-05-12 20:16:25 as -o final.o final.asm
+  651  2023-05-12 20:16:28 ld -o a.out final.o csc35.o
+  652  2023-05-12 20:16:31 ./a.out
+  653  2023-05-12 20:17:33 nano final.asm
+  654  2023-05-12 20:18:52 as -o final.o final.asm
+  655  2023-05-12 20:18:53 ld -o a.out final.o csc35.o
+  656  2023-05-12 20:18:55 ./a.out
+  657  2023-05-12 20:19:39 nano final.asm
+  658  2023-05-12 20:28:52 as -o final.o final.asm
+  659  2023-05-12 20:28:54 ld -o a.out final.o csc35.o
+  660  2023-05-12 20:28:58 nano final.asm
+  661  2023-05-12 20:29:57 as -o final.o final.asm
+  662  2023-05-12 20:29:59 ld -o a.out final.o csc35.o
+  663  2023-05-12 20:30:01 ./a.out
+  664  2023-05-12 20:30:35 nano final.asm
+  665  2023-05-12 20:30:54 as -o final.o final.asm
+  666  2023-05-12 20:30:56 ld -o a.out final.o csc35.o
+  667  2023-05-12 20:30:57 ./a.out
+  668  2023-05-12 20:31:21 nano final.asm
+  669  2023-05-12 20:32:31 as -o final.o final.asm
+  670  2023-05-12 20:32:32 ld -o a.out final.o csc35.o
+  671  2023-05-12 20:32:34 ./a.out
+  672  2023-05-12 20:33:03 nano final.asm
+  673  2023-05-12 20:40:44 as -o final.o final.asm
+  674  2023-05-12 20:40:45 ld -o a.out final.o csc35.o
+  675  2023-05-12 20:40:46 ./a.out
+  676  2023-05-12 20:41:21 nano final.asm
+  677  2023-05-12 20:43:49 as -o final.o final.asm
+  678  2023-05-12 20:43:51 ld -o a.out final.o csc35.o
+  679  2023-05-12 20:43:52 ./a.out
+  680  2023-05-12 20:44:28 nano final.asm
+  681  2023-05-12 20:54:20 as -o final.o final.asm
+  682  2023-05-12 20:54:22 ld -o a.out final.o csc35.o
+  683  2023-05-12 20:54:28 ./a.out
+  684  2023-05-12 20:55:45 nano final.asm
+  685  2023-05-12 20:56:44 as -o final.o final.asm
+  686  2023-05-12 20:56:45 ld -o a.out final.o csc35.o
+  687  2023-05-12 20:56:46 ./a.out
+  688  2023-05-12 20:57:40 nano final.asm
+  689  2023-05-12 20:59:10 as -o final.o final.asm
+  690  2023-05-12 20:59:11 ld -o a.out final.o csc35.o
+  691  2023-05-12 20:59:13 ./a.out
+  692  2023-05-12 21:03:09 nano final.asm
+  693  2023-05-12 21:07:05 as -o final.o final.asm
+  694  2023-05-12 21:07:08 ld -o a.out final.o csc35.o
+  695  2023-05-12 21:07:09 ./a.out
+  696  2023-05-12 21:08:18 nano final.asm
+  697  2023-05-12 21:11:27 as -o final.o final.asm
+  698  2023-05-12 21:11:28 ld -o a.out final.o csc35.o
+  699  2023-05-12 21:11:29 ./a.out
+  700  2023-05-12 21:12:11 nano final.asm
+  701  2023-05-12 21:13:51 as -o final.o final.asm
+  702  2023-05-12 21:13:52 ld -o a.out final.o csc35.o
+  703  2023-05-12 21:13:53 ./a.out
+  704  2023-05-12 21:14:38 nano final.asm
+  705  2023-05-12 21:15:59 as -o final.o final.asm
+  706  2023-05-12 21:16:00 ld -o a.out final.o csc35.o
+  707  2023-05-12 21:16:02 ./a.out
+  708  2023-05-12 21:16:51 nano final.asm
+  709  2023-05-12 21:31:09 as -o final.o final.asm
+  710  2023-05-12 21:31:10 ld -o a.out final.o csc35.o
+  711  2023-05-12 21:31:12 ./a.out
+  712  2023-05-12 21:32:15 nano final.asm
+  713  2023-05-12 21:32:54 as -o final.o final.asm
+  714  2023-05-12 21:32:57 ld -o a.out final.o csc35.o
+  715  2023-05-12 21:32:58 ./a.out
+  716  2023-05-12 21:34:31 nano final.asm
+  717  2023-05-12 21:36:35 as -o final.o final.asm
+  718  2023-05-12 21:36:37 ld -o a.out final.o csc35.o
+  719  2023-05-12 21:36:38 ./a.out
+  720  2023-05-12 21:37:17 nano final.asm
+  721  2023-05-12 21:50:28 as -o final.o final.asm
+  722  2023-05-12 21:50:29 ld -o a.out final.o csc35.o
+  723  2023-05-12 21:50:30 ./a.out
+  724  2023-05-12 21:52:37 3
+  725  2023-05-12 21:52:45 ./a.out
+  726  2023-05-12 21:53:24 nano final.asm
+  727  2023-05-12 21:57:09 as -o final.o final.asm
+  728  2023-05-12 21:57:13 ld -o a.out final.o csc35.o
+  729  2023-05-12 21:57:14 ./a.out
+  730  2023-05-12 22:01:31 nano final.asm
+  731  2023-05-12 22:08:33 as -o final.o final.asm
+  732  2023-05-12 22:08:35 ld -o a.out final.o csc35.o
+  733  2023-05-12 22:08:37 ./a.out
+  734  2023-05-12 22:09:27 nano final.asm
+  735  2023-05-12 22:09:42 as -o final.o final.asm
+  736  2023-05-12 22:09:44 ld -o a.out final.o csc35.o
+  737  2023-05-12 22:09:46 ./a.out
+  738  2023-05-12 22:10:46 nano final.asm
+  739  2023-05-12 22:11:19 as -o final.o final.asm
+  740  2023-05-12 22:11:20 ld -o a.out final.o csc35.o
+  741  2023-05-12 22:11:22 ./a.out
+  742  2023-05-12 22:12:43 nano final.asm
+  743  2023-05-12 22:14:02 as -o final.o final.asm
+  744  2023-05-12 22:14:03 ld -o a.out final.o csc35.o
+  745  2023-05-12 22:14:06 ./a.out
+  746  2023-05-12 22:14:40 nano final.asm
+  747  2023-05-12 22:20:20 as -o final.o final.asm
+  748  2023-05-12 22:20:22 ld -o a.out final.o csc35.o
+  749  2023-05-12 22:20:23 ./a.out
+  750  2023-05-12 22:21:06 nano final.asm
+  751  2023-05-12 22:29:22 as -o final.o final.asm
+  752  2023-05-12 22:29:23 ld -o a.out final.o csc35.o
+  753  2023-05-12 22:29:24 ./a.out
+  754  2023-05-12 22:30:28 nano final.asm
+  755  2023-05-12 22:38:25 ./a.out
+  756  2023-05-12 22:39:19 nano final.asm
+  757  2023-05-12 22:53:22 as -o final.o final.asm
+  758  2023-05-12 22:53:39 nano final.asm
+  759  2023-05-12 22:55:08 as -o final.o final.asm
+  760  2023-05-12 22:55:11 ld -o a.out final.o csc35.o
+  761  2023-05-12 22:55:14 ./a.out
+  762  2023-05-12 22:56:38 nano final.asm
+  763  2023-05-12 22:58:02 as -o final.o final.asm
+  764  2023-05-12 22:58:04 ld -o a.out final.o csc35.o
+  765  2023-05-12 22:58:05 ./a.out
+  766  2023-05-12 22:59:22 nano final.asm
+  767  2023-05-12 23:00:51 as -o final.o final.asm
+  768  2023-05-12 23:00:53 ld -o a.out final.o csc35.o
+  769  2023-05-12 23:00:55 ./a.out
+  770  2023-05-12 23:01:01 nano final.asm
+  771  2023-05-12 23:01:22 as -o final.o final.asm
+  772  2023-05-12 23:01:23 ld -o a.out final.o csc35.o
+  773  2023-05-12 23:01:30 nano final.asm
+  774  2023-05-12 23:02:00 as -o final.o final.asm
+  775  2023-05-12 23:02:12 nano final.asm
+  776  2023-05-12 23:13:22 as -o final.o final.asm
+  777  2023-05-12 23:13:25 ld -o a.out final.o csc35.o
+  778  2023-05-12 23:13:29 ./a.out
+  779  2023-05-12 23:14:31 nano final.asm
+  780  2023-05-12 23:15:39 as -o final.o final.asm
+  781  2023-05-12 23:15:40 ld -o a.out final.o csc35.o
+  782  2023-05-12 23:15:41 ./a.out
+  783  2023-05-12 23:16:12 nano final.asm
+  784  2023-05-12 23:17:19 as -o final.o final.asm
+  785  2023-05-12 23:17:20 ld -o a.out final.o csc35.o
+  786  2023-05-12 23:17:22 ./a.out
+  787  2023-05-12 23:17:58 nano final.asm
+  788  2023-05-12 23:26:15 as -o final.o final.asm
+  789  2023-05-12 23:26:16 ld -o a.out final.o csc35.o
+  790  2023-05-12 23:26:18 ./a.out
+  791  2023-05-12 23:27:29 nano final.asm
+  792  2023-05-12 23:29:02 as -o final.o final.asm
+  793  2023-05-12 23:29:03 ld -o a.out final.o csc35.o
+  794  2023-05-12 23:29:05 ./a.out
+  795  2023-05-12 23:29:48 nano final.asm
+  796  2023-05-12 23:43:14 as -o final.o final.asm
+  797  2023-05-12 23:43:16 ld -o a.out final.o csc35.o
+  798  2023-05-12 23:43:17 ./a.out
+  799  2023-05-12 23:44:01 nano final.asm
+  800  2023-05-12 23:44:58 as -o final.o final.asm
+  801  2023-05-12 23:44:59 ld -o a.out final.o csc35.o
+  802  2023-05-12 23:45:01 ./a.out
+  803  2023-05-12 23:51:33 alpine
+  804  2023-05-12 23:53:15 exit
+  805  2023-05-14 18:24:47 nano lab9.asm
+  806  2023-05-14 18:34:02 as -o lab9.o lab9.asm
+  807  2023-05-14 18:34:12 ld -o a.out lab9.o csc35.o
+  808  2023-05-14 18:34:16 ./a.out
+  809  2023-05-14 18:35:51 nano lab9.asm
+  810  2023-05-14 18:39:47 as -o lab9.o lab9.asm
+  811  2023-05-14 18:39:49 ld -o a.out lab9.o csc35.o
+  812  2023-05-14 18:39:54 nano lab9.asm
+  813  2023-05-14 18:41:17 as -o lab9.o lab9.asm
+  814  2023-05-14 18:41:18 ld -o a.out lab9.o csc35.o
+  815  2023-05-14 18:41:21 ./a.out
+  816  2023-05-14 18:41:47 nano divP.asm
+  817  2023-05-14 18:50:58 as -o divP.o divP.asm
+  818  2023-05-14 18:51:09 ld -o a.out divP.o csc35.o
+  819  2023-05-14 18:51:11 ./a.out
+  820  2023-05-14 18:51:38 nano divP.asm
+  821  2023-05-14 18:51:55 as -o divP.o divP.asm
+  822  2023-05-14 18:51:56 ld -o a.out divP.o csc35.o
+  823  2023-05-14 18:51:58 ./a.out
+  824  2023-05-14 18:56:17 nano mulP.asm
+  825  2023-05-14 19:14:04 as -o mulP.o mulP.asm
+  826  2023-05-14 19:14:11 ld -o a.out mulP.o csc35.o
+  827  2023-05-14 19:14:12 ./a.out
+  828  2023-05-14 19:14:31 nano mulP.asm
+  829  2023-05-14 19:16:10 as -o mulP.o mulP.asm
+  830  2023-05-14 19:16:13 ld -o a.out mulP.o csc35.o
+  831  2023-05-14 19:16:15 ./a.out
+  832  2023-05-14 19:16:25 nano mulP.asm
+  833  2023-05-14 19:17:21 as -o mulP.o mulP.asm
+  834  2023-05-14 19:17:22 ld -o a.out mulP.o csc35.o
+  835  2023-05-14 19:17:24 ./a.out
+  836  2023-05-14 19:17:35 nano mulP.asm
+  837  2023-05-14 21:33:13 nano while.asm
+  838  2023-05-14 21:41:01 as -o while.o while.asm
+  839  2023-05-14 21:41:14 ld -o a.out while.o csc35.o
+  840  2023-05-14 21:41:23 nano while.asm
+  841  2023-05-14 21:41:36 as -o while.o while.asm
+  842  2023-05-14 21:41:38 ld -o a.out while.o csc35.o
+  843  2023-05-14 21:41:44 ./a.out
+  844  2023-05-14 21:41:59 nano while.asm
+  845  2023-05-14 21:43:17 as -o while.o while.asm
+  846  2023-05-14 21:43:19 ld -o a.out while.o csc35.o
+  847  2023-05-14 21:43:21 ./a.out
+  848  2023-05-15 10:43:35 nano mulP.asm
+  849  2023-05-15 10:45:01 nano avg.asm
+  850  2023-05-15 10:51:01 as -o avg.o avg.asm
+  851  2023-05-15 10:51:15 nano avg.asm
+  852  2023-05-15 10:52:49 as -o avg.o avg.asm
+  853  2023-05-15 10:53:02 ld -o a.out avg.o csc35.o
+  854  2023-05-15 10:53:19 ./a.out
+  855  2023-05-15 10:54:52 nano avg.asm
+  856  2023-05-15 10:56:42 as -o avg.o avg.asm
+  857  2023-05-15 10:56:43 ld -o a.out avg.o csc35.o
+  858  2023-05-15 10:56:48 ./a.out
+  859  2023-05-15 10:57:04 nano avg.asm
+  860  2023-05-15 10:59:08 as -o avg.o avg.asm
+  861  2023-05-15 10:59:09 ld -o a.out avg.o csc35.o
+  862  2023-05-15 10:59:11 ./a.out
+  863  2023-05-15 11:00:11 nano avg.asm
+  864  2023-05-15 11:01:56 nano divP.asm
+  865  2023-05-15 11:03:04 nano avg.asm
+  866  2023-05-15 11:03:28 as -o avg.o avg.asm
+  867  2023-05-15 11:03:31 ld -o a.out avg.o csc35.o
+  868  2023-05-15 11:03:33 ./a.out
+  869  2023-05-15 11:11:56 nano avg.asm
+  870  2023-05-15 11:12:16 as -o avg.o avg.asm
+  871  2023-05-15 11:12:17 ld -o a.out avg.o csc35.o
+  872  2023-05-15 11:12:20 ./a.out
+  873  2023-05-15 11:12:32 nano avg.asm
+  874  2023-05-15 15:36:05 nano add.asm
+  875  2023-07-20 22:14:42 nano final.asm
+  876  2023-07-20 22:16:18 ./a.out
+  877  2023-07-20 22:16:39 as -o avg.o final.asm
+  878  2023-07-20 22:16:50 as -o final.o final.asm
+  879  2023-07-20 22:17:02 ld -o a.out final.o csc35.o
+  880  2023-07-20 22:17:05 ./a.out
+  881  2023-07-20 22:17:22 3
+  882  2023-07-20 22:17:38 exit
+  883  2023-07-20 23:26:27 ./a.out
+  884  2023-07-20 23:32:54 nano final.asm
+  885  2023-07-20 23:34:28 ./a.out
+  886  2023-07-20 23:35:12 3
+  887  2023-07-20 23:35:35 exit
+  888  2023-09-16 19:12:57 gcc -v
+  889  2023-09-16 19:14:06 exit
+  890  2023-09-23 14:13:22 cat.vimrc
+  891  2023-09-23 14:13:35 cat .vimrc
+  892  2023-09-23 14:13:56 exit
+  893  2023-09-23 14:01:55 vim .vimrc
+  894  2023-09-23 14:13:04 script AngelRamirez_lab1.txt
+  895  2023-09-23 14:14:05 exit
+  896  2023-09-23 16:38:47 alpine
+  897  2023-09-23 16:39:02 exit
+  898  2023-09-23 16:39:18 alpine
+  899  2023-09-23 16:47:30 wxit
+  900  2023-09-23 16:47:32 exit
+  901  2023-09-28 16:32:04 gcc lab2.c
+  902  2023-09-28 16:32:19 ./a.out
+  903  2023-09-28 16:32:39 exit
+  904  2023-09-28 15:56:52 mkdir csc60
+  905  2023-09-28 15:57:06 cd csc60
+  906  2023-09-28 15:57:23 mkdir lab2
+  907  2023-09-28 15:57:30 cd lab2
+  908  2023-09-28 15:57:43 vim lab2.c
+  909  2023-09-28 16:12:47 gcc lab2.c
+  910  2023-09-28 16:13:13 vim lab2.c
+  911  2023-09-28 16:20:01 gcc lab2.c
+  912  2023-09-28 16:20:22 a.out
+  913  2023-09-28 16:20:29 ./a.out
+  914  2023-09-28 16:20:33 vim lab2.c
+  915  2023-09-28 16:21:48 gcc lab2.c
+  916  2023-09-28 16:21:52 a.out
+  917  2023-09-28 16:22:01 ./a.out
+  918  2023-09-28 16:31:50 script AngelRamirez_lab2.txt
+  919  2023-09-28 16:33:07 alpine
+  920  2023-09-28 16:33:12 exit
+  921  2023-09-28 16:33:59 alpine
+  922  2023-09-28 16:34:02 Alpine
+  923  2023-09-28 16:34:13 exit
+  924  2023-09-28 16:36:43 gcc lab2.txt
+  925  2023-09-28 16:36:52 exit
+  926  2023-09-28 16:34:28 alpine
+  927  2023-09-28 16:36:16 script AngelRamirez_lab2.txt
+  928  2023-09-28 16:37:12 exit
+  929  2023-09-28 16:37:38 gcc lab2.txt
+  930  2023-09-28 16:37:47 gcc lab2.c
+  931  2023-09-28 16:37:55 vim lab2.c
+  932  2023-09-28 16:39:09 ./a.out
+  933  2023-09-28 16:39:25 3
+  934  2023-09-28 16:39:30 exit
+  935  2023-09-28 16:41:39 cd csc60
+  936  2023-09-28 16:41:45 gcc lab2.c
+  937  2023-09-28 16:41:53 vim lab2.c
+  938  2023-09-28 16:45:53 ./a.out
+  939  2023-09-28 16:47:27 gcc lab2.c
+  940  2023-09-28 16:47:33 cd csc60
+  941  2023-09-28 16:47:36 gcc lab2.c
+  942  2023-09-28 16:50:58 cd csc60
+  943  2023-09-28 16:51:06 mkdir csc60
+  944  2023-09-28 16:51:50 cd csc60
+  945  2023-09-28 16:52:13 mkdir lab2
+  946  2023-09-28 16:52:20 cd lab2
+  947  2023-09-28 16:52:30 vim lab2.c
+  948  2023-09-28 16:59:31 gcc lab2.c
+  949  2023-09-28 16:59:54 vim lab2.c
+  950  2023-09-28 17:00:51 gcc lab2.c
+  951  2023-09-28 17:00:57 ./a.out
+  952  2023-09-28 17:01:14 exit
+  953  2023-09-28 17:03:45 ./a.out
+  954  2023-09-28 17:04:01 exit
+  955  2023-09-28 17:02:21 ./a.out
+  956  2023-09-28 17:02:35 3
+  957  2023-09-28 17:02:36 33
+  958  2023-09-28 17:02:51 cd csc60
+  959  2023-09-28 17:03:01 cd lab2
+  960  2023-09-28 17:03:18 ./a.out
+  961  2023-09-28 17:03:42 script angelRamirez_lab2.txt
+  962  2023-09-28 17:04:04 alpine
+  963  2023-09-28 17:04:18 exit
+  964  2023-09-28 17:05:41 gcc lab2.c
+  965  2023-09-28 17:05:47 ./a.out
+  966  2023-09-28 17:05:58 exit
+  967  2023-09-28 17:04:34 ./a.out
+  968  2023-09-28 17:04:41 3
+  969  2023-09-28 17:04:52 cd csc60
+  970  2023-09-28 17:04:57 cd lab2
+  971  2023-09-28 17:05:00 ./a.out
+  972  2023-09-28 17:05:29 script angelRamirez_lab2.txt
+  973  2023-09-28 17:06:04 alpine
+  974  2023-09-28 17:06:09 exit
+  975  2023-09-28 17:02:17 script angelRamirez_lab2.txt
+  976  2023-09-28 17:06:21 exit
+  977  2023-09-28 17:07:18 ./a.out
+  978  2023-09-28 17:07:23 exit
+  979  2023-09-28 17:06:39 cd csc60
+  980  2023-09-28 17:06:42 cd lab2
+  981  2023-09-28 17:06:51 ./a.out
+  982  2023-09-28 17:07:12 script AngelRamirez_Lab2.txt
+  983  2023-09-28 17:07:26 exit
+  984  2023-09-28 17:07:46 apline
+  985  2023-09-28 17:07:49 alpine
+  986  2023-09-28 17:07:53 Alpine
+  987  2023-09-28 17:08:09 exit
+  988  2023-09-28 17:08:46 alpine
+  989  2023-09-28 17:15:24 exit
+  990  2023-10-17 19:55:57 cd csc60
+  991  2023-10-17 19:56:05 mkdir lab3
+  992  2023-10-17 19:56:10 cd lab3
+  993  2023-10-17 19:56:15 mkdir aaa
+  994  2023-10-17 19:56:27 cd aaa
+  995  2023-10-17 19:56:42 cd ..
+  996  2023-10-17 19:56:50 rmdir aaa
+  997  2023-10-17 19:56:54 cd ..
+  998  2023-10-17 19:57:01 rmdir lab3
+  999  2023-10-17 19:57:15 cd ..
+ 1000  2023-10-17 19:57:42 ezit
+ 1001  2023-10-17 19:57:47 exit
+ 1002  2023-10-17 19:59:41 cd csc60
+ 1003  2023-10-17 19:59:50 mkdir lab3
+ 1004  2023-10-17 19:59:57 cd lab3
+ 1005  2023-10-17 20:00:03 pwd
+ 1006  2023-10-17 20:00:10 mkdir aaa
+ 1007  2023-10-17 20:00:14 cd aaa
+ 1008  2023-10-17 20:00:16 pwd
+ 1009  2023-10-17 20:00:25 cd ..
+ 1010  2023-10-17 20:00:32 pwd
+ 1011  2023-10-17 20:00:57 ls > file1
+ 1012  2023-10-17 20:01:06 cat file1
+ 1013  2023-10-17 20:01:24 less file1
+ 1014  2023-10-17 20:01:41 file *
+ 1015  2023-10-17 20:01:58 wc file1
+ 1016  2023-10-17 20:02:07 wc *
+ 1017  2023-10-17 20:02:33 grep lab4 file1
+ 1018  2023-10-17 20:02:44 grep file file1
+ 1019  2023-10-17 20:03:00 cp file1 file2
+ 1020  2023-10-17 20:03:08 ls
+ 1021  2023-10-17 20:03:16 cd aaa
+ 1022  2023-10-17 20:03:22 pwd
+ 1023  2023-10-17 20:03:47 cp ../file1 .
+ 1024  2023-10-17 20:04:02 ls
+ 1025  2023-10-17 20:04:06 mv file1 file2
+ 1026  2023-10-17 20:04:08 ls
+ 1027  2023-10-17 20:04:18 mv ../file1 .
+ 1028  2023-10-17 20:04:23 cd ..
+ 1029  2023-10-17 20:04:25 pwd
+ 1030  2023-10-17 20:04:30 ls
+ 1031  2023-10-17 20:04:33 cd aaa
+ 1032  2023-10-17 20:04:34 ls
+ 1033  2023-10-17 20:04:55 cmp file1 file2
+ 1034  2023-10-17 20:05:04 diff file1 aaalist
+ 1035  2023-10-17 20:05:32 ls > aaalist
+ 1036  2023-10-17 20:05:37 ls
+ 1037  2023-10-17 20:05:51 cmp file1 aaalist
+ 1038  2023-10-17 20:06:02 diff file1 aaalist
+ 1039  2023-10-17 20:06:16 rm -i file1
+ 1040  2023-10-17 20:06:30 ls
+ 1041  2023-10-17 20:06:41 ps u
+ 1042  2023-10-17 20:06:55 ps -I
+ 1043  2023-10-17 20:16:05 ps -l
+ 1044  2023-10-17 20:16:27 cd ../..
+ 1045  2023-10-17 20:16:32 pwd
+ 1046  2023-10-17 20:24:36 cd lab2
+ 1047  2023-10-17 20:24:42 head lab2.c
+ 1048  2023-10-17 20:24:55 head -20 lab2.c
+ 1049  2023-10-17 20:25:06 tail lab2.c
+ 1050  2023-10-17 20:25:16 tail -20 lab2.c
+ 1051  2023-10-17 20:26:05 s -al | less
+ 1052  2023-10-17 20:26:22 history
+]0;angelramirez-garcia@ecs-pa-coding1:~/csc60/lab2[angelramirez-garcia@ecs-pa-coding1 lab2]$ exit
+exit
+
+Script done on Tue 17 Oct 2023 08:26:55 PM PDT

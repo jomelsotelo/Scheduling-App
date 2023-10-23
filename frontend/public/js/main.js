@@ -226,6 +226,68 @@
         return events;
     }
 
+    //Edit-Event Button functions
+    $("#edit-button").click(edit_event);
+
+    function edit_event() {
+        // Check if a date is selected for editing
+        if ($(".active-date").length === 0) {
+            return;
+        }
+    
+        // Retrieve the selected date
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = parseInt($(".active-date").html());
+    
+        // Find the event data for the selected date
+        var selectedEvent = find_event(year, month, day);
+    
+        if (selectedEvent) {
+            // Populate the dialog input fields with the event data
+            $("#name").val(selectedEvent.occasion);
+            $("#startTime").val(selectedEvent.start);
+            $("#endTime").val(selectedEvent.end);
+            $("#count").val(selectedEvent.invited_count);
+    
+            // Hide the events container and show the dialog
+            $(".events-container").hide(250);
+            $("#dialog").show(250);
+    
+            // Event handler for the "OK" button for saving changes
+            $("#ok-button").unbind().click(function () {
+                // Update the event data with the edited values
+                selectedEvent.occasion = $("#name").val().trim();
+                selectedEvent.start = $("#startTime").val().trim();
+                selectedEvent.end = $("#endTime").val().trim();
+                selectedEvent.invited_count = parseInt($("#count").val().trim());
+    
+                // Hide the dialog and show the events container
+                $("#dialog").hide(250);
+                $(".events-container").show(250);
+    
+                // Update the calendar with the edited event
+                date.setDate(day);
+                init_calendar(date);
+            });
+        }
+    }
+    
+    // Function to find the event data for a specific date
+    function find_event(year, month, day) {
+        for (var i = 0; i < event_data.events.length; i++) {
+            var event = event_data.events[i];
+            if (event.year === year && event.month === month && event.day === day) {
+                return event;
+            }
+        }
+        return null; // Event not found
+    }
+    
+
+
+
     // Given data for events in JSON format
     var event_data = {
         "events": [

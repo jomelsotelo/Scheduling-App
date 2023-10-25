@@ -40,7 +40,7 @@ export const getUser = (req, res) => {
 };
 
 
-//creates a user with post
+//Create a new user
 export const createUser = (req, res) => {  
     const user = req.body;
 
@@ -128,4 +128,19 @@ export const deleteUser = (req, res) => {
 
 };
 
+//USER MANAGEMENT
 
+// //Create a new user.
+// createUser
+
+// //Retrieve user profile information.
+// getUserProfile
+
+// //Retrieve all user data.
+// getUserData
+
+// //Edit user info.
+// editUserInfo
+
+// //Delete user.
+// deleteUser

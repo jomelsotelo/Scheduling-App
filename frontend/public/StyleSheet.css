@@ -98,3 +98,17 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+#logOut {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
+}
+
+#out {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+}

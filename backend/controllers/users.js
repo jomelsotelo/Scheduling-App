@@ -1,146 +1,132 @@
-import { v4 as uuidv4 } from 'uuid';
-let users = [{
-    "Fname": "joe",
-    "Lname": "bruh",
-    "age": 25,
-    'id': "1egfd213dg1s3-gs2c145"
-    },
-    {
-    "Fname": "jim",
-    "Lname": "brown ",
-    "age": 25,
-    "id": "4fdsagfsd-cdsfse-4r5t"
-    }
-]
+import database from '../config/database.js';
 
 
 //gets all users
-export const getUsers = (req, res) => {
-    console.log(users);
-    res.send(users);
+export const getUsers = async (req, res) => {
+  try {
+    const [rows] = await database.query("SELECT * FROM users");
+        res.json(rows);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send('Server Error');
+  }
 }
+
+
 
 
 //get one user
-export const getUser = (req, res) => {
-    const {id}= req.params;
-    const foundUser = users.find((user) => user.id === id);
- 
-    //404 error
-    /*if (!foundUser) {
-     
-      // If the user is not found, return a 404 Not Found response.
-      return res.status(404).send(`404 Not Found`);
-    }*/
-
-
-    res.send(foundUser);
-   
- 
+export const getUser = async(req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await database.query("SELECT * FROM users WHERE user_id = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).send(`User with ID ${id} not found.`);
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).send('Server Error');
+  }
 };
+
+
 
 
 //Create a new user
-export const createUser = (req, res) => {  
-    const user = req.body;
+export const createUser = async (req, res) => {
+  const user = req.body;
+  // Validate user data here
+  try {
+      // Insert user into the database
+      const query = "INSERT INTO users (first_name, last_name, email, salt, password_hash) VALUES (?, ?, ?, ?, ?)";
+      const values = [user.first_name, user.last_name, user.email, user.salt, user.password_hash];
+     
+      const result = await database.query(query, values);
 
 
-    // Check the Content-Type of the request.
-    const contentType = req.get('Content-Type');
-   
-    if (contentType !== 'application/json') {
-        // If the Content-Type is not JSON, return a 415 Unsupported Media Type error.
-        return res.status(415).send('Error 415. Response must be in JSON');
-    }
-
-
-    //random id created
-    const userId=uuidv4();
-    const userWithId = { ... user, id: userId}
-    users.push(userWithId);
-
-
-
-
-    res.send(`user with username ${user.Fname} added`);
-
-
-};
-
-
-//updates a user with put
-export const updateUser =  (req,res) => {
-  const {id} = req.params;
-  const{ Fname,Lname,age} = req.body;
-  const user= users.find((user)=> user.id === id);
-
-
-  //404 error
-  if (!user) {
-    // If the user is not found, return a 404 Not Found response.
-    return res.status(404).send(`404 Not Found. User with Id ${id} not found.`);
+      if (result.affectedRows === 1) {
+          res.send(`User with email ${user.email} added`);
+      } else {
+          res.status(500).send('Failed to create a user.');
+      }
+  } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).send('Server Error');
   }
-
-
-  //415 error if contentType is no JSON
-  if (contentType !== 'application/json') {
-    // If the Content-Type is not JSON, return a 415 Unsupported Media Type error.
-    return res.status(415).send('Unsupported Media Type. Please send data in JSON format.');
 }
 
 
-  if (Fname || Lname || age) {
-    if (Fname) user.Fname = Fname;
-    if (Lname) user.Lname = Lname;
-    if (age) user.age = age;
 
 
-    // Return a 200 OK response to indicate a successful update.
-    return res.status(200).send(`User with Id ${id} has been updated.`);
-  } else {
-    // If no data was provided to update, return a 400 Bad Request response.
-    return res.status(400).send('Invalid request data. Please provide data to update the user.');
+//updates a user with put
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { Fname, Lname, age } = req.body;
+  const contentType = req.get('Content-Type'); // Get the content type from headers
+
+
+  if (!contentType || contentType !== 'application/json') {
+      return res.status(415).send('Unsupported Media Type. Please send data in JSON format.');
   }
-};
+
+
+  try {
+      // Update user data in the database
+      const result = await database.query("UPDATE users SET Fname = ?, Lname = ?, age = ? WHERE id = ?", [Fname, Lname, age, id]);
+
+
+      if (result.affectedRows === 0) {
+          return res.status(404).send(`User with ID ${id} not found.`);
+      }
+
+
+      res.status(200).send(`User with ID ${id} has been updated.`);
+  } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).send('Server Error');
+  }
+}
 
 
 //Deletes user with delete
-export const deleteUser = (req, res) => {
-  const {id} =req.params;
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
 
 
-  const userIndex = users.findIndex((user) => user.id === id);
+  try {
+      const result = await database.query("DELETE FROM users WHERE id = ?", [id]);
 
 
-  if (userIndex === -1) {
-    // If the user is not found, return a 404 Not Found response.
-    return res.status(404).send(`User with Id ${id} not found.`);
+      if (result.affectedRows === 0) {
+          return res.status(404).send(`User with ID ${id} not found.`);
+      }
+
+
+      res.send(`User with ID ${id} has been deleted.`);
+  } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).send('Server Error');
   }
-
-
-
-
-  users = users.filter((user) => user.id !== id);
-  res.send (`user with id  ${id} has been deleted `);
-
-
-
-
-};
-
+}
 //USER MANAGEMENT
+
 
 // //Create a new user.
 // createUser
 
+
 // //Retrieve user profile information.
 // getUserProfile
+
 
 // //Retrieve all user data.
 // getUserData
 
+
 // //Edit user info.
 // editUserInfo
+
 
 // //Delete user.
 // deleteUser

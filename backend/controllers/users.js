@@ -114,7 +114,7 @@ export const deleteUser = async (req, res) => {
 
 // //Create a new user.
 // createUser
-
+INSERT INTO 
 
 // //Retrieve user profile information.
 // getUserProfile

@@ -1,5 +1,7 @@
 //MEETING MANAGEMENT
 
+import database from '../config/database.js';
+
 //Create a new meeting.
 
 //Retrieve details about a specific meeting.

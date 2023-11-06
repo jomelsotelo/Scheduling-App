@@ -1,5 +1,6 @@
 //AVAILABILITY MANAGEMENT
 
+import database from '../config/database.js';
 //Create a new availability entry for a user.
 createAvailability
 

@@ -8,14 +8,16 @@ const PORT = 5000;
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use('/users', usersRoutes);
+app.use('/API/users', usersRoutes);
 // app.use('/meeting',);
 // app.use('/availability',);
+// app.use('/userData', database);
 
 
 app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
+
 
 
 app.listen(PORT, () => {

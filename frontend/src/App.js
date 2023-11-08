@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import { Routes, Route } from "react-router-dom"
+import HomePage from "./pages/HomePage"
+import Calendar from './pages/Calendar'
+import CreateAccount from "./pages/CreateAccount"
+import Login from "./pages/LoginPage"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        </a>
-      </header>
-    </div>
-  );
+    <Routes>
+        <Route path="/" exact element={<HomePage />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/createaccount" element={<CreateAccount />} />
+        <Route path="/login" element={<Login />} />
+    </Routes>
+  )
 }
-
-export default App;

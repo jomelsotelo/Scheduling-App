@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>JoinIn!</title>
+    <link rel="stylesheet" href="StyleSheet.css">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+
+      #settings-sidebar {
+        width: 250px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        background-color: #f4f4f4;
+        transition: left 0.3s;
+        overflow-y: auto;
+      }
+
+      #settings-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+      }
+
+      #calendar-container {
+        display: block;
+      }
+
+      #close-button {
+        text-align: center;
+        padding: 10px;
+        background-color: #d3d3d3;
+        cursor: pointer;
+      }
+
+      #key-input {
+        text-align: center;
+        padding: 10px;
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #key-input input {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+      
+      #settings-sidebar div {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <!--Log out button-->
+    <!--<button id = "logOut" onclick="logOut()">Log Out</button>-->
+    <input id="out" type="button" value="Log Out" onclick="location.href='login.html'"/>
+    
+    <!--Settings Button-->
+    <button id="settings-button">Settings</button>
+    <div id="settings-sidebar">
+      <div>
+        <!-- Settings content goes here -->
+        <button id="option1" onclick="handleOptionClick(1)">Option 1</button>
+        <button id="option2" onclick="handleOptionClick(2)">Option 2</button>
+        <button id="option3" onclick="handleOptionClick(3)">Option 3</button>
+      </div>
+      <div id="key-input">
+        <input type="text" id="api-key" placeholder="Enter a key">
+        <button id="key-submit" onclick="processKey()">Submit</button>
+      </div>
+      <div id="close-button" onclick="toggleSettings(event)">Close</div>
+    </div>
+    <div id="calendar-container">
+      <object id="C4" type="text/html" data="calendar4.html"></object>
+    </div>
+    <script>
+      let isSidebarOpen = false;
+      const settingsButton = document.getElementById("settings-button");
+      const sidebar = document.getElementById("settings-sidebar");
+      const apiKeyInput = document.querySelector("#api-key");
+      let displayedImage = null;
+      let calendarObject = document.getElementById("C4"); // Reference to the calendar object
+
+      settingsButton.addEventListener("click", toggleSettings);
+
+      function toggleSettings(event) {
+        isSidebarOpen = !isSidebarOpen;
+        if (isSidebarOpen) {
+          sidebar.style.left = "0";
+        } else {
+          sidebar.style.left = "-250px";
+        }
+        event.stopPropagation();
+      }
+
+      function handleOptionClick(optionNumber) {
+        // Handle the button click for the corresponding option
+        switch (optionNumber) {
+          case 1:
+            // Handle Option 1 click
+            console.log("Option 1 clicked");
+            break;
+          case 2:
+            // Handle Option 2 click
+            console.log("Option 2 clicked");
+            break;
+          case 3:
+            // Handle Option 3 click
+            console.log("Option 3 clicked");
+            break;
+          default:
+            break;
+        }
+      }
+
+      function processKey() {
+        const key = apiKeyInput.value;
+
+        if (key === "dog") {
+          // Create an image element
+          const dogImage = document.createElement("img");
+          dogImage.src = "dogCSC131.jpg"; // Assuming the image is in the same folder
+          dogImage.alt = "A cute dog"; // Add alt text for accessibility
+          dogImage.style.maxWidth = "100%"; // Ensure the image fits within the container
+          
+          // Clear the container and display the image
+          const calendarContainer = document.getElementById("calendar-container");
+          calendarContainer.innerHTML = ""; // Clear the container
+          calendarContainer.appendChild(dogImage);
+          displayedImage = dogImage;
+
+          // Remove the image after 3 seconds
+          setTimeout(() => {
+            if (displayedImage) {
+              calendarContainer.innerHTML = ""; // Clear the container
+              displayedImage = null;
+
+              // Display the calendar object
+              calendarContainer.appendChild(calendarObject);
+            }
+          }, 3000);
+        } else {
+          // Handle other keys here
+          console.log("Entered key:", key);
+        }
+
+        // Clear the input field
+        apiKeyInput.value = "";
+      }
+    </script>
+    <script type = "text/javascript" src="script.js"></script>
+  </body>
+</html>

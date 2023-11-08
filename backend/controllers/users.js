@@ -39,16 +39,16 @@ export const createUser = async (req, res) => {
   // Validate user data here
   try {
       // Insert user into the database
-      const query = "INSERT INTO users (first_name, last_name, email, salt, password_hash) VALUES (?, ?, ?, ?, ?)";
-      const values = [user.first_name, user.last_name, user.email, user.salt, user.password_hash];
+      const query = "INSERT INTO users (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
+      const values = [user.first_name, user.last_name, user.email, user.password_hash];
      
       const result = await database.query(query, values);
 
 
       if (result.affectedRows === 1) {
-          res.send(`User with email ${user.email} added`);
-      } else {
           res.status(500).send('Failed to create a user.');
+      } else {
+          res.send(`User with email ${user.email} added`);
       }
   } catch (error) {
       console.error("Error creating user:", error);
@@ -95,7 +95,7 @@ export const deleteUser = async (req, res) => {
 
 
   try {
-      const result = await database.query("DELETE FROM users WHERE id = ?", [id]);
+      const result = await database.query("DELETE FROM users WHERE user_id = ?", [id]);
 
 
       if (result.affectedRows === 0) {
@@ -114,7 +114,7 @@ export const deleteUser = async (req, res) => {
 
 // //Create a new user.
 // createUser
-INSERT INTO 
+// INSERT INTO 
 
 // //Retrieve user profile information.
 // getUserProfile

@@ -2,7 +2,7 @@ import database from '../config/database.js';
 import bcrypt from 'bcryptjs'
 //USER MANAGEMENT
 
-// //Create a new user.
+//Create a new user.
 export const createUser = async (req, res) => {
   const user = req.body; // Assuming user data is in the request body
   // Check if the user object contains the required fields
@@ -40,7 +40,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-// //Retrieve user profile information.
+//Retrieve user profile information.
 export const getUser = async(req, res) => {
   const { id } = req.params;
   try {
@@ -55,7 +55,7 @@ export const getUser = async(req, res) => {
   }
 };
 
-// //Retrieve all user data.
+//Retrieve all user data.
 export const getUsers = async (req, res) => {
   try {
     const [rows] = await database.query("SELECT * FROM users");
@@ -66,7 +66,7 @@ export const getUsers = async (req, res) => {
   }
 }
 
-// //Edit user info.
+//Edit user info.
 export const editUser = async (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, email, salt, password_hash } = req.body;
@@ -92,7 +92,7 @@ export const editUser = async (req, res) => {
   }
 }
 
-// //Delete user.
+//Delete user.
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {

@@ -1,6 +1,10 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
+
 function CreateAccountForm() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,13 +27,14 @@ function CreateAccountForm() {
       first_name: formData.firstName,
       last_name: formData.lastName,
       email: formData.email,
-      password_hash: formData.password,
+      password: formData.password,
     }
     // Perform registration actions (e.g., API call)
     axios
     .post("/users", userData)
     .then((response) => {
       console.log("Registration success:", response.data)
+      navigate.push("/login")
     })
     .catch((error) => {
       console.error("Registration error:", error)

@@ -1,17 +1,27 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom"
-import HomePage from "./pages/HomePage"
-import Calendar from './pages/Calendar'
-import CreateAccount from "./pages/CreateAccount"
-import Login from "./pages/LoginPage"
+import React, { useState, useEffect} from "react"
+import { Outlet } from "react-router-dom"
+import PortalFooter from "./components/footer/PortalFooter"
+import PortalNavbar from "./components/navbar/PortalNavbar"
 
-export default function App() {
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const checkUserToken = () => {
+      const userToken = localStorage.getItem('user-token');
+      if (!userToken || userToken === 'undefined') {
+          setIsLoggedIn(false);
+      }
+      setIsLoggedIn(true);
+  }
+  useEffect(() => {
+      checkUserToken();
+  }, [isLoggedIn]);
+
   return (
-    <Routes>
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/createaccount" element={<CreateAccount />} />
-        <Route path="/login" element={<Login />} />
-    </Routes>
-  )
+      <React.Fragment>
+          {isLoggedIn && <PortalNavbar />}
+          <Outlet />
+          {isLoggedIn && <PortalFooter />}
+      </React.Fragment>
+  );
 }
+export default App;

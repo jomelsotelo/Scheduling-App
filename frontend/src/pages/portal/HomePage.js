@@ -4,11 +4,8 @@ function HomePage() {
   return (
     <div>
       <h1>Welcome to the Scheduling App</h1>
-      <Link to="/createaccount">Create Account</Link>
-      <h1>Login</h1>
-      <Link to="/login">CLick here</Link>
       <h1>Calendar</h1>
-      <Link to="/calendar">CLick here</Link>
+      <Link to="/calendar">CLick here to start scheduling</Link>
       {/* Other content */}
     </div>
   );

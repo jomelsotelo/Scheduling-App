@@ -1,9 +1,10 @@
 import React from "react";
-import LoginForm from "../components/Login";
+import LoginForm from "../../components/Login";
 import { Link } from "react-router-dom"; // Use Link for navigation
 // import "../assets/styles/StyleSheet.css";
 
 function LoginPage() {
+
   return (
     <div className="login-page">
       <div className="form">
@@ -15,7 +16,7 @@ function LoginPage() {
         </div>
         <LoginForm />
         <p className="message">
-          Not registered? <Link to="/createaccount">Create an account</Link>
+          Not registered? <Link to="/auth/createaccount">Create an account</Link>
         </p>
       </div>
     </div>

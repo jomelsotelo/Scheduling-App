@@ -1,6 +1,6 @@
 import React from "react";
-import CreateAccountForm from "../components/CreateAccountForm";
-import "../assets/styles/StyleSheet.css"; // Import your stylesheet
+import CreateAccountForm from "../../components/CreateAccountForm";
+import "../../assets/styles/StyleSheet.css"; // Import your stylesheet
 
 function CreateAccountPage() {
   return (

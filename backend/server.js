@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import usersRoutes from './routes/users.js';
+import authRoutes from './routes/auth.js'
 // changed the types of the to mode to have newer syntax
 const app = express();
 const PORT = 5000;
@@ -8,7 +9,8 @@ const PORT = 5000;
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use('/API/users', usersRoutes);
+app.use('/users', usersRoutes);
+app.use('/auth', authRoutes)
 // app.use('/meeting',);
 // app.use('/availability',);
 // app.use('/userData', database);

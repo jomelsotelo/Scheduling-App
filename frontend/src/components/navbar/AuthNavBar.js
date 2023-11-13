@@ -6,9 +6,11 @@ const AuthNavbar = () => {
     return (
         <React.Fragment>
             <Navbar bg="dark" expand="lg" className="navbar-dark">
-                <Container>
-                    <Navbar.Brand>JoinIn</Navbar.Brand>
-                </Container>
+            <Container>
+                <Nav className = "mx-auto">
+                    <Navbar.Brand style={{ fontSize: "1.5rem" , fontWeight: "bold"}}>JoinIn</Navbar.Brand>
+                </Nav>
+            </Container>
             </Navbar>
         </React.Fragment>
     );

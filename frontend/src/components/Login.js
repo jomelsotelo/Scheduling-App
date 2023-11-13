@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ function LoginForm() {
     password: "",
   });
 
+  const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -21,9 +23,7 @@ function LoginForm() {
 
   const submitLoginForm = async (event) => {
     event.preventDefault();
-    const btnPointer = document.querySelector('#loginButton');
-    btnPointer.innerHTML = 'Please wait..';
-    btnPointer.setAttribute('disabled', true);
+    setLoading(true);
 
     try {
       const response = await axios.post("/auth/login", formData);
@@ -32,8 +32,7 @@ function LoginForm() {
 
       if (!token) {
         setErrorMessage('Invalid username or password.');
-        btnPointer.innerHTML = 'Login';
-        btnPointer.removeAttribute('disabled');
+        setLoading(false);
         return;
       }
 
@@ -43,9 +42,8 @@ function LoginForm() {
         navigate('/');
       }, 500);
     } catch (error) {
-      setErrorMessage('Oops! Some error occurred.');
-      btnPointer.innerHTML = 'Login';
-      btnPointer.removeAttribute('disabled');
+      setErrorMessage('Invalid username or password.');
+      setLoading(false);
     }
   };
 
@@ -70,9 +68,14 @@ function LoginForm() {
         value={formData.password}
         onChange={handleInputChange}
       />
-      <button type="submit" id="loginButton">
-        Login
-      </button>
+      <Button
+        variant="primary"
+        type="submit"
+        id="loginButton"
+        disabled={isLoading}
+      >
+        {isLoading ? 'Logging in...' : 'Login'}
+      </Button>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </form>
   );

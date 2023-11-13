@@ -1,6 +1,6 @@
 import React from "react";
 import CreateAccountForm from "../../components/CreateAccountForm";
-import "../../assets/styles/StyleSheet.css"; // Import your stylesheet
+import { Link } from "react-router-dom";
 
 function CreateAccountPage() {
   return (
@@ -13,6 +13,9 @@ function CreateAccountPage() {
           </div>
         </div>
         <CreateAccountForm />
+        <p className="message">
+          Already have an account? <Link to="/auth/login">Login here!</Link>
+        </p>
       </div>
     </div>
   );

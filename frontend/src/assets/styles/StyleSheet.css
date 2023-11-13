@@ -1,5 +1,6 @@
 body {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
+    background: #f0f0f0
 }
 
 #C4 {
@@ -24,15 +25,41 @@ header a img {
 }
 
 .login-page {
-    width: 360px;
+    /* width: 360px;
     padding: 8% 0 0;
-    margin: auto;
+    margin: auto; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
 
-.login-page .form .login {
+.create-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+    background-color: #f0f0f0;
+  }
+
+.home-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+.home-content {
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* .login-page .form .login {
     margin-top: -31px;
     margin-bottom: 26px;
-}
+} */
 
 .form {
     position: relative;
@@ -61,8 +88,8 @@ header a img {
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
-    background-color: #328f8a;
-    background-image: linear-gradient(45deg, #328f8a, #08ac4b);
+    background-color: #2DFFF5;
+    background-image: linear-gradient(45deg,#328f8a, #08ac4b);
     width: 100%;
     border: 0;
     padding: 15px;
@@ -92,23 +119,8 @@ header a img {
 }
 
 body {
-    background-color: #328f8a;
-    background-image: linear-gradient(45deg, #328f8a, #08ac4b);
+    background-color: #f0f0f0;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-#logOut {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-
-}
-
-#out {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
 }

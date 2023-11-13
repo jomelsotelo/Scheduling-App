@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from "react"
 import { Outlet } from "react-router-dom"
-import PortalFooter from "./components/footer/PortalFooter"
 import PortalNavbar from "./components/navbar/PortalNavbar"
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
       <React.Fragment>
           {isLoggedIn && <PortalNavbar />}
           <Outlet />
-          {isLoggedIn && <PortalFooter />}
       </React.Fragment>
   );
 }

@@ -1,10 +1,10 @@
-import express from 'express';
-import {  } from '../controllers/availability.js';
+import express from 'express'
+import { createAvailability, getAvailability, updateAvailability, deleteAvailability } from '../controllers/availability.js'
 
-//Availability Management
-router.post();
-router.get();
-router.put();
-router.delete();
+const router = express.Router()
+router.post('/:id/availability', createAvailability)
+router.get('/:id/availability', getAvailability)
+router.put('/:id/availability/:id', updateAvailability)
+router.delete('/:id/availability/:id', deleteAvailability)
 
-export default router;
+export default router

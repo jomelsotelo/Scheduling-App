@@ -1,8 +1,7 @@
-import express from 'express';
-import {  } from '../controllers/timeslots.js';
+import express from 'express'
+import { getAvailableTime } from '../controllers/timeslots.js'
 
-const router = express.Router();
-//Search for Available Timeslots
-router.get();
+const router = express.Router()
+router.get('/', getAvailableTime)
 
-export default router;
+export default router

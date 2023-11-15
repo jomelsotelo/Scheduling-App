@@ -1,49 +1,47 @@
-import database from '../config/database.js';
+import database from '../config/database.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { createUser } from './users.js'
-//USER REGISTRATION AND AUTHENTICATION
 
 //Register a new user.
 export const registerUser = async (req, res) => {
     try {
         // Assuming user registration data is in the request body
-        const userData = req.body;
+        const userData = req.body
     
         // Call the createUser function from user.js to add the user to the database
-        await createUser(userData);
+        await createUser(userData)
     
         // If createUser is successful, you can send a response to the client
-        res.status(201).send('User registered successfully');
+        res.status(201).send('User registered successfully')
       } catch (error) {
-        console.error('Error registering user:', error);
-        res.status(500).send('Server Error');
+        console.error('Error registering user:', error)
+        res.status(500).send('Server Error')
       }
-  };
+  }
 
 //Authenticate a new user.
 export const authenticateUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
   
     // Check if the user object contains the required fields
     if (!email || !password) {
-      return res.status(400).send('Email and password are required.');
+      return res.status(400).send('Email and password are required.')
     }
   
     try {
       // Assuming you have a function to fetch user data from the database
-      const user = await getUserByEmail(email);
-      // console.log('User:', );
+      const user = await getUserByEmail(email)
   
       if (!user) {
-        return res.status(401).send('Invalid email or password.');
+        return res.status(401).send('Invalid email or password.')
       }
   
       // Compare the provided password with the stored hash
-      const isValidPassword = await bcrypt.compare(password, user[0].password_hash);
+      const isValidPassword = await bcrypt.compare(password, user[0].password_hash)
 
       if (!isValidPassword) {
-        return res.status(401).send('Invalid email or password.');
+        return res.status(401).send('Invalid email or password.')
       }
   
       // If authentication is successful, generate a token
@@ -51,16 +49,16 @@ export const authenticateUser = async (req, res) => {
         expiresIn: '1h', // You can adjust the token expiration time
       });
   
-      res.json({ token });
+      res.json({ token })
     } catch (error) {
-      console.error("Error authenticating user:", error);
-      res.status(500).send('Server Error');
+      console.error("Error authenticating user:", error)
+      res.status(500).send('Server Error')
     }
   };
   
   const getUserByEmail = async (email) => {
     // Implement your database query to get user data based on email
-    const query = 'SELECT user_id, email, password_hash FROM users WHERE email = ?';
-    const [user] = await database.query(query, [email]);
-    return user;
+    const query = 'SELECT user_id, email, password_hash FROM users WHERE email = ?'
+    const [user] = await database.query(query, [email])
+    return user
   };

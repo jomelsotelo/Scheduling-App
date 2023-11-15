@@ -1,27 +1,27 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import usersRoutes from './routes/users.js';
+import express from 'express'
+import usersRoutes from './routes/users.js'
+import availabilityRoutes from './routes/availability.js'
+import meetingRoutes from './routes/meeting.js'
+import timeSlotRoute from './routes/timeslots.js'
 import authRoutes from './routes/auth.js'
-// changed the types of the to mode to have newer syntax
-const app = express();
-const PORT = 5000;
+// import extraRoutes from './routes/extra.js'
 
+const app = express()
+const PORT = 5000
 
-app.use(bodyParser.json());
-app.use(express.json());
-app.use('/users', usersRoutes);
-app.use('/auth', authRoutes)
-// app.use('/meeting',);
-// app.use('/availability',);
-// app.use('/userData', database);
-
+//Endpoints
+app.use(express.json())
+app.use('/api/users', usersRoutes)
+app.use('/api/user', availabilityRoutes)
+app.use('/api/meeting', meetingRoutes)
+app.use('/api/timeslots', timeSlotRoute)
+app.use('/api/auth', authRoutes)
+// app.use('/api/extra', extraRoutes)
 
 app.get('/hello', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello World!')
 });
 
-
-
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`)
 });

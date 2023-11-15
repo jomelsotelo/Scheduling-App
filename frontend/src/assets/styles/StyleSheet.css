@@ -132,3 +132,44 @@ body {
     color: #FFFFFF;
   }
 
+  .rbc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    overflow-x: auto; /* Add horizontal scrolling if necessary */
+    padding: 0 10px; /* Add padding for better aesthetics */
+  }
+  
+  .rbc-btn-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rbc-toolbar-label {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .rbc-btn-group button {
+    background-color: gray;
+    background-image: gray;
+    color: #fff;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    padding: 5px 5px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .rbc-btn-group button.active {
+    background-color: #0056b3;
+  }
+  
+  /* Adjust styles for Today button */
+  .rbc-btn-group .today-button {
+    background-color: #28a745;
+  }
+  
+  

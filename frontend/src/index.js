@@ -7,7 +7,6 @@ import App from "./App"
 import HomePage from "./pages/portal/HomePage"
 import Calendar from './pages/portal/Calendar'
 import CreateAccount from "./pages/authentication/CreateAccount"
-import Agenda from "./pages/portal/Agenda"
 import Login from "./pages/authentication/LoginPage"
 import Auth from "./pages/authentication/Auth"
 import ProtectedRoute from "./components/util/ProtectedRoute"
@@ -25,7 +24,6 @@ ReactDOM.render(
                 </ProtectedRoute>}>
                 <Route index element={<HomePage />} />
                 <Route path='calendar' element={<Calendar />} />
-                <Route path='agenda' element={<Agenda />} />
             </Route>
         </Routes>
     </BrowserRouter>,

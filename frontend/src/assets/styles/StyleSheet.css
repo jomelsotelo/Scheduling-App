@@ -1,3 +1,4 @@
+@import '~react-big-calendar/lib/css/react-big-calendar.css';
 body {
     /* background-color: aquamarine; */
     background: #f0f0f0
@@ -47,12 +48,12 @@ header a img {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 50vh;
     text-align: center;
   }
   
 .home-content {
-    max-width: 600px;
+    max-width: 650px;
     padding: 20px;
 }
 
@@ -124,3 +125,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.button-link {
+    background: linear-gradient(45deg,#328f8a, #08ac4b);
+    border: 0;
+    color: #FFFFFF;
+  }
+

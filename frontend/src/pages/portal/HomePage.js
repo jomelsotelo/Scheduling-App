@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button'
 
 function HomePage() {
   return (
@@ -15,15 +16,16 @@ function HomePage() {
         <h2>Key Features:</h2>
         <ul>
           <li>Easy schedule creation and customization.</li>
-          <li>Set reminders for important events and tasks.</li>
+          <li>Set reminders for important events.</li>
           <li>View your schedule at a glance with a clean and intuitive interface.</li>
-          <li>Sync your schedule across devices for seamless accessibility.</li>
         </ul>
         <p>
           Get started today and take control of your time!
         </p>
         <Link to="/calendar">
-          <button>Get Started</button>
+          <Button className="button-link" variant="primary" size="lg">
+          Get Started
+          </Button>{' '}
         </Link>
       </div>
     </div>

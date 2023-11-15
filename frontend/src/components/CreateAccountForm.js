@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 
 function CreateAccountForm() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -13,12 +13,12 @@ function CreateAccountForm() {
     lastName: "",
   });
 
-  const [isLoading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
@@ -26,21 +26,22 @@ function CreateAccountForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const userData = {
       first_name: formData.firstName,
       last_name: formData.lastName,
       email: formData.email,
       password: formData.password,
     }
-    setLoading(true);
+    setLoading(true)
+
     // Perform registration actions (e.g., API call)
     axios
-    .post("/users", userData)
+    .post("/api/users", userData)
     .then((response) => {
       console.log("Registration success:", response.data)
-      setSuccessMessage("Account created successfully!");
-      setErrorMessage(""); // Clear any previous error messages
+      setSuccessMessage("Account created successfully!")
+      setErrorMessage("") // Clears any previous error messages
       setTimeout(() => {
         setLoading(false);
         navigate("/auth/login");
@@ -48,11 +49,11 @@ function CreateAccountForm() {
     })
     .catch((error) => {
       console.error("Registration error:", error)
-      setSuccessMessage(""); // Clear any previous success messages
-      setErrorMessage("Registration failed. Please try again.");
-      setLoading(false);
+      setSuccessMessage("") // Clear any previous success messages
+      setErrorMessage("Registration failed. Please try again.")
+      setLoading(false)
     })
-  };
+  }
 
   return (
     <div>
@@ -96,7 +97,7 @@ function CreateAccountForm() {
     {successMessage && <p className="success-message" style={{color:'green'}}>{successMessage}</p>}
     {errorMessage && <p className="error-message" style={{color:'red'}}>{errorMessage}</p>}
     </div>
-  );
+  )
 }
 
-export default CreateAccountForm;
+export default CreateAccountForm

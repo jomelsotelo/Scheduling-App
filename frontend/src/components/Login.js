@@ -26,7 +26,7 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/auth/login", formData);
+      const response = await axios.post("/api/auth/login", formData);
       const data = response.data;
       const token = data.token;
 
@@ -56,14 +56,14 @@ function LoginForm() {
     <form id="loginForm" onSubmit={submitLoginForm}>
       <input
         type="text"
-        placeholder="email"
+        placeholder="Email"
         id="email"
         value={formData.email}
         onChange={handleInputChange}
       />
       <input
         type="password"
-        placeholder="password"
+        placeholder="Password"
         id="password"
         value={formData.password}
         onChange={handleInputChange}

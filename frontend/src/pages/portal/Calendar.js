@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import dayjs from 'dayjs'
+import axios from 'axios'
+
 
 const localizer = dayjsLocalizer(dayjs)
 
@@ -38,7 +40,7 @@ const MyCalendar = (props) => {
       setSelectedSlot(null); // Clear the selected slot
     }
   };
-  
+
   const handleCancelSelection = () => {
     setSelectedSlot(null); // Clear the selected slot
   };
@@ -46,6 +48,19 @@ const MyCalendar = (props) => {
   const handleRemoveAvailability = (event) => {
     const updatedEventsList = myEventsList.filter((e) => e !== event);
     setMyEventsList(updatedEventsList);
+  };
+
+  //Get from timeslots from botton
+  const getTimeslots = () => {
+
+    axios.get("/api/timeslots/")
+      .then(response => {
+        console.log('Response: ', response);
+      })
+      .catch(error => {
+        console.error('Error', error);
+      });
+    //console.log(getSlots);
   };
 
 
@@ -59,6 +74,7 @@ const MyCalendar = (props) => {
         selectable
         onSelectSlot={handleSelectSlot}
         style={{ height: 500 }}
+        step={5}
       />
       {selectedSlot && (
         <div>
@@ -71,9 +87,14 @@ const MyCalendar = (props) => {
       )}
 
       <div>
+        <p></p>
+        <button onClick={getTimeslots}>Connect to Timeslots</button>
+
+        <legend>Directions</legend>
         <p>Drag your cursor to select your available time.</p>
         <p>Select Week or Day to pick a specific time.</p>
       </div>
+
       <div>
         <p>Selected Availabilities:</p>
         {myEventsList.map((event, index) => (

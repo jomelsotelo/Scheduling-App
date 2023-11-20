@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode'
 const PortalNavbar = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true)
     
     useEffect(() => {
         const fetchUserData = async () => {
@@ -18,10 +18,8 @@ const PortalNavbar = () => {
             const token = localStorage.getItem('user-token')
     
             if (token) {
-              const decodedToken = jwtDecode(token);
-              console.log("Decoded Token:", decodedToken);
-              const userId = decodedToken.userId;
-              console.log("User ID:", userId);
+              const decodedToken = jwtDecode(token)
+              const userId = decodedToken.userId
               // Send a request to the server to get user data
               const response = await axios.get(`/api/users/${userId}`, {
                 headers: {
@@ -36,7 +34,7 @@ const PortalNavbar = () => {
               setIsLoading(false)
             }
           } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error('Error fetching user data:', error)
             // Handle error
           }
         }

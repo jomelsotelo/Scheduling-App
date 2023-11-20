@@ -27,7 +27,7 @@ ReactDOM.render(
                 </ProtectedRoute>}>
                 <Route index element={<HomePage />} />
                 <Route path='calendar' element={<Calendar />} />
-                <Route path = 'account' element={<Account/>}></Route>
+                <Route path ='account' element={<Account />}/>
             </Route>
         </Routes>
     </BrowserRouter>,

@@ -36,7 +36,6 @@ export const authenticateUser = async (req, res) => {
       if (!user) {
         return res.status(401).send('Invalid email or password.')
       }
-  
       // Compare the provided password with the stored hash
       const isValidPassword = await bcrypt.compare(password, user[0].password_hash)
 
@@ -45,10 +44,10 @@ export const authenticateUser = async (req, res) => {
       }
   
       // If authentication is successful, generate a token
-      const token = jwt.sign({ userId: user.user_id, email: user.email }, 'your-secret-key', {
+      const token = jwt.sign({ userId: user[0].user_id, email: user[0].email}, 'your-secret-key', {
         expiresIn: '1h', // You can adjust the token expiration time
       });
-  
+      
       res.json({ token })
     } catch (error) {
       console.error("Error authenticating user:", error)
@@ -57,7 +56,6 @@ export const authenticateUser = async (req, res) => {
   };
   
   const getUserByEmail = async (email) => {
-    // Implement your database query to get user data based on email
     const query = 'SELECT user_id, email, password_hash FROM users WHERE email = ?'
     const [user] = await database.query(query, [email])
     return user

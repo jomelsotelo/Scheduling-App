@@ -3,13 +3,13 @@ import { Button, Nav } from "react-bootstrap"
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import { useNavigate } from "react-router-dom"
-import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
 const PortalNavbar = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState(null)
-    const { id } = useParams()
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
         const fetchUserData = async () => {
@@ -18,8 +18,12 @@ const PortalNavbar = () => {
             const token = localStorage.getItem('user-token')
     
             if (token) {
+              const decodedToken = jwtDecode(token);
+              console.log("Decoded Token:", decodedToken);
+              const userId = decodedToken.userId;
+              console.log("User ID:", userId);
               // Send a request to the server to get user data
-              const response = await axios.get('/api/users/${id}', {
+              const response = await axios.get(`/api/users/${userId}`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -27,9 +31,9 @@ const PortalNavbar = () => {
     
               // Assuming the server responds with user data
               const userData = response.data;
-    
               // Update the state to store the user data
               setUser(userData)
+              setIsLoading(false)
             }
           } catch (error) {
             console.error('Error fetching user data:', error);
@@ -39,7 +43,7 @@ const PortalNavbar = () => {
     
         // Call the function to fetch user data when the component mounts
         fetchUserData()
-      }, [id])
+      }, [])
 
     const logout = () => {
         localStorage.clear()
@@ -66,7 +70,8 @@ const PortalNavbar = () => {
                 </Nav>
                 <Container />
                 <Navbar.Text>
-                    Signed in as: {user?.first_name || 'Guest'}
+                  {isLoading && <span style={{ color: '#ccc' }}>Loading...</span>}
+                  {!isLoading && <span>Signed in as: {user?.first_name || 'Guest'}</span>}
                 </Navbar.Text>
                 <Nav className="ml-auto">
                     <Nav.Link>

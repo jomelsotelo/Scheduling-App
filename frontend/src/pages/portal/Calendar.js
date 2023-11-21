@@ -1,55 +1,200 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar'
 import dayjs from 'dayjs'
 import axios from 'axios'
-
+import { createAvailability } from '../../components/availability'
+import { jwtDecode } from 'jwt-decode'
 
 const localizer = dayjsLocalizer(dayjs)
 
 const MyCalendar = (props) => {
   const [myEventsList, setMyEventsList] = useState([])
   const [selectedSlot, setSelectedSlot] = useState(null)
+  const [user, setUser] = useState(null)
+  const [setAvailabilityMap] = useState({})
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // Gets the token from local storage
+        const token = localStorage.getItem('user-token')
+
+        if (token) {
+          const axiosInstance = axios.create({
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken.userId;
+
+          // Send a request to the server to get user data
+          const userDataResponse = await axiosInstance.get(`/api/users/${userId}`);
+          
+          // Sends a request to get user availabilities
+          const availabilitiesResponse = await axiosInstance.get(`/api/user/${userId}/availability`);
+
+          const userData = userDataResponse.data;
+          const availabilitiesData = availabilitiesResponse.data
+          
+          // Updates the state to store the user data
+          setUser(userData)
+
+           // Map availabilities to the format expected by the calendar
+          const mappedAvailabilities = availabilitiesData.map((availability) => ({
+            title: 'Available',
+            start: new Date(availability.start_time),
+            end: new Date(availability.end_time),
+            availability_id: availability.availability_id,
+          }));
+
+          const newAvailabilityMap = {}
+          mappedAvailabilities.forEach((availability, index) => {
+            newAvailabilityMap[availability.availability_id] = index
+          })
+          setAvailabilityMap(newAvailabilityMap)
+
+          // Updates the state to store the mapped availabilities
+          setMyEventsList(mappedAvailabilities);
+          }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle error
+      }
+    }
+
+    // Call the function to fetch user data when the component mounts
+    fetchUserData()
+  }, [])
 
   // Function to handle adding availability
   const handleSelectSlot = (slotInfo) => {
     const { start, end, action } = slotInfo;
 
-    // Check the current view to determine how to handle the selection
+    // Checks the current view to determine how to handle the selection
     if (action === 'select') {
       if (props.view === 'month') {
-        // In month view, select the whole day
+        // In month view, selects the whole day
         setSelectedSlot({ start: dayjs(start).startOf('day'), end: dayjs(end).endOf('day') });
       } else {
-        // In day/week view, select the specific time
+        // In day/week view, selects the specific time
         setSelectedSlot({ start, end });
       }
     } else if (action === 'click') {
-      // Handle click events if needed
+      // Handles click events if needed
     }
   };
 
-  const handleConfirmSelection = () => {
+  const handleConfirmSelection = (token) => {
     if (selectedSlot) {
+      const formatToMySQLTimestamp = (dateTime) => dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      console.log("Start: ",selectedSlot.start)
+      console.log("End: ",selectedSlot.end)
       const newEvent = {
         title: 'Available',
-        start: selectedSlot.start,
-        end: selectedSlot.end,
+        start: formatToMySQLTimestamp(selectedSlot.start),
+        end: formatToMySQLTimestamp(selectedSlot.end),
       };
+      const user_id = user?.user_id;
 
-      setMyEventsList([...myEventsList, newEvent]);
-      setSelectedSlot(null); // Clear the selected slot
+      // Calls the createAvailability function from availability.js
+      createAvailability(
+        user_id,
+        newEvent.start,
+        newEvent.end
+      )
+        .then((data) => {
+          // Handles success
+          console.log('Availability created successfully:', data);
+
+          // Fetches the updated user availabilities after creation
+          return axios.get(`/api/user/${user_id}/availability`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        })
+        .then((availabilitiesResponse) => {
+          const availabilitiesData = availabilitiesResponse.data;
+
+          // Map availabilities to the format expected by the calendar
+          const mappedAvailabilities = availabilitiesData.map((availability) => ({
+            title: 'Available',
+            start: new Date(availability.start_time),
+            end: new Date(availability.end_time),
+            availability_id: availability.availability_id,
+          }));
+
+          // Update the state to store the mapped availabilities and availability map
+          const newAvailabilityMap = {};
+          mappedAvailabilities.forEach((availability, index) => {
+            newAvailabilityMap[availability.availability_id] = index;
+          });
+
+          setMyEventsList(mappedAvailabilities);
+          setAvailabilityMap(newAvailabilityMap);
+          setSelectedSlot(null); // Clears the selected slot
+        })
+        .catch((error) => {
+          // Handles error
+          console.error('Error creating availability:', error);
+        });
     }
   };
 
   const handleCancelSelection = () => {
-    setSelectedSlot(null); // Clear the selected slot
+    setSelectedSlot(null); // Clears the selected slot
   };
 
   const handleRemoveAvailability = (event) => {
-    const updatedEventsList = myEventsList.filter((e) => e !== event);
-    setMyEventsList(updatedEventsList);
+    const availabilityId = event.availability_id;
+    const user_id = user?.user_id
+
+    axios.delete(`/api/user/${user_id}/availability/${availabilityId}`)
+    .then((response) => {
+      console.log(response.data.message)
+
+      //Updates the events list
+      const updatedEventsList = myEventsList.filter((e) => e.availability_id !== event.availability_id)
+      setMyEventsList(updatedEventsList)
+    })
+    .catch((error) => {
+      console.error('Error removing availability:', error)
+    })
   };
 
+   //Function to fetch all users for button
+   let showUsers = () => {
+    axios.get("api/users")
+      .then(response => {
+        //const { firstName, lastName, email } = response.data;
+        console.log("All Users: ", response.data);
+        var list = response.data;
+
+        list.forEach(function (arrayItem) {
+          //let id = arrayItem.user_id;
+          let firstName = arrayItem.first_name;
+          let lastName = arrayItem.last_name;
+          let email = arrayItem.email;
+          console.log("First Name: " + firstName + " \nLast Name: " + lastName + " \nEmail: " + email);
+        });
+      })
+      .catch(error => {
+        console.error('Error', error);
+      });
+
+  }
+  //Show first name, last name, email
+  //https://react-select.com/home
+
+  //https://mui.com/material-ui/react-table/
+  //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
+  //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
+  let displayUsers = () => {
+    Document.getElementById();
+  }
+  
   //Get from timeslots from botton
   const getTimeslots = () => {
 

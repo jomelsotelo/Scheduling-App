@@ -1,14 +1,15 @@
 @import '~react-big-calendar/lib/css/react-big-calendar.css';
+
 body {
-    /* background-color: aquamarine; */
-    background: #f0f0f0
+  /* background-color: aquamarine; */
+  background: #f0f0f0
 }
 
 #C4 {
-    width: 1000px;
-    height: 900px;
+  width: 1000px;
+  height: 900px;
 
-    background-position: center;
+  background-position: center;
 }
 
 /* Style for login page*/
@@ -16,45 +17,45 @@ body {
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 header .header {
-    background-color: #fff;
-    height: 45px;
+  background-color: #fff;
+  height: 45px;
 }
 
 header a img {
-    width: 134px;
-    margin-top: 4px;
+  width: 134px;
+  margin-top: 4px;
 }
 
 .login-page {
-    /* width: 360px;
+  /* width: 360px;
     padding: 8% 0 0;
     margin: auto; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .create-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-    background-color: #f0f0f0;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
 
 .home-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    text-align: center;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+}
+
 .home-content {
-    max-width: 650px;
-    padding: 20px;
+  max-width: 650px;
+  padding: 20px;
 }
 
 /* .login-page .form .login {
@@ -63,113 +64,134 @@ header a img {
 } */
 
 .form {
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 0 auto 100px;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 .form input {
-    font-family: "Roboto", sans-serif;
-    outline: 0;
-    background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 .form button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background-color: #2DFFF5;
-    background-image: linear-gradient(45deg,#328f8a, #08ac4b);
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: #2DFFF5;
+  background-image: linear-gradient(45deg, #328f8a, #08ac4b);
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
 }
 
 .form .message {
-    margin: 15px 0 0;
-    color: #b3b3b3;
-    font-size: 12px;
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
 }
 
 .form .message a {
-    color: #4CAF50;
-    text-decoration: none;
+  color: #4CAF50;
+  text-decoration: none;
 }
 
 .container {
-    position: relative;
-    z-index: 1;
-    max-width: 300px;
-    margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 body {
-    background-color: #f0f0f0;
-    font-family: "Roboto", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f0f0;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .button-link {
-    background: linear-gradient(45deg,#328f8a, #08ac4b);
-    border: 0;
-    color: #FFFFFF;
-  }
+  background: linear-gradient(45deg, #328f8a, #08ac4b);
+  border: 0;
+  color: #FFFFFF;
+}
 
-  .rbc-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    overflow-x: auto; /* Add horizontal scrolling if necessary */
-    padding: 0 10px; /* Add padding for better aesthetics */
-  }
-  
-  .rbc-btn-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  .rbc-toolbar-label {
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .rbc-btn-group button {
-    background-color: gray;
-    background-image: gray;
-    color: #fff;
-    border: none;
-    width: 100%;
-    border-radius: 3px;
-    padding: 5px 5px;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .rbc-btn-group button.active {
-    background-color: #0056b3;
-  }
-  
-  /* Adjust styles for Today button */
-  .rbc-btn-group .today-button {
-    background-color: #28a745;
-  }
-  
-  
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
+  /* Add horizontal scrolling if necessary */
+  padding: 0 10px;
+  /* Add padding for better aesthetics */
+}
+
+.rbc-btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.rbc-toolbar-label {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.rbc-btn-group button {
+  background-color: gray;
+  background-image: gray;
+  color: #fff;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  padding: 5px 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.rbc-btn-group button.active {
+  background-color: #0056b3;
+}
+
+/* Adjust styles for Today button */
+.rbc-btn-group .today-button {
+  background-color: #28a745;
+}
+
+
+/*Show users button*/
+#showUsers {
+  float: left;
+  border-radius: 12px;
+  /*top, right, bottom, left*/
+  margin: 1px 8px 5px 8px;
+}
+
+/*Show timeslots button*/
+#showTimeslots {
+  float: right;
+  border-radius: 12px;
+  margin: 1px 8px 5px 8px;
+}
+
+#showTimeSlot:hover {
+  background-color: #e7e7e7;
+  color: white;
+}

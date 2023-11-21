@@ -50,8 +50,38 @@ const MyCalendar = (props) => {
     setMyEventsList(updatedEventsList);
   };
 
+  //Function to fetch all users for button
+  let showUsers = () => {
+    axios.get("api/users")
+      .then(response => {
+        //const { firstName, lastName, email } = response.data;
+        console.log("All Users: ", response.data);
+        var list = response.data;
+
+        list.forEach(function (arrayItem) {
+          //let id = arrayItem.user_id;
+          let firstName = arrayItem.first_name;
+          let lastName = arrayItem.last_name;
+          let email = arrayItem.email;
+          console.log("First Name: " + firstName + " \nLast Name: " + lastName + " \nEmail: " + email);
+        });
+      })
+      .catch(error => {
+        console.error('Error', error);
+      });
+
+  }
+  //Show first name, last name, email
+  //https://react-select.com/home
+
+  //https://mui.com/material-ui/react-table/
+  //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
+  //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
+  let displayUsers = () => {
+    Document.getElementById();
+  }
   //Get from timeslots from botton
-  const getTimeslots = () => {
+  let showTimeslots = () => {
 
     axios.get("/api/timeslots/")
       .then(response => {
@@ -88,7 +118,8 @@ const MyCalendar = (props) => {
 
       <div>
         <p></p>
-        <button onClick={getTimeslots}>Connect to Timeslots</button>
+        <button id="showUsers" onClick={showUsers}>Show All Users</button>
+        <button id="showTimeslots" onClick={showTimeslots}>Connect to Timeslots</button>
 
         <legend>Directions</legend>
         <p>Drag your cursor to select your available time.</p>

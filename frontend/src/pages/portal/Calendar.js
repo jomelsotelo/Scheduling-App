@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import { createAvailability } from '../../components/availability'
 import { jwtDecode } from 'jwt-decode'
+import EnhancedTable from '../../components/UserTable'
 
 const localizer = dayjsLocalizer(dayjs)
 
@@ -25,7 +26,7 @@ const MyCalendar = (props) => {
               Authorization: `Bearer ${token}`,
             },
           });
-       
+
           const decodedToken = jwtDecode(token)
           const userId = decodedToken.userId;
 
@@ -37,11 +38,11 @@ const MyCalendar = (props) => {
 
           const userData = userDataResponse.data;
           const availabilitiesData = availabilitiesResponse.data
-         
+
           // Updates the state to store the user data
           setUser(userData)
 
-           // Map availabilities to the format expected by the calendar
+          // Map availabilities to the format expected by the calendar
           const mappedAvailabilities = availabilitiesData.map((availability) => ({
             title: 'Available',
             start: new Date(availability.start_time),
@@ -56,7 +57,7 @@ const MyCalendar = (props) => {
 
           // Updates the state to store the mapped availabilities
           setMyEventsList(mappedAvailabilities)
-          }
+        }
       } catch (error) {
         console.error('Error fetching user data:', error)
         // Handle error
@@ -143,49 +144,49 @@ const MyCalendar = (props) => {
     const user_id = user?.user_id
 
     axios.delete(`/api/user/${user_id}/availability/${availabilityId}`)
-    .then((response) => {
-      console.log(response.data.message)
+      .then((response) => {
+        console.log(response.data.message)
 
 
-      //Updates the events list
-      const updatedEventsList = myEventsList.filter((e) => e.availability_id !== event.availability_id)
-      setMyEventsList(updatedEventsList)
-    })
-    .catch((error) => {
-      console.error('Error removing availability:', error)
-    })
+        //Updates the events list
+        const updatedEventsList = myEventsList.filter((e) => e.availability_id !== event.availability_id)
+        setMyEventsList(updatedEventsList)
+      })
+      .catch((error) => {
+        console.error('Error removing availability:', error)
+      })
   };
 
-    //Function to fetch all users for button
-    let showUsers = () => {
-      axios.get("api/users")
-        .then(response => {
-          //const { firstName, lastName, email } = response.data;
-          console.log("All Users: ", response.data)
-          var list = response.data;
-  
-          list.forEach(function (arrayItem) {
-            //let id = arrayItem.user_id;
-            let firstName = arrayItem.first_name
-            let lastName = arrayItem.last_name
-            let email = arrayItem.email
-            console.log("First Name: " + firstName + " \nLast Name: " + lastName + " \nEmail: " + email)
-          });
-        })
-        .catch(error => {
-          console.error('Error', error)
+  //Function to fetch all users for button
+  let showUsers = () => {
+    axios.get("api/users")
+      .then(response => {
+        //const { firstName, lastName, email } = response.data;
+        console.log("All Users: ", response.data)
+        var list = response.data;
+
+        list.forEach(function (arrayItem) {
+          //let id = arrayItem.user_id;
+          let firstName = arrayItem.first_name
+          let lastName = arrayItem.last_name
+          let email = arrayItem.email
+          console.log("First Name: " + firstName + " \nLast Name: " + lastName + " \nEmail: " + email)
         });
-  
-    }
-    //Show first name, last name, email
-    //https://react-select.com/home
-  
-    //https://mui.com/material-ui/react-table/
-    //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
-    //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
-    let displayUsers = () => {
-      Document.getElementById()
-    }
+      })
+      .catch(error => {
+        console.error('Error', error)
+      });
+
+  }
+  //Show first name, last name, email
+  //https://react-select.com/home
+
+  //https://mui.com/material-ui/react-table/
+  //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
+  //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
+  let displayUsers = () => {
+    Document.getElementById()
+  }
 
   //Get from timeslots from botton
   let showTimeslots = () => {
@@ -224,8 +225,9 @@ const MyCalendar = (props) => {
 
       <div>
         <p></p>
-        <button id="showUsers" onClick={showUsers}>Show All Users</button>
-        <button id="showTimeslots" onClick={showTimeslots}>Connect to Timeslots</button>
+        <EnhancedTable />
+        <button class="showUsers" id="showUsers" onClick={showUsers}>Show All Participants</button>
+        <button class="showTimeslots" id="showTimeslots" onClick={showTimeslots}>Connect to Timeslots</button>
         <legend>Directions</legend>
         <p>Drag your cursor to select your available time.</p>
         <p>Select Week or Day to pick a specific time.</p>

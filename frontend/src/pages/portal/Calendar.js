@@ -4,14 +4,44 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import { createAvailability } from '../../components/availability'
 import { jwtDecode } from 'jwt-decode'
-import EnhancedTable from '../../components/UserTable'
+import CreateMeetingForm from '../../components/CreateMeetingForm'
 
 const localizer = dayjsLocalizer(dayjs)
 
 const MyCalendar = (props) => {
-  const [myEventsList, setMyEventsList] = useState([])
-  const [selectedSlot, setSelectedSlot] = useState(null)
-  const [user, setUser] = useState(null)
+  const [myEventsList, setMyEventsList] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isCreateMeetingFormVisible, setCreateMeetingFormVisible] = useState(false);
+  const [userOptions, setUserOptions] = useState([]);
+  const [availableTimeslots, setAvailableTimeslots] = useState([]);
+
+  useEffect(() => {
+    const loadUserOptions = async () => {
+      const options = await fetchUsers();
+      setUserOptions(options);
+    };
+
+    loadUserOptions();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('/api/users');
+      const users = response.data;
+ 
+      // Format the users as options for react-select
+      const userOptions = users.map((user) => ({
+        value: user.user_id,
+        label: `${user.first_name} ${user.last_name} - ${user.email}`,
+      }));
+ 
+      return userOptions;
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      return [];
+    }
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -69,20 +99,11 @@ const MyCalendar = (props) => {
 
   // Function to handle adding availability
   const handleSelectSlot = (slotInfo) => {
-    const { start, end, action } = slotInfo
-    // Checks the current view to determine how to handle the selection
+    const { start, end, action } = slotInfo;
     if (action === 'select') {
-      if (props.view === 'month') {
-        // In month view, selects the whole day
-        setSelectedSlot({ start: dayjs(start).startOf('day'), end: dayjs(end).endOf('day') })
-      } else {
-        // In day/week view, selects the specific time
-        setSelectedSlot({ start, end })
-      }
-    } else if (action === 'click') {
-      // Handles click events if needed
+      setSelectedSlot({ start, end });
     }
-  }
+  };
 
   const handleConfirmSelection = (token) => {
     if (selectedSlot) {
@@ -184,22 +205,49 @@ const MyCalendar = (props) => {
   //https://mui.com/material-ui/react-table/
   //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
   //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
-  let displayUsers = () => {
-    Document.getElementById()
-  }
 
   //Get from timeslots from botton
-  let showTimeslots = () => {
 
-    axios.get("/api/timeslots/")
-      .then(response => {
-        console.log('Response: ', response)
-      })
-      .catch(error => {
-        console.error('Error', error)
-      });
-    //console.log(getSlots);
+
+  const toggleCreateMeetingForm = () => {
+    setCreateMeetingFormVisible(!isCreateMeetingFormVisible);
   };
+
+  const handleCreateMeeting = async (meetingData) => {
+    if (meetingData.title && meetingData.participants.length > 0) {
+      try {
+        const user_id = user?.user_id;
+
+
+        // Prepare data for API request
+        const requestData = {
+          users: meetingData.participants.map((participant) => ({ id: participant.value })),
+          duration: meetingData.duration,
+          date: dayjs(meetingData.date).format('YYYY-MM-DD HH:mm:ss'),
+        };
+
+
+        // Call your API endpoint to get available timeslots
+        const response = await axios.get('/api/timeslots', { params: requestData });
+        const availableTimeslots = response.data;
+
+
+        if (availableTimeslots.length > 0) {
+          // Update the calendar with the new available timeslots
+          setAvailableTimeslots(availableTimeslots);
+        } else {
+          console.error('No available timeslots found');
+        }
+      } catch (error) {
+        console.error('Error updating calendar:', error);
+      }
+    } else {
+      // Handle case where meeting details are incomplete or participants are not selected
+      console.error('Incomplete meeting details or no participants selected');
+    }
+    setCreateMeetingFormVisible(false);
+  };
+
 
   return (
     <div>
@@ -222,12 +270,20 @@ const MyCalendar = (props) => {
           <button onClick={handleCancelSelection}>Cancel</button>
         </div>
       )}
-
       <div>
-        <p></p>
-        <EnhancedTable />
-        <button class="showUsers" id="showUsers" onClick={showUsers}>Show All Participants</button>
-        <button class="showTimeslots" id="showTimeslots" onClick={showTimeslots}>Connect to Timeslots</button>
+        <button onClick={toggleCreateMeetingForm}>Create Meeting</button>
+
+
+        {/* Create Meeting Form */}
+        {isCreateMeetingFormVisible && (
+          <CreateMeetingForm
+            onSubmit={handleCreateMeeting}
+            onCancel={toggleCreateMeetingForm}
+            userOptions={userOptions}
+          />
+        )}
+      </div>
+      <div>
         <legend>Directions</legend>
         <p>Drag your cursor to select your available time.</p>
         <p>Select Week or Day to pick a specific time.</p>

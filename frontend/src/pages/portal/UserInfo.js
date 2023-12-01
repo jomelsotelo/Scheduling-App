@@ -3,10 +3,13 @@ import React from "react";
 const UserInfo = ({ user }) => {
     return (
         <div>
-            <h2>User Information</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2>User Information</h2>
+                <button onClick={() => { /* CODE HERE */ }}>Edit Info</button>
+            </div>
             <p>Name: {user ? `${user.first_name} ${user.last_name}` : 'Guest'}</p>
             <p>Email: {user ? user.email : 'N/A'}</p>
-            {/* Add more user information as needed */}
+            {/* MORE INFO HERE */}
         </div>
     );
 };

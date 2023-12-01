@@ -11,6 +11,7 @@ import CreateAccount from "./pages/authentication/CreateAccount"
 import Login from "./pages/authentication/LoginPage"
 import Auth from "./pages/authentication/Auth"
 import ProtectedRoute from "./components/util/ProtectedRoute"
+import UserInfo from "./pages/portal/UserInfo"
 
 
 
@@ -28,6 +29,7 @@ ReactDOM.render(
                 <Route index element={<HomePage />} />
                 <Route path='calendar' element={<Calendar />} />
                 <Route path ='account' element={<Account />}/>
+                <Route path ='user' element={<UserInfo />}/>
             </Route>
         </Routes>
     </BrowserRouter>,

@@ -56,6 +56,9 @@ const PortalNavbar = () => {
     const navigateToAccount = () => {
       navigate ('/account')
     }
+    const navigateToUser = () => {
+      navigate ('/user')
+    }
 
     return (
         <React.Fragment>
@@ -65,6 +68,7 @@ const PortalNavbar = () => {
                 <Nav.Link onClick={navigateToHome} style={{ fontSize: '1rem', margin: '5px 10px' }}>Home</Nav.Link>
                 <Nav.Link onClick={navigateToCalendar} style={{ fontSize: '1rem', margin: '5px 5px' }}>Calendar</Nav.Link>
                 <Nav.Link onClick={navigateToAccount} style={{ fontSize: '1rem', margin: '5px 5px' }}>Account</Nav.Link>
+                <Nav.Link onClick={navigateToUser} style={{ fontSize: '1rem', margin: '5px 5px' }}>User</Nav.Link>
                 </Nav>
                 <Container />
                 <Navbar.Text>

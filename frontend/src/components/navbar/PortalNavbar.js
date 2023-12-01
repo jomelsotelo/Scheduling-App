@@ -67,7 +67,6 @@ const PortalNavbar = () => {
                 <Navbar.Brand style={{ fontSize: "1.5rem" , fontWeight: "bold", margin: '0px 10px'}}>JoinIn</Navbar.Brand>
                 <Nav.Link onClick={navigateToHome} style={{ fontSize: '1rem', margin: '5px 10px' }}>Home</Nav.Link>
                 <Nav.Link onClick={navigateToCalendar} style={{ fontSize: '1rem', margin: '5px 5px' }}>Calendar</Nav.Link>
-                <Nav.Link onClick={navigateToAccount} style={{ fontSize: '1rem', margin: '5px 5px' }}>Account</Nav.Link>
                 <Nav.Link onClick={navigateToUser} style={{ fontSize: '1rem', margin: '5px 5px' }}>User</Nav.Link>
                 </Nav>
                 <Container />

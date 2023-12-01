@@ -9,9 +9,7 @@ function EditAccount() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [isLoading, setLoading] = useState(false)
@@ -37,7 +35,6 @@ function EditAccount() {
     const userData = {
       first_name: formData.firstName,
       last_name: formData.lastName,
-      email: formData.email,
       password: formData.password,
     }
     setLoading(true)
@@ -81,23 +78,9 @@ function EditAccount() {
         onChange={handleInputChange}
       />
       <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-      />
-      <input
         type="password"
         placeholder="Password"
         name="password"
-        value={formData.password}
-        onChange={handleInputChange}
-      />
-     <input
-        type="password"
-        placeholder="Confirm Password"
-        name="confirmPassword"
         value={formData.password}
         onChange={handleInputChange}
       />

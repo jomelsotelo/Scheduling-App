@@ -10,7 +10,7 @@ function Account(){
             <div className="account">
               <div className="account-header">
                 <h3>Account Information</h3>
-                <p>Here is all of your current information!</p>
+                <p>Here is all the information you can edit!</p>
               </div>
             </div>
             <EditAccount />

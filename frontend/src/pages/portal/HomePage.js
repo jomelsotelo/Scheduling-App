@@ -24,10 +24,11 @@ function HomePage() {
         </p>
         <Link to="/calendar">
           <Button className="button-link" variant="primary" size="lg">
-          Get Started
+            Get Started!
           </Button>{' '}
         </Link>
       </div>
+      <div className="home-content2"></div>
     </div>
   );
 }

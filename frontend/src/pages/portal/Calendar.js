@@ -29,13 +29,13 @@ const MyCalendar = (props) => {
     try {
       const response = await axios.get('/api/users');
       const users = response.data;
- 
+
       // Format the users as options for react-select
       const userOptions = users.map((user) => ({
         value: user.user_id,
         label: `${user.first_name} ${user.last_name} - ${user.email}`,
       }));
- 
+
       return userOptions;
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -178,7 +178,7 @@ const MyCalendar = (props) => {
       })
   };
 
-  //Function to fetch all users for button
+  //Function to fetch all users for button in console
   let showUsers = () => {
     axios.get("api/users")
       .then(response => {
@@ -199,12 +199,6 @@ const MyCalendar = (props) => {
       });
 
   }
-  //Show first name, last name, email
-  //https://react-select.com/home
-
-  //https://mui.com/material-ui/react-table/
-  //https://stackoverflow.com/questions/69222920/module-not-found-cant-resolve-mui-x-data-grid-in-c-users-syndicate-docume
-  //https://stackoverflow.com/questions/67965481/how-to-assign-data-to-a-variable-from-axios-get-response
 
   //Get from timeslots from botton
 

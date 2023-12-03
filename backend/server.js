@@ -4,7 +4,7 @@ import availabilityRoutes from './routes/availability.js'
 import meetingRoutes from './routes/meeting.js'
 import timeSlotRoute from './routes/timeslots.js'
 import authRoutes from './routes/auth.js'
-// import extraRoutes from './routes/extra.js'
+ import extraRoutes from './routes/extra.js'
 
 const app = express()
 const PORT = 5000
@@ -16,7 +16,7 @@ app.use('/api/user', availabilityRoutes)
 app.use('/api/meeting', meetingRoutes)
 app.use('/api/timeslots', timeSlotRoute)
 app.use('/api/auth', authRoutes)
-// app.use('/api/extra', extraRoutes)
+app.use('/api', extraRoutes)
 
 app.get('/hello', (req, res) => {
     res.send('Hello World!')

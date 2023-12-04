@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
 
 const CreateMeetingForm = ({
   onSubmit,
@@ -26,11 +27,10 @@ const CreateMeetingForm = ({
         })),
         // Remove duration and date from the request
       };
-
+      console.log(requestData)
       // Call your API endpoint to get available timeslots
       const response = await axios.post("/api/timeslots", requestData);
       const availableTimeslots = response.data;
-
       // Call the callback to update the parent component's state (calendar events)
       onParticipantsChange(selectedParticipants, availableTimeslots);
     } catch (error) {
@@ -79,8 +79,8 @@ const CreateMeetingForm = ({
         </div>
       )}
 
-      <button onClick={handleCreateMeeting}>Confirm Meeting</button>
-      <button onClick={onCancel}>Cancel</button>
+      <Button class="Calendar" variant="primary" onClick={handleCreateMeeting}>Confirm Meeting</Button>
+      <Button class="Calendar" variant="primary" onClick={onCancel}>Cancel</Button>
     </div>
   );
 };

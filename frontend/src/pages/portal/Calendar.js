@@ -5,10 +5,17 @@ import axios from "axios";
 import { createAvailability } from "../../components/availability";
 import { jwtDecode } from "jwt-decode";
 import CreateMeetingForm from "../../components/CreateMeetingForm";
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const localizer = dayjsLocalizer(dayjs);
 
 const MyCalendar = (props) => {
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [myEventsList, setMyEventsList] = useState([]);
   const [user, setUser] = useState(null);
   const [userOptions, setUserOptions] = useState([]);
@@ -335,17 +342,18 @@ const MyCalendar = (props) => {
           <p>Selected Availability Slot:</p>
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
-          <button
+          <Button  variant="primary"
             onClick={() => handleConfirmSelection(selectedAvailabilitySlot)}
           >
             Confirm
-          </button>
+          </Button>
           <button onClick={handleCancelSelection}>Cancel</button>
         </div>
       )}
 
       <div>
-        <button onClick={toggleCreateMeetingForm}>Create Meeting</button>
+      <Button variant="primary" onClick={toggleCreateMeetingForm}>Create Meeting
+      </Button>
 
         {/* Create Meeting Form */}
         {isCreateMeetingFormVisible && (
@@ -358,20 +366,30 @@ const MyCalendar = (props) => {
           />
         )}
       </div>
-      <div>
-        <legend>Directions</legend>
-        <p>Drag your cursor to select your available time.</p>
-        <p>Select Week or Day to pick a specific time.</p>
-      </div>
+      <Button variant="primary" onClick={handleShow}>
+      Need Help?
+      </Button>
+
+      <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Directions</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+        Drag your cursor to select your available time.
+        </Offcanvas.Body>
+        <Offcanvas.Body>
+        Select Week or Day to pick a specific time.
+        </Offcanvas.Body>
+      </Offcanvas>
       <div>
         <p>Selected Availabilities:</p>
         {myEventsList.map((event, index) => (
           <div key={index}>
             {event.title} - {event.start.toLocaleString()} to{" "}
             {event.end.toLocaleString()}
-            <button onClick={() => handleRemoveAvailability(event)}>
+            <Button  variant="primary" onClick={() => handleRemoveAvailability(event)}>
               Remove
-            </button>
+            </Button>
           </div>
         ))}
       </div>

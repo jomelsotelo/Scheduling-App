@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const UserInfo = () => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,6 +28,9 @@ const UserInfo = () => {
                 setUser(userData);
             } catch (error) {
                 console.error('Error fetching user data:', error);
+            } finally {
+                // Set loading to false regardless of success or failure
+                setLoading(false);
             }
         };
 
@@ -41,21 +45,21 @@ const UserInfo = () => {
                     Edit Info
                 </Button>
             </Link>
-            <div style={{ background: 'black', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
+            <div style={{ background: loading ? 'grey' : 'black', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
                 {/* BLACK BOX */}
                 <h2 style={{ fontSize: '1.5em' }}>{/* TITLE? */}</h2>
                 {/* NAME */}
                 <p style={{ fontSize: '1.2em', marginBottom: '0' }}>
-                    {user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A'}
+                    {loading ? 'Loading...' : (user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A')}
                 </p>
                 {/* EMAIL */}
                 <p style={{ opacity: 0.75 }}>
-                    {user ? user.email : 'N/A'}
+                    {loading ? 'Loading...' : (user ? user.email : 'N/A')}
                 </p>
             </div>
             {/* WHEN CREATED */}
             <div style={{ fontSize: '0.8em', opacity: 0.5, marginBottom: '20px' }}>
-                Account created: {user ? new Date(user.created_at).toLocaleString() : 'N/A'}
+                Account created: {loading ? 'Loading...' : (user ? new Date(user.created_at).toLocaleString() : 'N/A')}
             </div>
         </div>
     );

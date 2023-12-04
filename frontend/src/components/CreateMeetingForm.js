@@ -1,19 +1,55 @@
-import React, { useState} from 'react'
-import EnhancedTable from './UserTable'
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+import axios from "axios";
 
-const CreateMeetingForm = ({ onSubmit, onCancel, userOptions, onTitleChange, onParticipantsChange, onDurationChange }) => {
-  const [meetingTitle, setMeetingTitle] = useState('');
+const CreateMeetingForm = ({
+  onSubmit,
+  onCancel,
+  userOptions,
+  onParticipantsChange,
+  selectedMeetingSlot,
+}) => {
+  const [meetingTitle, setMeetingTitle] = useState("");
   const [selectedParticipants, setSelectedParticipants] = useState([]);
-  const [selectedDuration, setSelectedDuration] = useState(60); // Default duration in minutes
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Default date is today
+
+  useEffect(() => {
+    // No need to set the selected date based on the selected slot
+  }, [selectedMeetingSlot]);
+
+  // Fetch available meeting times based on selected participants
+  const fetchAvailableTimes = async () => {
+    try {
+      // Prepare data for API request
+      const requestData = {
+        users: selectedParticipants.map((participant) => ({
+          id: participant.value,
+        })),
+        // Remove duration and date from the request
+      };
+
+      // Call your API endpoint to get available timeslots
+      const response = await axios.post("/api/timeslots", requestData);
+      const availableTimeslots = response.data;
+
+      // Call the callback to update the parent component's state (calendar events)
+      onParticipantsChange(selectedParticipants, availableTimeslots);
+    } catch (error) {
+      console.error("Error fetching available meeting times:", error);
+    }
+  };
 
   const handleCreateMeeting = () => {
     onSubmit({
       title: meetingTitle,
       participants: selectedParticipants,
-      duration: selectedDuration,
-      date: selectedDate,
+      start: selectedMeetingSlot?.start,
+      end: selectedMeetingSlot?.end,
     });
+  };
+
+  const handleParticipantsChange = (selectedOptions) => {
+    setSelectedParticipants(selectedOptions);
+    fetchAvailableTimes(); // Fetch available meeting times when participants change
   };
 
   return (
@@ -26,23 +62,24 @@ const CreateMeetingForm = ({ onSubmit, onCancel, userOptions, onTitleChange, onP
       />
 
       <label>Participants:</label>
-      <EnhancedTable />
-
-      <label>Meeting Duration (minutes):</label>
-      <input
-        type="number"
-        value={selectedDuration}
-        onChange={(e) => setSelectedDuration(e.target.value)}
+      <Select
+        isMulti
+        options={userOptions}
+        value={selectedParticipants}
+        onChange={handleParticipantsChange}
       />
 
-      <label>Selected Date:</label>
-      <input
-        type="datetime-local"
-        value={selectedDate.toISOString().slice(0, -8)} // Format the date for input field
-        onChange={(e) => setSelectedDate(new Date(e.target.value))}
-      />
+      {selectedMeetingSlot && (
+        <div>
+          <label>Selected Date:</label>
+          <p>
+            {selectedMeetingSlot.start.toLocaleString()} to{" "}
+            {selectedMeetingSlot.end.toLocaleString()}
+          </p>
+        </div>
+      )}
 
-      <button onClick={handleCreateMeeting}>Create Meeting</button>
+      <button onClick={handleCreateMeeting}>Confirm Meeting</button>
       <button onClick={onCancel}>Cancel</button>
     </div>
   );

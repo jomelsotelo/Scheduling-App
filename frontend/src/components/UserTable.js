@@ -27,27 +27,14 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const confirmedParticipants = [];
 
-function createData(firstName, lastName, email) {
+function createData(id, firstName, lastName, email) {
   return {
+    id,
     firstName,
     lastName,
     email,
   };
 }
-
-const confirmUsers = () => {
-    // Add logic to handle confirmed participants
-    // For now, just add selected participants to the confirmedParticipants array
-    // confirmedParticipants.push(...selected);
-    // Clear the selected participants
-    // setSelected([]);
-  };
-
-const handleDelete = () => {
-  // Add logic to delete confirmed participants
-  // For now, just log the selected participants to the console
-  console.log('Deleting participants:', confirmedParticipants);
-};
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -76,26 +63,33 @@ function descendingComparator(a, b, orderBy) {
     });
     return stabilizedThis.map((el) => el[0]);
   }  
-const headCells = [
-  {
-    id: 'firstName',
-    numeric: true,
-    disablePadding: false,
-    label: 'First Name',
-  },
-  {
-    id: 'lastName',
-    numeric: true,
-    disablePadding: false,
-    label: 'Last Name',
-  },
-  {
-    id: 'email',
-    numeric: true,
-    disablePadding: false,
-    label: 'Email',
-  },
-];
+  const headCells = [
+    {
+      id: 'firstName',
+      numeric: true,
+      disablePadding: false,
+      label: 'First Name',
+    },
+    {
+      id: 'lastName',
+      numeric: true,
+      disablePadding: false,
+      label: 'Last Name',
+    },
+    {
+      id: 'email',
+      numeric: true,
+      disablePadding: false,
+      label: 'Email',
+    },
+    {
+      id: 'timeSlot',
+      numeric: false,
+      disablePadding: false,
+      label: 'Time Slot',
+    },
+  ];
+  
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -148,7 +142,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, search } = props;
+  const { numSelected, search, onConfirmUsers, onDelete } = props;
 
   return (
     <Toolbar
@@ -170,12 +164,13 @@ const EnhancedTableToolbar = (props) => {
           Users
         </Typography>
       )}
-      <button id="addUsersButton" onClick={confirmUsers}>
-        Show Availabilities
+      <button id="addUsersButton" onClick={onConfirmUsers}>
+        Confirm Users
       </button>
+      
       {numSelected > 0 && (
         <Tooltip title="Delete">
-          <IconButton onClick={handleDelete}>
+          <IconButton onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -194,9 +189,15 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  onConfirmUsers: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
-const EnhancedTable = ({ selectedParticipants, onParticipantsChange }) => {
+EnhancedTableToolbar.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+};
+
+const EnhancedTable = ({ onParticipantsChange, selectedParticipants, onTimeSlotSelect }) => {
   const [searchText, setSearchText] = React.useState('');
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -207,16 +208,61 @@ const EnhancedTable = ({ selectedParticipants, onParticipantsChange }) => {
   const [rows, setRows] = React.useState([]);
 
   useEffect(() => {
+    // Fetch users and available time slots
     axios.get("api/users")
       .then(response => {
         let list = response.data;
-        let updatedRows = list.map(arrayItem => createData(arrayItem.first_name, arrayItem.last_name, arrayItem.email));
+        let updatedRows = list.map((arrayItem, index) => {
+          const timeSlot = 'Placeholder Time Slot'; // Replace with actual logic to fetch time slot data
+          return createData(index, arrayItem.first_name, arrayItem.last_name, arrayItem.email, timeSlot);
+        });
         setRows(updatedRows);
       })
       .catch(error => {
         console.error('Error', error);
       });
   }, []);
+
+  const confirmUsers = async () => {
+    try {
+      // Add logic to handle confirmed participants
+      // For now, just add selected participants to the confirmedParticipants array
+      // confirmedParticipants.push(...selected);
+      // Clear the selected participants
+      // setSelected([]);
+      const meetingId = 'your_meeting_id'; // Replace with the actual meeting ID
+
+      // Send a request to update the meeting with added participants
+      await axios.put(`/api/meetings/${meetingId}`, {
+        addParticipants: selectedParticipants,
+      });
+
+      // Notify parent component about the change
+      onParticipantsChange(selectedParticipants);
+    } catch (error) {
+      console.error('Error confirming users:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      // Add logic to delete confirmed participants
+      // For now, just log the selected participants to the console
+      console.log('Deleting participants:', selectedParticipants);
+
+      const meetingId = 'your_meeting_id'; // Replace with the actual meeting ID
+
+      // Send a request to update the meeting by removing participants
+      await axios.put(`/api/meetings/${meetingId}`, {
+        removeParticipants: selectedParticipants,
+      });
+
+      // Notify parent component about the change
+      onParticipantsChange([]);
+    } catch (error) {
+      console.error('Error deleting users:', error);
+    }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -251,7 +297,9 @@ const EnhancedTable = ({ selectedParticipants, onParticipantsChange }) => {
     }
     setSelected(newSelected);
 
-    onParticipantsChange(newSelected);
+    if (typeof onParticipantsChange === 'function') {
+      onParticipantsChange(newSelected);
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -356,6 +404,7 @@ const EnhancedTable = ({ selectedParticipants, onParticipantsChange }) => {
                     <TableCell align="right">{row.firstName}</TableCell>
                     <TableCell align="right">{row.lastName}</TableCell>
                     <TableCell align="right">{row.email}</TableCell>
+                    <TableCell align="right">{row.timeSlot}</TableCell>
                   </TableRow>
                 );
               })}

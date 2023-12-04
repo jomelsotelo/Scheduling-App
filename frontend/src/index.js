@@ -12,7 +12,7 @@ import Login from "./pages/authentication/LoginPage"
 import Auth from "./pages/authentication/Auth"
 import ProtectedRoute from "./components/util/ProtectedRoute"
 import UserInfo from "./pages/portal/UserInfo"
-
+import Notification from "./pages/portal/Notification"
 
 
 ReactDOM.render(
@@ -30,6 +30,7 @@ ReactDOM.render(
                 <Route path='calendar' element={<Calendar />} />
                 <Route path ='account' element={<Account />}/>
                 <Route path ='user' element={<UserInfo />}/>
+                <Route path ='notification' element={<Notification />} />
             </Route>
         </Routes>
     </BrowserRouter>,

@@ -34,28 +34,29 @@ const UserInfo = () => {
     }, []);
 
     return (
-        <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2 style={{ textAlign: 'center', fontSize: '1.5em' }}>{/* Add a title if needed */}</h2>
-                <Link to="/account">
-                    <Button className="button-link" variant="primary" size="lg">
-                        Edit Info
-                    </Button>{' '}
-                </Link>
+        <div style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: '20px', position: 'relative' }}>
+            {/* EDIT INFO */}
+            <Link to="/account" style={{ position: 'absolute', top: '20px', right: '20px' }}>
+                <Button className="button-link" variant="primary" size="lg">
+                    Edit Info
+                </Button>
+            </Link>
+            <div style={{ background: 'black', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
+                {/* BLACK BOX */}
+                <h2 style={{ fontSize: '1.5em' }}>{/* TITLE? */}</h2>
+                {/* NAME */}
+                <p style={{ fontSize: '1.2em', marginBottom: '0' }}>
+                    {user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A'}
+                </p>
+                {/* EMAIL */}
+                <p style={{ opacity: 0.75 }}>
+                    {user ? user.email : 'N/A'}
+                </p>
             </div>
-            <p style={{ textAlign: 'center', fontSize: '1.2em', marginBottom: '0' }}>
-                {user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A'}
-            </p>
-            {/* NAME */}
-            <p style={{ textAlign: 'center', opacity: 0.75 }}>
-                {user ? user.email : 'N/A'}
-            </p>
-            {/* EMAIL */}
-            <p style={{ position: 'absolute', bottom: '0', left: '0', fontSize: '0.8em', opacity: 0.5 }}>
-                Account created: {user ? new Date(user.created_at).toLocaleString() : 'N/A'}
-            </p>
             {/* WHEN CREATED */}
-            {/* MORE INFO GOES HERE */}
+            <div style={{ fontSize: '0.8em', opacity: 0.5, marginBottom: '20px' }}>
+                Account created: {user ? new Date(user.created_at).toLocaleString() : 'N/A'}
+            </div>
         </div>
     );
 };

@@ -1,0 +1,45 @@
+RELEASE NOTES - SWARM CRUNCHERS
+
+MEMBERS:
+JOMEL SOTELO
+JOSE VASQUEZ
+ANGEL RAMIREZ-GARCIA
+KATY CHAN
+JENICA CHU
+HECTOR YABES
+
+-product name
+
+-date of release
+
+overview
+
+purpose
+
+feature summery
+
+issue summery
+
+steps to reproduce
+
+end-user impact
+
+installation
+
+REST API endpoints
+
+disclaimer
+
+contact
+
+REST API DOCUMENTS
+-every api w/ examples
+-all method interactions (GET, POST, PUT, DEL)
+-all query parameters
+-all expected outputs
+-all error cases
+
+
+
+
+

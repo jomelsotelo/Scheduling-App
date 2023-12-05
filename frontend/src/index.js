@@ -13,7 +13,7 @@ import Auth from "./pages/authentication/Auth"
 import ProtectedRoute from "./components/util/ProtectedRoute"
 import UserInfo from "./pages/portal/UserInfo"
 import Notification from "./pages/portal/Notification"
-import Info from "./pages/portal/Info"
+import Extra from "./pages/portal/Extra"
 
 
 ReactDOM.render(
@@ -32,7 +32,7 @@ ReactDOM.render(
                 <Route path ='account' element={<Account />}/>
                 <Route path ='user' element={<UserInfo />}/>
                 <Route path ='notification' element={<Notification />} />
-                <Route path ='info' element={<Info />} />
+                <Route path ='extra' element={<Extra />} />
             </Route>
         </Routes>
     </BrowserRouter>,

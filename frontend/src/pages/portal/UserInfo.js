@@ -1,18 +1,21 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import editButtonImage from '../../assets/images/edit-button.png';
+import notificationDefaultImage from '../../assets/images/notificationIconDefault.png';
+import notificationActiveImage from '../../assets/images/notificationIconActive.png';
+import loadingImage from '../../assets/images/loading.png';
 
 const UserInfo = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [hasNotifications, setHasNotifications] = useState(false);
+    const [lastUpdated, setLastUpdated] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Grabs user data
                 const token = localStorage.getItem('user-token');
                 const axiosInstance = axios.create({
                     headers: {
@@ -23,14 +26,20 @@ const UserInfo = () => {
                 const userId = decodedToken.userId;
 
                 const userDataResponse = await axiosInstance.get(`/api/users/${userId}`);
-
                 const userData = userDataResponse.data;
-
                 setUser(userData);
+
+                // Check for notifications
+                const notificationsResponse = await axiosInstance.get(`/api/notifications/1`);
+                const hasNotifications = notificationsResponse.data.length > 0;
+                setHasNotifications(hasNotifications);
+
+                // Set last updated time
+                const lastUpdatedTime = userData.updated_at;
+                setLastUpdated(lastUpdatedTime);
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching user data or notifications:', error);
             } finally {
-                // LOADING STATE
                 setLoading(false);
             }
         };
@@ -39,26 +48,77 @@ const UserInfo = () => {
     }, []);
 
     return (
-        <div style={{ width: 'calc(100vw)', height: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: '20px', position: 'relative', background: loading ? 'linear-gradient(135deg, #dfb6b2, #008000)' : 'linear-gradient(135deg, #dfb6b2, #008000)', overflow: 'hidden' }}>
-            {/* EDIT INFO */}
-            <Link to="/account" style={{ position: 'absolute', top: '130px', right: '530px' }}>
-                <img src={editButtonImage} alt="Edit Info" style={{ width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} />
+        <div style={{
+            width: 'calc(100vw)',
+            height: 'calc(100vh - 70px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            background: `
+                linear-gradient(#ae445a, transparent),
+                linear-gradient(90deg, #451952, transparent),
+                linear-gradient(-90deg, #662549, transparent)`,
+            overflow: 'hidden',
+            backgroundBlendMode: 'screen',
+        }}>
+            {/* EDIT ICON */}
+            <Link to="/account" style={{ position: 'absolute', top: '80px', left: '10px', width: '50px', height: '50px', transition: 'transform 0.2s' }}>
+                <img
+                    src={loading ? loadingImage : editButtonImage}
+                    alt="Edit Info"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        cursor: 'pointer',
+                        objectFit: 'cover',
+                        transform: 'scale(1)',
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                />
             </Link>
-            <div style={{ background: 'rgba(0, 0, 0, 0.5)', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
-                {/* BLACK BOX */}
+
+            {/* NOTIFICATION ICON */}
+            <Link to="/notification" style={{ position: 'absolute', top: '10px', left: '5px', width: '54px', height: '54px', transition: 'transform 0.2s' }}>
+                <img
+                    src={loading ? loadingImage : (hasNotifications ? notificationActiveImage : notificationDefaultImage)}
+                    alt="Notification Icon"
+                    style={{
+                        width: '110%',
+                        height: '110%',
+                        cursor: 'pointer',
+                        objectFit: 'cover',
+                        transform: 'scale(1)',
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                />
+            </Link>
+
+            <div style={{
+                background: 'rgba(0, 0, 0, 0.5)',
+                padding: '100px 100px',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                color: 'white',
+                textAlign: 'center',
+                margin: 'auto',
+            }}>
                 <h2 style={{ fontSize: '1.5em' }}>{/* TITLE? */}</h2>
-                {/* NAME */}
                 <p style={{ fontSize: '1.2em', marginBottom: '0' }}>
                     {loading ? 'Loading...' : (user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A')}
                 </p>
-                {/* EMAIL */}
-                <p style={{ opacity: 0.75 }}>
+                <p style={{ marginTop: '-5px', opacity: 0.75 }}>
                     {loading ? 'Loading...' : (user ? user.email : 'N/A')}
                 </p>
-            </div>
-            {/* WHEN CREATED */}
-            <div style={{ fontSize: '0.8em', opacity: 0.75, marginBottom: '5px' }}>
-                Account created: {loading ? 'Loading...' : (user ? new Date(user.created_at).toLocaleString() : 'N/A')}
+                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '-13px', textAlign: 'center' }}>
+                    Account created: {loading ? 'Loading...' : (user ? new Date(user.created_at).toLocaleString() : 'N/A')}
+                </div>
+                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '-3px', textAlign: 'center' }}>
+                    Last updated: {loading ? 'Loading...' : (lastUpdated ? new Date(lastUpdated).toLocaleString() : 'N/A')}
+                </div>
             </div>
         </div>
     );

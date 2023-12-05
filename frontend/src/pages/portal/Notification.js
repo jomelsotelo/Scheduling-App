@@ -10,6 +10,8 @@ const Notification = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [notificationToDeleteId, setNotificationToDeleteId] = useState(null);
   const [showClearNotification, setShowClearNotification] = useState(true);
+  const [isTrashCanHovered, setIsTrashCanHovered] = useState(false);
+  const [isRedXHovered, setIsRedXHovered] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,9 +103,41 @@ const Notification = () => {
     setShowConfirmation(false);
   };
 
+  
+
   return (
-    <div style={{ width: 'calc(100vw)', height: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', padding: '20px', position: 'relative', background: 'linear-gradient(135deg, #FF69B4, #87CEEB)', overflow: 'hidden' }}>
-      <div style={{ height: '500px', overflowY: 'auto', background: 'rgba(0, 0, 0, 0.8)', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto', opacity: 0.75, padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{
+      width: 'calc(100vw)',
+      height: 'calc(100vh - 70px)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding: '20px',
+      position: 'relative',
+      background: `
+        linear-gradient(#ae445a, transparent),
+        linear-gradient(90deg, #451952, transparent),
+        linear-gradient(-90deg, #662549, transparent)`,
+      backgroundBlendMode: 'screen',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        height: '500px',
+        overflowY: 'auto',
+        background: 'rgba(0, 0, 0, 0.8)',
+        borderRadius: '10px',
+        marginBottom: '20px',
+        color: 'white',
+        textAlign: 'center',
+        margin: 'auto',
+        opacity: 0.75,
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -138,14 +172,38 @@ const Notification = () => {
         )}
       </div>
 
-      {showClearNotification && (
-        <button
-          style={{ marginBottom: '20px', position: 'absolute', bottom: '10px', left: '47%', width: '100px', height: '40px', cursor: 'pointer', backgroundColor: 'grey', border: 'none', borderRadius: '5px', color: 'white', fontWeight: 'bold' }}
-          onClick={handleDeleteAllNotifications}
-        >
-          Clear
-        </button>
-      )}
+{showClearNotification && (
+  <button
+    style={{
+      marginTop: '20px',
+      position: 'absolute',
+      bottom: '20px',
+      left: '740px',
+      width: '50px', // Adjust the width to the desired size
+      height: '50px', // Adjust the height to the desired size
+      cursor: 'pointer',
+      background: 'none',
+      border: 'none',
+      borderRadius: '5px',
+      overflow: 'hidden',
+    }}
+    onClick={handleDeleteAllNotifications}
+  >
+    <img
+      src={TrashCanImage}
+      alt="Clear All"
+      style={{
+        width: '85%',
+        height: '85%',
+        objectFit: 'cover',
+        transition: 'transform 0.3s', // Add transition property for smooth scaling
+        transform: isTrashCanHovered ? 'scale(1.2)' : 'scale(1)', // Apply scale based on hover state
+      }}
+      onMouseEnter={() => setIsTrashCanHovered(true)} // Set hover state to true on mouse enter
+      onMouseLeave={() => setIsTrashCanHovered(false)} // Set hover state to false on mouse leave
+    />
+  </button>
+)}
 
       {selectedNotification && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

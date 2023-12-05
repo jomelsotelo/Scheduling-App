@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import editButtonImage from '../../assets/images/edit-button.png';
 
 const UserInfo = () => {
     const [user, setUser] = useState(null);
@@ -29,7 +30,7 @@ const UserInfo = () => {
             } catch (error) {
                 console.error('Error fetching user data:', error);
             } finally {
-                // Set loading to false regardless of success or failure
+                // LOADING STATE
                 setLoading(false);
             }
         };
@@ -38,14 +39,12 @@ const UserInfo = () => {
     }, []);
 
     return (
-        <div style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: '20px', position: 'relative' }}>
+        <div style={{ width: 'calc(100vw)', height: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: '20px', position: 'relative', background: loading ? 'linear-gradient(135deg, #dfb6b2, #008000)' : 'linear-gradient(135deg, #dfb6b2, #008000)', overflow: 'hidden' }}>
             {/* EDIT INFO */}
-            <Link to="/account" style={{ position: 'absolute', top: '20px', right: '20px' }}>
-                <Button className="button-link" variant="primary" size="lg">
-                    Edit Info
-                </Button>
+            <Link to="/account" style={{ position: 'absolute', top: '130px', right: '530px' }}>
+                <img src={editButtonImage} alt="Edit Info" style={{ width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} />
             </Link>
-            <div style={{ background: loading ? 'grey' : 'black', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
+            <div style={{ background: 'rgba(0, 0, 0, 0.5)', padding: '100px 100px', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto' }}>
                 {/* BLACK BOX */}
                 <h2 style={{ fontSize: '1.5em' }}>{/* TITLE? */}</h2>
                 {/* NAME */}
@@ -58,7 +57,7 @@ const UserInfo = () => {
                 </p>
             </div>
             {/* WHEN CREATED */}
-            <div style={{ fontSize: '0.8em', opacity: 0.5, marginBottom: '20px' }}>
+            <div style={{ fontSize: '0.8em', opacity: 0.75, marginBottom: '5px' }}>
                 Account created: {loading ? 'Loading...' : (user ? new Date(user.created_at).toLocaleString() : 'N/A')}
             </div>
         </div>

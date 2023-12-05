@@ -1,44 +1,16 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
-
-const ConfirmationPopup = ({ onConfirm, onCancel }) => {
-  return (
-    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '100px', background: 'rgba(0, 0, 0, 1)', color: '#fff', zIndex: 999, width: '400px' }}>
-      <p>Are you sure?</p>
-      <button style={{ margin: '0 10px', cursor: 'pointer', padding: '10px' }} onClick={onConfirm}>
-        Yes
-      </button>
-      <button style={{ margin: '0 10px', cursor: 'pointer', padding: '10px' }} onClick={onCancel}>
-        Cancel
-      </button>
-    </div>
-  );
-};
-
-const NotificationPopup = ({ notification, onClose, onDelete }) => {
-  const formattedDate = new Date(notification.timestamp).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
-
-  return (
-    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', padding: '200px', background: 'rgba(0, 0, 0, 1)', color: '#fff', zIndex: 999, width: '600px' }}>
-      <button style={{ position: 'absolute', top: 0, right: 0, padding: '10px', cursor: 'pointer', background: 'grey', border: 'none', color: '#fff' }} onClick={onClose}>
-        Close
-      </button>
-      <button style={{ position: 'absolute', top: 0, right: '60px', padding: '10px', cursor: 'pointer', background: 'red', border: 'none', color: '#fff' }} onClick={onDelete}>
-        Delete
-      </button>
-      <p style={{ position: 'absolute', top: 0, left: 0, padding: '10px', cursor: 'default', background: 'transparent', border: 'none', color: '#fff' }}>From: N/A</p>
-      <p>{notification.content}</p>
-      <p style={{ position: 'absolute', bottom: 0, left: 0, padding: '10px', cursor: 'default', background: 'transparent', border: 'none', color: '#fff' }}>{formattedDate}</p>
-      {/* Add more details or components as needed */}
-    </div>
-  );
-};
+import RedXImage from '../../assets/images/red-x.png';
+import TrashCanImage from '../../assets/images/trashcan.png';
 
 const Notification = () => {
-  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [notificationToDeleteId, setNotificationToDeleteId] = useState(null);
+  const [showClearNotification, setShowClearNotification] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +18,7 @@ const Notification = () => {
         const response = await axios.get('/api/notifications/1');
         setNotifications(response.data);
       } catch (error) {
-        console.error('Error fetching notifications:', error);
+        console.error('Error fetching notification data:', error);
       } finally {
         setLoading(false);
       }
@@ -55,70 +27,187 @@ const Notification = () => {
     fetchData();
   }, []);
 
+  const handleMouseEnter = (event) => {
+    event.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+  };
+
+  const handleMouseLeave = (event) => {
+    event.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+  };
+
   const handleNotificationClick = (notification) => {
     setSelectedNotification(notification);
+    setNotificationToDeleteId(notification.notifications_id);
   };
 
-  const handlePopupClose = () => {
+  const handleCloseButtonClick = () => {
     setSelectedNotification(null);
-    setShowConfirmation(false);
+    setNotificationToDeleteId(null);
   };
 
-  const handleDelete = () => {
+  const handleTrashButtonClick = () => {
     setShowConfirmation(true);
   };
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmationYes = async () => {
     try {
-      if (selectedNotification) {
-        await axios.delete(`/api/notifications/${selectedNotification.notifications_id}`);
-        setNotifications((prevNotifications) =>
-          prevNotifications.filter((notification) => notification.notifications_id !== selectedNotification.notifications_id)
-        );
+      if (notificationToDeleteId) {
+        await axios.delete(`/api/notifications/${notificationToDeleteId}`);
+        console.log(`Notification with ID ${notificationToDeleteId} deleted successfully!`);
+
+        setNotificationToDeleteId(null);
+        setShowConfirmation(false);
+        setSelectedNotification(null);
+
+        window.location.reload();
+      } else {
+        console.error('No notification ID to delete.');
       }
     } catch (error) {
       console.error('Error deleting notification:', error);
-    } finally {
-      handlePopupClose();
     }
   };
 
-  const handleCancelDelete = () => {
+  const handleConfirmationNo = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleDeleteAllNotifications = async () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmationYesAll = async () => {
+    try {
+      const userId = notifications.length > 0 ? notifications[0].user_id : null;
+      if (!userId) {
+        console.error('User ID not found in notifications.');
+        return;
+      }
+
+      for (const notification of notifications) {
+        await axios.delete(`/api/notifications/${notification.notifications_id}`);
+        console.log(`Notification with ID ${notification.notifications_id} deleted successfully!`);
+      }
+
+      console.log(`All notifications for user ${userId} deleted successfully!`);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting notifications:', error);
+    } finally {
+      setShowConfirmation(false);
+    }
+  };
+
+  const handleConfirmationNoAll = () => {
     setShowConfirmation(false);
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'absolute', top: 125, left: '50%', transform: 'translateX(-50%)', padding: '40px', width: '400px', background: loading ? 'grey' : 'rgba(0, 0, 0, 0.8)', color: '#fff', textAlign: 'center' }}>
+    <div style={{ width: 'calc(100vw)', height: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', padding: '20px', position: 'relative', background: 'linear-gradient(135deg, #FF69B4, #87CEEB)', overflow: 'hidden' }}>
+      <div style={{ height: '500px', overflowY: 'auto', background: 'rgba(0, 0, 0, 0.8)', borderRadius: '10px', marginBottom: '20px', color: 'white', textAlign: 'center', margin: 'auto', opacity: 0.75, padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <>
-            <p style={{ textAlign: 'center', fontSize: '1.2em', marginBottom: '10px' }}></p>
-            <div style={{ textAlign: 'center' }}>
-              {notifications.map((notification) => (
-                <p
-                  key={notification.notifications_id}
-                  onClick={() => handleNotificationClick(notification)}
-                  style={{ cursor: 'pointer', transition: 'background 0.3s', margin: '10px 0' }}
-                  onMouseOver={(e) => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
-                  onMouseOut={(e) => (e.target.style.background = 'transparent')}
-                >
-                  {notification.entityId === 1 ? 'Message' : 'Update'} - {new Date(notification.timestamp).toLocaleString('en-US', { month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}
-                </p>
-              ))}
-              {notifications.length === 0 && <p>No notifications</p>}
-            </div>
-          </>
+          <div style={{ width: '100%', maxWidth: '400px' }}>
+            {notifications.length > 0 ? (
+              notifications.map((notification, index) => (
+                <div key={notification.notifications_id} style={{ marginBottom: '10px' }}>
+                  <button
+                    style={{
+                      fontSize: '1.2em',
+                      margin: '0',
+                      padding: '10px',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s',
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      color: 'white',
+                    }}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleNotificationClick(notification)}
+                  >
+                    {notification.entityId === 1 ? 'Message' : 'Update'} - {new Date(notification.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p style={{ textAlign: 'center' }}>No notifications :(</p>
+            )}
+          </div>
         )}
       </div>
 
+      {showClearNotification && (
+        <button
+          style={{ marginBottom: '20px', position: 'absolute', bottom: '10px', left: '47%', width: '100px', height: '40px', cursor: 'pointer', backgroundColor: 'grey', border: 'none', borderRadius: '5px', color: 'white', fontWeight: 'bold' }}
+          onClick={handleDeleteAllNotifications}
+        >
+          Clear
+        </button>
+      )}
+
       {selectedNotification && (
-        <NotificationPopup notification={selectedNotification} onClose={handlePopupClose} onDelete={handleDelete} />
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: 'white', padding: '150px', borderRadius: '10px', position: 'relative', width: '70%', maxWidth: '400px' }}>
+            <img src={RedXImage} alt="Close" style={{ position: 'absolute', top: '10px', right: '10px', width: '40px', height: '40px', cursor: 'pointer' }} onClick={handleCloseButtonClick} />
+
+            <h2 style={{ position: 'absolute', top: '20px', left: '10px', marginBottom: '5px' }}>
+              {selectedNotification.entityId === 1 && (
+                <>
+                  <span style={{ fontSize: '1em', opacity: 1 }}>Message</span>
+                  <br />
+                  <span style={{ fontSize: '0.55em', opacity: 0.75, marginTop: '-1px' }}>
+                    {new Date(selectedNotification.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{' '}
+                    {new Date(selectedNotification.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', year: 'numeric' })}
+                  </span>
+                </>
+              )}
+              {selectedNotification.entityId === 2 && (
+                <>
+                  <span style={{ fontSize: '1em', opacity: 1 }}>Update</span>
+                  <br />
+                  <span style={{ fontSize: '0.55em', opacity: 0.75, marginTop: '-1px' }}>
+                    {new Date(selectedNotification.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{' '}
+                    {new Date(selectedNotification.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', year: 'numeric' })}
+                  </span>
+                </>
+              )}
+            </h2>
+
+            <p>{selectedNotification.content}</p>
+
+            <img
+              src={TrashCanImage}
+              alt="Trashcan"
+              style={{ position: 'absolute', bottom: '10px', right: '10px', width: '40px', height: '40px', cursor: 'pointer' }}
+              onClick={handleTrashButtonClick}
+            />
+          </div>
+        </div>
       )}
 
       {showConfirmation && (
-        <ConfirmationPopup onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: 'white', padding: '20px', borderRadius: '10px', position: 'relative', width: '50%', maxWidth: '300px' }}>
+            <p style={{ textAlign: 'center' }}>Are you sure you want to clear all notifications?</p>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+              <button
+                style={{ background: 'red', color: 'white', padding: '10px', margin: '5px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                onClick={handleConfirmationYesAll}
+              >
+                Yes
+              </button>
+              <button
+                style={{ background: 'black', color: 'white', padding: '10px', margin: '5px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                onClick={handleConfirmationNoAll}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

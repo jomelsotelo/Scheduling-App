@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import RedXImage from '../../assets/images/red-x.png';
@@ -191,17 +190,17 @@ const Notification = () => {
       {showConfirmation && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '20px', borderRadius: '10px', position: 'relative', width: '50%', maxWidth: '300px' }}>
-            <p style={{ textAlign: 'center' }}>Are you sure you want to clear all notifications?</p>
+            <p style={{ textAlign: 'center' }}>{`Are you sure you want to delete ${selectedNotification ? 'this notification' : 'all notifications'}?`}</p>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
               <button
                 style={{ background: 'red', color: 'white', padding: '10px', margin: '5px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-                onClick={handleConfirmationYesAll}
+                onClick={selectedNotification ? handleConfirmationYes : handleConfirmationYesAll}
               >
                 Yes
               </button>
               <button
                 style={{ background: 'black', color: 'white', padding: '10px', margin: '5px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-                onClick={handleConfirmationNoAll}
+                onClick={selectedNotification ? handleConfirmationNo : handleConfirmationNoAll}
               >
                 No
               </button>

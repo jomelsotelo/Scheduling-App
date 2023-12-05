@@ -1,36 +1,86 @@
-RELEASE NOTES - SWARM CRUNCHERS
+RELEASE NOTES
 
-MEMBERS:
-JOMEL SOTELO
-JOSE VASQUEZ
-ANGEL RAMIREZ-GARCIA
-KATY CHAN
-JENICA CHU
-HECTOR YABES
+Team Name: SWARM CRUNCHERS
 
--product name
+Members: BACKEND : JOMEL SOTELO, JOSE VASQUEZ, ANGEL RAMIREZ-GARCIA 
+	 FRONTEND: KATY CHAN, JENICA CHU , HECTOR YABES
 
--date of release
+Product Name:
+???
 
-overview
+Date of release:
+???
 
-purpose
+Overview:
+???
 
-feature summery
+Purpose:
+???
 
-issue summery
+Feature summery:
+???
 
-steps to reproduce
+Issue summery:
+???
 
-end-user impact
+Steps to reproduce:
+???
 
-installation
+End-user impact:
+???
 
-REST API endpoints
+Installation:
+???
 
-disclaimer
+REST API endpoints:
 
-contact
+auth.js
+	POST /register
+	POST /login
+
+availability.js
+	POST /:id/availability
+	GET  /:id/availability/:id
+	PUT /:id/availability/:id
+	DEL /:id/availability/:id
+
+extra.js
+	POST /invite
+	GET /notifications/:user_id
+	DEL /notifications/:notification_id
+
+meeting.js
+	POST /
+	GET /:id
+	GET /
+	PUT /:id
+	DELETE /:id
+
+timeslots.js
+	GET /
+
+users.js
+	POST /
+	GET /:id
+	GET /
+	PUT /:id
+	DEL /:id
+
+Disclaimer:
+???
+
+Contact:
+
+BACKEND:
+JOMEL SOTELO - @
+JOSE VASQUEZ - @
+ANGEL RAMIREZ-GARCIA - @
+
+FRONTEND:
+KATY CHAN - @
+JENICA CHU - @
+HECTOR YABES - @hec0824@gmail.com
+	       @hyabes@csus.edu
 
 REST API DOCUMENTS
 -every api w/ examples
@@ -38,6 +88,72 @@ REST API DOCUMENTS
 -all query parameters
 -all expected outputs
 -all error cases
+
+auth.js
+	POST /register
+	POST /login
+
+availability.js
+	POST /:id/availability
+	GET  /:id/availability/:id
+	PUT /:id/availability/:id
+	DEL /:id/availability/:id
+
+extra.js
+	POST /invite
+	GET /notifications/:user_id
+		
+		[
+			{
+				"notifications_id": 108,
+				"type": "update_notification",
+				"entityId": 2,
+				"content": "Sorry!",
+				"user_id": 1,
+				"timestamp": "2023-12-05T20:13:44.000Z"
+			},
+			{
+				"notifications_id": 109,
+				"type": "message_notification",
+				"entityId": 1,
+				"content": "Need to talk!",
+				"user_id": 1,
+				"timestamp": "2023-12-05T20:13:44.000Z"
+			}
+		]
+
+		notification_id - order of notifcation created, used when deleting notifcation
+		type - only two types of notifcations at the moment, message_notifcation & update_notification
+		entityId - 1=message_notification 2=update_notification
+		content - the actual message
+		user_id - who the message was sent too
+		timestamp - time message was created
+
+		return 200 - OK
+	
+	DEL /notifications/:notification_id
+
+		/notifications/108
+
+		return 204 - No content
+
+meeting.js
+	POST /
+	GET /:id
+	GET /
+	PUT /:id
+	DELETE /:id
+
+timeslots.js
+	GET /
+
+users.js
+	POST /
+	GET /:id
+	GET /
+	PUT /:id
+	DEL /:id
+
 
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import RedXImage from '../../assets/images/red-x.png';
+import CrossImage from '../../assets/images/cross.png';
 import ReleaseNotes from '../../assets/ReleaseNotes.txt';
 
 function Info() {

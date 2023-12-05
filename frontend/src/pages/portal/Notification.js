@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import RedXImage from '../../assets/images/red-x.png';
+import CrossImage from '../../assets/images/cross.png'; // I
 import TrashCanImage from '../../assets/images/trashcan.png';
 
 const Notification = () => {
@@ -11,7 +11,7 @@ const Notification = () => {
   const [notificationToDeleteId, setNotificationToDeleteId] = useState(null);
   const [showClearNotification, setShowClearNotification] = useState(true);
   const [isTrashCanHovered, setIsTrashCanHovered] = useState(false);
-  const [isRedXHovered, setIsRedXHovered] = useState(false);
+  const [isCrossHovered, setIsCrossHovered] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,8 +103,6 @@ const Notification = () => {
     setShowConfirmation(false);
   };
 
-  
-
   return (
     <div style={{
       width: 'calc(100vw)',
@@ -131,12 +129,14 @@ const Notification = () => {
         color: 'white',
         textAlign: 'center',
         margin: 'auto',
-        opacity: 0.75,
+        opacity: 0.65,
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        height: '500px', // Set a fixed height for the black box
+        width: '300px',
       }}>
         {loading ? (
           <p>Loading...</p>
@@ -172,43 +172,43 @@ const Notification = () => {
         )}
       </div>
 
-{showClearNotification && (
-  <button
-    style={{
-      marginTop: '20px',
-      position: 'absolute',
-      bottom: '20px',
-      left: '740px',
-      width: '50px', // Adjust the width to the desired size
-      height: '50px', // Adjust the height to the desired size
-      cursor: 'pointer',
-      background: 'none',
-      border: 'none',
-      borderRadius: '5px',
-      overflow: 'hidden',
-    }}
-    onClick={handleDeleteAllNotifications}
-  >
-    <img
-      src={TrashCanImage}
-      alt="Clear All"
-      style={{
-        width: '85%',
-        height: '85%',
-        objectFit: 'cover',
-        transition: 'transform 0.3s', // Add transition property for smooth scaling
-        transform: isTrashCanHovered ? 'scale(1.2)' : 'scale(1)', // Apply scale based on hover state
-      }}
-      onMouseEnter={() => setIsTrashCanHovered(true)} // Set hover state to true on mouse enter
-      onMouseLeave={() => setIsTrashCanHovered(false)} // Set hover state to false on mouse leave
-    />
-  </button>
-)}
+      {showClearNotification && (
+        <button
+          style={{
+            marginTop: '20px',
+            position: 'absolute',
+            bottom: '20px',
+            left: '740px',
+            width: '50px', // Adjust the width to the desired size
+            height: '50px', // Adjust the height to the desired size
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            borderRadius: '5px',
+            overflow: 'hidden',
+          }}
+          onClick={handleDeleteAllNotifications}
+        >
+          <img
+            src={TrashCanImage}
+            alt="Clear All"
+            style={{
+              width: '85%',
+              height: '85%',
+              objectFit: 'cover',
+              transition: 'transform 0.3s', // Add transition property for smooth scaling
+              transform: isTrashCanHovered ? 'scale(1.2)' : 'scale(1)', // Apply scale based on hover state
+            }}
+            onMouseEnter={() => setIsTrashCanHovered(true)} // Set hover state to true on mouse enter
+            onMouseLeave={() => setIsTrashCanHovered(false)} // Set hover state to false on mouse leave
+          />
+        </button>
+      )}
 
       {selectedNotification && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '150px', borderRadius: '10px', position: 'relative', width: '70%', maxWidth: '400px' }}>
-            <img src={RedXImage} alt="Close" style={{ position: 'absolute', top: '10px', right: '10px', width: '40px', height: '40px', cursor: 'pointer' }} onClick={handleCloseButtonClick} />
+            <img src={CrossImage} alt="Close" style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', cursor: 'pointer' }} onClick={handleCloseButtonClick} />
 
             <h2 style={{ position: 'absolute', top: '20px', left: '10px', marginBottom: '5px' }}>
               {selectedNotification.entityId === 1 && (

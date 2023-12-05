@@ -64,7 +64,7 @@ const UserInfo = () => {
             backgroundBlendMode: 'screen',
         }}>
             {/* EDIT ICON */}
-            <Link to="/account" style={{ position: 'absolute', top: '80px', left: '10px', width: '50px', height: '50px', transition: 'transform 0.2s' }}>
+            <Link to="/account" style={{ position: 'absolute', top: '180px', left: '555px', width: '50px', height: '50px', transition: 'transform 0.2s' }}>
                 <img
                     src={loading ? loadingImage : editButtonImage}
                     alt="Edit Info"
@@ -81,7 +81,7 @@ const UserInfo = () => {
             </Link>
 
             {/* NOTIFICATION ICON */}
-            <Link to="/notification" style={{ position: 'absolute', top: '10px', left: '5px', width: '54px', height: '54px', transition: 'transform 0.2s' }}>
+            <Link to="/notification" style={{ position: 'absolute', top: '240px', left: '550px', width: '54px', height: '54px', transition: 'transform 0.2s' }}>
                 <img
                     src={loading ? loadingImage : (hasNotifications ? notificationActiveImage : notificationDefaultImage)}
                     alt="Notification Icon"
@@ -99,24 +99,30 @@ const UserInfo = () => {
 
             <div style={{
                 background: 'rgba(0, 0, 0, 0.5)',
-                padding: '100px 100px',
+                padding: '30px', // Set a fixed height for the black box
                 borderRadius: '10px',
                 marginBottom: '20px',
                 color: 'white',
                 textAlign: 'center',
-                margin: 'auto',
+                height: '300px', // Set a fixed height for the black box
+                width: '300px', // Set a fixed width for the black box
+                overflow: 'hidden', // Hide content overflow
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
             }}>
                 <h2 style={{ fontSize: '1.5em' }}>{/* TITLE? */}</h2>
-                <p style={{ fontSize: '1.2em', marginBottom: '0' }}>
+                <div style={{ fontSize: '1.2em', marginBottom: '0px' }}>
                     {loading ? 'Loading...' : (user ? <span style={{ fontSize: '1.5em' }}>{`${user.first_name} ${user.last_name}`}</span> : 'N/A')}
-                </p>
+                </div>
                 <p style={{ marginTop: '-5px', opacity: 0.75 }}>
                     {loading ? 'Loading...' : (user ? user.email : 'N/A')}
                 </p>
-                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '-13px', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '-10px', textAlign: 'center' }}>
                     Account created: {loading ? 'Loading...' : (user ? new Date(user.created_at).toLocaleString() : 'N/A')}
                 </div>
-                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '-3px', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.8em', opacity: 0.6, marginTop: '5px', textAlign: 'center' }}>
                     Last updated: {loading ? 'Loading...' : (lastUpdated ? new Date(lastUpdated).toLocaleString() : 'N/A')}
                 </div>
             </div>

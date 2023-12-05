@@ -62,6 +62,9 @@ const PortalNavbar = () => {
     const navigateToNotification = () => {
       navigate ('/notification')
     }
+    const navigateToInfo = () => {
+      navigate ('/info')
+    }
 
     return (
         <React.Fragment>
@@ -72,6 +75,7 @@ const PortalNavbar = () => {
                 <Nav.Link onClick={navigateToCalendar} style={{ fontSize: '1rem', margin: '5px 5px' }}>Calendar</Nav.Link>
                 <Nav.Link onClick={navigateToUser} style={{ fontSize: '1rem', margin: '5px 5px' }}>User</Nav.Link>
                 <Nav.Link onClick={navigateToNotification} style={{ fontSize: '1rem', margin: '5px 5px' }}>Notifications</Nav.Link>
+                <Nav.Link onClick={navigateToInfo} style={{ fontSize: '1rem', margin: '5px 5px' }}>Info</Nav.Link>
                 </Nav>
                 <Container />
                 <Navbar.Text>

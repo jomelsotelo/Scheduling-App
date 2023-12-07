@@ -23,14 +23,15 @@ CREATE TABLE user_availability(
 	FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE meetings(
-	meeting_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    scheduled_time TIMESTAMP NOT NULL,
-    duration TIME NOT NULL,
+CREATE TABLE meetings (
+    meeting_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE meeting_participants(
 	participant_id INT AUTO_INCREMENT PRIMARY KEY,

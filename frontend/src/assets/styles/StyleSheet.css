@@ -70,7 +70,7 @@ header a img {
   z-index: 1;
   background: black;
   max-width: 360px;
-  margin: 0 auto 100px;
+  margin: 0px auto 100px;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -274,4 +274,17 @@ progress {
 #helpButton {
   float: right;
   margin: 10px 8px 5px 0px;
+}
+
+/*Account Information Page*/
+.account-information {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90.6vh;
+  background:
+    linear-gradient(#ae445a, transparent),
+    linear-gradient(90deg, #451952, transparent),
+    linear-gradient(-90deg, #662549, transparent);
+  background-blend-mode: screen;
 }

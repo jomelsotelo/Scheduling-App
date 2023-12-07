@@ -17,14 +17,16 @@ export const getAvailableTime = async (req, res) => {
 
     // Generate the SQL statement dynamically with the user IDs
     const sqlStatement = `
-      SELECT DISTINCT GREATEST(ua1.start_time, ua2.start_time) AS start_time,
-                      LEAST(ua1.end_time, ua2.end_time) AS end_time
+      SELECT GREATEST(ua1.start_time, ua2.start_time) AS start_time,
+             LEAST(ua1.end_time, ua2.end_time) AS end_time
       FROM user_availability ua1
       JOIN user_availability ua2 ON ua1.user_id <> ua2.user_id
                                AND ua1.start_time < ua2.end_time
                                AND ua1.end_time > ua2.start_time
       WHERE ua1.user_id IN (${userIDs.join(', ')})
-        AND ua2.user_id IN (${userIDs.join(', ')});
+        AND ua2.user_id IN (${userIDs.join(', ')})
+      GROUP BY start_time, end_time
+      HAVING COUNT(DISTINCT ua1.user_id) = ${userIDs.length};
     `;
 
     // Execute the SQL query

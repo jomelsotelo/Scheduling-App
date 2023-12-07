@@ -36,7 +36,7 @@ header a img {
     linear-gradient(-90deg, #662549, transparent);
 }
 
-/*Account creattion page*/
+/*Account creation page*/
 .create-page {
   display: flex;
   align-items: center;
@@ -106,12 +106,12 @@ header a img {
 
 .form .message {
   margin: 15px 0 0;
-  color: #b3b3b3;
+  color: white;
   font-size: 12px;
 }
 
 .form .message a {
-  color: #4CAF50;
+  color: #e8bcb9;
   text-decoration: none;
 }
 
@@ -175,8 +175,14 @@ body {
 }
 
 /* React buttons*/
-.btn-primary:hover {
-  background-color: #bd5851;
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open>.dropdown-toggle.btn-primary,
+progress {
+
+  background-color: #bd5851 !important;
 }
 
 /* Adjust styles for Today button */
@@ -230,9 +236,42 @@ body {
 }
 
 /*CSS for Calendar.js page*/
+.rbc-calendar {
+  background:
+    linear-gradient(#ae445a, transparent),
+    linear-gradient(90deg, #451952, transparent),
+    linear-gradient(-90deg, #662549, transparent);
+  background-blend-mode: screen;
+  color: white;
+}
+
+.rbc-button-group {
+  margin-top: 60px;
+}
+
+/*Create Meeting Button*/
+.meetingModificationButton {
+  border-radius: 8px;
+  background-color: #1D1A39;
+  color: white;
+  box-shadow: 0px 0px 10px 1px grey;
+  transition: .3s background-color;
+}
+
+#meetingButton:hover,
+#helpButton:hover {
+  background-color: silver;
+  color: black;
+}
+
+/*Meeting Button*/
+#meetingButton {
+  margin: 10px 0px 5px 8px;
+}
 
 /*Help button*/
 
 #helpButton {
   float: right;
+  margin: 10px 8px 5px 0px;
 }

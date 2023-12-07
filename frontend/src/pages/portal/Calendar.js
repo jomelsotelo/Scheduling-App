@@ -342,7 +342,7 @@ const MyCalendar = (props) => {
           <p>Selected Availability Slot:</p>
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
-          <Button  variant="primary"
+          <Button variant="primary"
             onClick={() => handleConfirmSelection(selectedAvailabilitySlot)}
           >
             Confirm
@@ -352,8 +352,8 @@ const MyCalendar = (props) => {
       )}
 
       <div>
-      <Button variant="primary" onClick={toggleCreateMeetingForm}>Create Meeting
-      </Button>
+        <button id="meetingButton" class="meetingModificationButton" onClick={toggleCreateMeetingForm}>Create Meeting
+        </button>
 
         {/* Create Meeting Form */}
         {isCreateMeetingFormVisible && (
@@ -365,20 +365,21 @@ const MyCalendar = (props) => {
             onParticipantsChange={handleParticipantsChange}
           />
         )}
+        <button id="helpButton" class="meetingModificationButton" onClick={handleShow}>
+          Need Help?
+        </button>
       </div>
-      <Button variant="primary" onClick={handleShow}>
-      Need Help?
-      </Button>
+
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Directions</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-        Drag your cursor to select your available time.
+          Drag your cursor to select your available time.
         </Offcanvas.Body>
         <Offcanvas.Body>
-        Select Week or Day to pick a specific time.
+          Select Week or Day to pick a specific time.
         </Offcanvas.Body>
       </Offcanvas>
       <div>
@@ -387,7 +388,7 @@ const MyCalendar = (props) => {
           <div key={index}>
             {event.title} - {event.start.toLocaleString()} to{" "}
             {event.end.toLocaleString()}
-            <Button  variant="primary" onClick={() => handleRemoveAvailability(event)}>
+            <Button variant="primary" onClick={() => handleRemoveAvailability(event)}>
               Remove
             </Button>
           </div>

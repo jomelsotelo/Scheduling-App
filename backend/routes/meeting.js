@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/', createMeeting)
 
 //This is used to retrieve (get) the details of a specific meeting.
-router.get('/:id', getMeetingDetails)
+router.get('/:userId', getMeetingDetails)
 
 //This is used to get the information of all the meetings.
 router.get('/', getAllMeetings)

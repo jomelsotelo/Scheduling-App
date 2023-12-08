@@ -31,24 +31,74 @@ export const createMeeting = async (req, res) => {
   }
 };
 
-
-// Retrieve details about a specific meeting
 export const getMeetingDetails = async (req, res) => {
-  const meetingId = req.params.id;
+  const userId = req.params.userId;
 
   try {
-    const [results] = await database.query('SELECT * FROM meetings WHERE meeting_id = ?', [meetingId]);
+    // Retrieve meeting details for a specific user from the meeting_participants table
+    const [meetingResults] = await database.query(`
+      SELECT
+        meetings.*,
+        users.user_id as participant_user_id,
+        users.first_name as participant_first_name,
+        users.last_name as participant_last_name,
+        users.email as participant_email
+      FROM
+        meetings
+      JOIN
+        meeting_participants ON meetings.meeting_id = meeting_participants.meeting_id
+      JOIN
+        users ON meeting_participants.user_id = users.user_id
+      WHERE
+        meetings.meeting_id IN (
+          SELECT meeting_id
+          FROM meeting_participants
+          WHERE user_id = ?
+        );
+    `, [userId]);
 
-    if (results.length === 0) {
-      res.status(404).json({ error: 'Meeting not found' });
-    } else {
-      res.status(200).json(results[0]);
+    if (meetingResults.length === 0) {
+      return res.status(404).json({ error: 'No meetings found for the user' });
     }
+
+    // Group participants by meeting_id
+    const meetingsMap = new Map();
+    meetingResults.forEach((meeting) => {
+      const meetingId = meeting.meeting_id;
+
+      if (!meetingsMap.has(meetingId)) {
+        // Initialize the meeting entry
+        meetingsMap.set(meetingId, {
+          meeting_id: meeting.meeting_id,
+          title: meeting.title,
+          start_time: meeting.start_time,
+          end_time: meeting.end_time,
+          participants: [],
+        });
+      }
+
+      // Add participant details to the meeting
+      meetingsMap.get(meetingId).participants.push({
+        user_id: meeting.participant_user_id,
+        first_name: meeting.participant_first_name,
+        last_name: meeting.participant_last_name,
+        email: meeting.participant_email,
+      });
+    });
+
+    // Convert the map values to an array
+    const meetingsData = Array.from(meetingsMap.values());
+
+    res.status(200).json(meetingsData);
   } catch (error) {
-    console.error('Error retrieving meeting details:', error);
+    console.error('Error retrieving meetings for user:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+
+
 
 // Get all meetings
 export const getAllMeetings = async (req, res) => {

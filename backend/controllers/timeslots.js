@@ -10,6 +10,12 @@ export const getAvailableTime = async (req, res) => {
     const userIDs = JSON.parse(users.user_ids);
         console.log(userIDs);
 
+    // Ensure userIDs is an array and has at least two elements
+    if (!Array.isArray(userIDs) || userIDs.length <1) {
+      res.status(400).json({ error: 'Invalid user IDs provided' });
+      return;
+    }
+
 
     // Generate the SQL statement dynamically with the user IDs
     const sqlStatement = `

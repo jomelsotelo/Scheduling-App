@@ -1,16 +1,23 @@
 import database from '../config/database.js'
+import dayjs from 'dayjs';
 
 // Create a new meeting
 export const createMeeting = async (req, res) => {
   const { title, start_time, end_time, participants } = req.body;
 
   try {
-    const meetingQuery = 'INSERT INTO meetings (title, scheduled_time, duration) VALUES (?, ?, ?)';
-    const [meetingResults] = await database.query(meetingQuery, [title, start_time, end_time]);
+    // Format the date strings to match the MySQL datetime format
+    const formattedStartTime = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss');
+    const formattedEndTime = dayjs(end_time).format('YYYY-MM-DD HH:mm:ss');
+
+    // Insert into meetings table
+    const meetingQuery = 'INSERT INTO meetings (title, start_time, end_time) VALUES (?, ?, ?)';
+    const [meetingResults] = await database.query(meetingQuery, [title, formattedStartTime, formattedEndTime]);
 
     const meetingId = meetingResults.insertId;
 
     if (participants && participants.length > 0) {
+      // Insert into meeting_participants table
       const participantsQuery = 'INSERT INTO meeting_participants (meeting_id, user_id) VALUES ?';
       const participantsValues = participants.map((participantId) => [meetingId, participantId]);
 

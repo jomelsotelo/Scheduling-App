@@ -1,17 +1,78 @@
 import React, { useState, useEffect } from "react";
-import { Calendar, dayjsLocalizer } from "react-big-calendar";
+import { Calendar, dayjsLocalizer, Toolbar } from "react-big-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
 import { createAvailability } from "../../components/availability";
 import { jwtDecode } from "jwt-decode";
 import CreateMeetingForm from "../../components/CreateMeetingForm";
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import Button from "react-bootstrap/Button";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 const localizer = dayjsLocalizer(dayjs);
 
-const MyCalendar = (props) => {
+//Toolbar
+const CustomToolbar = (toolbar) => {
+  const goToToday = () => {
+    toolbar.onNavigate("TODAY");
+  };
 
+  const goToPrev = () => {
+    toolbar.onNavigate("PREV");
+  };
+
+  const goToNext = () => {
+    toolbar.onNavigate("NEXT");
+  };
+
+  return (
+    <div className="custom-toolbar">
+      <div className="toolbar-section">
+        <div className="current-month">
+          {localizer.format(toolbar.date, "MMMM YYYY")}
+        </div>
+        <Button
+          variant="primary"
+          onClick={() => toolbar.onView("month")}
+          disabled={toolbar.view === "month"}
+        >
+          Month
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => toolbar.onView("week")}
+          disabled={toolbar.view === "week"}
+        >
+          Week
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => toolbar.onView("day")}
+          disabled={toolbar.view === "day"}
+        >
+          Day
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => toolbar.onView("agenda")}
+          disabled={toolbar.view === "agenda"}
+        >
+          Agenda
+        </Button>
+        <Button variant="primary" onClick={goToToday}>
+          Today
+        </Button>
+        <Button variant="primary" onClick={goToPrev}>
+          Back
+        </Button>
+        <Button variant="primary" onClick={goToNext}>
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const MyCalendar = (props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -30,6 +91,9 @@ const MyCalendar = (props) => {
   const [selectedAvailabilitySlot, setSelectedAvailabilitySlot] =
     useState(null);
   const [selectedMeetingSlot, setSelectedMeetingSlot] = useState(null);
+
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
 
   useEffect(() => {
     const loadUserOptions = async () => {
@@ -169,25 +233,6 @@ const MyCalendar = (props) => {
 
         // Fetches the updated user availabilities after creation
         await fetchUserData();
-      } else if (isCreatingMeeting && selectedMeetingSlot) {
-        // Code for creating a meeting (similar to your existing logic)
-        const user_id = user?.user_id;
-
-        // Prepare data for API request
-        const requestData = {
-          users: [], // Update this with the actual participants for the meeting
-          duration: 60, // Update this with the actual duration for the meeting
-          date: dayjs(selectedMeetingSlot.start).format("YYYY-MM-DD HH:mm:ss"),
-        };
-
-        // Call your API endpoint to create the meeting
-        // ...
-        // const response = await axios.post("/api/meeting/", requestData);
-        // Update the calendar or perform any other necessary actions
-        // ...
-
-        // Reset the selectedMeetingSlot state
-        setSelectedMeetingSlot(null);
       }
     } catch (error) {
       // Handles error
@@ -213,11 +258,10 @@ const MyCalendar = (props) => {
       .then((response) => {
         console.log(response.data.message);
 
-        //Updates the events list
-        const updatedEventsList = myEventsList.filter(
-          (e) => e.availability_id !== event.availability_id
+        // Updates the events list
+        setMyEventsList((prevEvents) =>
+          prevEvents.filter((e) => e.availability_id !== event.availability_id)
         );
-        setMyEventsList(updatedEventsList);
       })
       .catch((error) => {
         console.error("Error removing availability:", error);
@@ -229,69 +273,69 @@ const MyCalendar = (props) => {
     setCreateMeetingFormVisible(!isCreateMeetingFormVisible);
     setAddingAvailability(true);
     setMeetingCreationCanceled(false);
-    // Remove the following line since you don't need selectedMeetingSlot in the main component
-    // setSelectedMeetingSlot(null);
     setCreatingMeeting(!isCreateMeetingFormVisible);
   };
 
-  const handleParticipantsChange = async (
-    selectedParticipants,
-    availableTimeslots
-  ) => {
+  const handleParticipantsChange = async (selectedOptions) => {
+    setAvailableTimeSlots([]);
     try {
-      if (availableTimeslots.length > 0) {
-        // Update the calendar with the new available timeslots
-        const mappedTimeslots = availableTimeslots.map((timeslot) => ({
-          title: "Available Meeting",
-          start: new Date(timeslot.start_time),
-          end: new Date(timeslot.end_time),
-        }));
-        setMyEventsList(mappedTimeslots);
-      } else {
-        console.error("No available meeting times found");
-        setMyEventsList([]); // Clear the calendar events if no available times
-      }
-    } catch (error) {
-      console.error(
-        "Error updating calendar with available meeting times:",
-        error
+      // Prepare user IDs array from the selected participants
+      const userIDs = selectedOptions.map((participant) => participant.value);
+
+      // Call your API endpoint to get common availabilities using GET request
+      const response = await axios.get(`/api/timeslots/[${userIDs.join(",")}]`);
+
+      const commonAvailabilities = response.data;
+
+      // Update the state with the new common availabilities, specifying the color
+      setAvailableTimeSlots(
+        commonAvailabilities.map((availability, index) => ({
+          title: "Common Availability",
+          start: new Date(availability.start_time),
+          end: new Date(availability.end_time),
+          color: `rgba(83, 203, 23, ${index / commonAvailabilities.length})`,
+        }))
       );
+
+      // Update the state with the updated participants
+      setSelectedParticipants(selectedOptions);
+    } catch (error) {
+      console.error("Error fetching common availabilities:", error);
     }
   };
 
   const handleCreateMeeting = async (meetingData) => {
+    // console.log(meetingData.title)
+    // console.log(meetingData.start)
+    // console.log(meetingData.end)
+    // console.log(meetingData.participants)
     if (meetingData.title && meetingData.participants.length > 0) {
       try {
         const user_id = user?.user_id;
 
         // Prepare data for API request
         const requestData = {
-          users: meetingData.participants.map((participant) => ({
-            id: participant.value,
-          })),
-          duration: meetingData.duration,
-          date: dayjs(meetingData.date).format("YYYY-MM-DD HH:mm:ss"),
+          title: meetingData.title,
+          start_time: meetingData.start,
+          end_time: meetingData.end,
+          participants: meetingData.participants.map(
+            (participant) => participant.value
+          ),
         };
 
-        if (!isCreatingMeeting) {
-          // Call your API endpoint to get available timeslots
-          const response = await axios.post("/api/timeslots", requestData);
-          const availableTimeslots = response.data;
+        const response = await axios.post("/api/meeting", requestData);
+        const createdMeeting = response.data;
 
-          if (availableTimeslots.length > 0) {
-            // Update the calendar with the new available timeslots
-            const mappedTimeslots = availableTimeslots.map((timeslot) => ({
-              title: "Available Meeting",
-              start: new Date(timeslot.start_time),
-              end: new Date(timeslot.end_time),
-            }));
-            setMyEventsList(mappedTimeslots);
-          } else {
-            console.error("No available timeslots found");
-          }
-        }
+        // Update the calendar with the new meeting
+        const newEvent = {
+          title: meetingData.title,
+          start: new Date(createdMeeting.start_time),
+          end: new Date(createdMeeting.end_time),
+        };
+
+        setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
       } catch (error) {
-        console.error("Error updating calendar:", error);
+        console.error("Error creating meeting:", error);
       }
     } else {
       // Handle case where meeting details are incomplete or participants are not selected
@@ -312,6 +356,8 @@ const MyCalendar = (props) => {
     } catch (error) {
       console.error("Error canceling create meeting:", error);
     } finally {
+      // Reset the availableTimeSlots state
+      setAvailableTimeSlots([]);
       setCreateMeetingFormVisible(false);
       setAddingAvailability(true);
       setCreatingMeeting(false);
@@ -328,7 +374,7 @@ const MyCalendar = (props) => {
     <div>
       <Calendar
         localizer={localizer}
-        events={myEventsList}
+        events={[...myEventsList, ...availableTimeSlots]} // Merge current events with available time slots
         startAccessor="start"
         endAccessor="end"
         selectable
@@ -336,13 +382,17 @@ const MyCalendar = (props) => {
         style={{ height: 500 }}
         step={5}
         onSelectEvent={(event, e) => handleRemoveAvailability(event)}
+        components={{
+          toolbar: CustomToolbar,
+        }}
       />
       {selectedAvailabilitySlot && (
         <div>
           <p>Selected Availability Slot:</p>
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
-          <Button variant="primary"
+          <Button
+            variant="primary"
             onClick={() => handleConfirmSelection(selectedAvailabilitySlot)}
           >
             Confirm
@@ -352,7 +402,12 @@ const MyCalendar = (props) => {
       )}
 
       <div>
-        <button id="meetingButton" class="meetingModificationButton" onClick={toggleCreateMeetingForm}>Create Meeting
+        <button
+          id="meetingButton"
+          class="meetingModificationButton"
+          onClick={toggleCreateMeetingForm}
+        >
+          Create Meeting
         </button>
 
         {/* Create Meeting Form */}
@@ -365,12 +420,14 @@ const MyCalendar = (props) => {
             onParticipantsChange={handleParticipantsChange}
           />
         )}
-        <button id="helpButton" class="meetingModificationButton" onClick={handleShow}>
+        <button
+          id="helpButton"
+          class="meetingModificationButton"
+          onClick={handleShow}
+        >
           Need Help?
         </button>
       </div>
-
-
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Directions</Offcanvas.Title>
@@ -388,7 +445,10 @@ const MyCalendar = (props) => {
           <div key={index}>
             {event.title} - {event.start.toLocaleString()} to{" "}
             {event.end.toLocaleString()}
-            <Button variant="primary" onClick={() => handleRemoveAvailability(event)}>
+            <Button
+              variant="primary"
+              onClick={() => handleRemoveAvailability(event)}
+            >
               Remove
             </Button>
           </div>

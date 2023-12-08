@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import axios from "axios";
 import Button from 'react-bootstrap/Button';
 
 const CreateMeetingForm = ({
@@ -17,39 +16,18 @@ const CreateMeetingForm = ({
     // No need to set the selected date based on the selected slot
   }, [selectedMeetingSlot]);
 
-  // Fetch available meeting times based on selected participants
-  const fetchAvailableTimes = async () => {
-    try {
-      // Prepare data for API request
-      const requestData = {
-        users: selectedParticipants.map((participant) => ({
-          id: participant.value,
-        })),
-        // Remove duration and date from the request
-      };
-      console.log(requestData)
-      // Call your API endpoint to get available timeslots
-      const response = await axios.post("/api/timeslots", requestData);
-      const availableTimeslots = response.data;
-      // Call the callback to update the parent component's state (calendar events)
-      onParticipantsChange(selectedParticipants, availableTimeslots);
-    } catch (error) {
-      console.error("Error fetching available meeting times:", error);
-    }
-  };
-
   const handleCreateMeeting = () => {
     onSubmit({
       title: meetingTitle,
-      participants: selectedParticipants,
       start: selectedMeetingSlot?.start,
       end: selectedMeetingSlot?.end,
+      participants: selectedParticipants,
     });
   };
 
   const handleParticipantsChange = (selectedOptions) => {
     setSelectedParticipants(selectedOptions);
-    fetchAvailableTimes(); // Fetch available meeting times when participants change
+    onParticipantsChange(selectedOptions); // Call the parent component's function
   };
 
   return (

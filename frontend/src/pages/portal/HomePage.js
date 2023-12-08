@@ -28,7 +28,6 @@ function HomePage() {
           </Button>{' '}
         </Link>
       </div>
-      <div className="home-content2"></div>
     </div>
   );
 }

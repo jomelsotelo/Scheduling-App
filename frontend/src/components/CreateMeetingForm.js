@@ -10,7 +10,7 @@ const CreateMeetingForm = ({
   selectedMeetingSlot,
 }) => {
   const [meetingTitle, setMeetingTitle] = useState("");
-  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedParticipants, setSelectedParticipants] = useState([]); // Initialize with the current user
 
   useEffect(() => {
     // No need to set the selected date based on the selected slot

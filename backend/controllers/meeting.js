@@ -57,8 +57,10 @@ export const getMeetingDetails = async (req, res) => {
         );
     `, [userId]);
 
+    // Check if there are no rows found
     if (meetingResults.length === 0) {
-      return res.status(404).json({ error: 'No meetings found for the user' });
+      // Return an empty array in the response
+      return res.status(200).json([]);
     }
 
     // Group participants by meeting_id
@@ -95,7 +97,6 @@ export const getMeetingDetails = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 
 
@@ -141,14 +142,15 @@ export const updateMeeting = async (req, res) => {
 // Delete a meeting
 export const deleteMeeting = async (req, res) => {
   const meetingId = req.params.id;
-  const deleteMeetingQuery = 'DELETE FROM meetings WHERE meeting_id = ?';
   const deleteParticipantsQuery = 'DELETE FROM meeting_participants WHERE meeting_id = ?';
+  const deleteMeetingQuery = 'DELETE FROM meetings WHERE meeting_id = ?';
 
   try {
-    await database.query(deleteMeetingQuery, [meetingId]);
-
-    // Also delete participants associated with the meeting
+    // Delete meeting_participants records first
     await database.query(deleteParticipantsQuery, [meetingId]);
+
+    // Then, delete the meeting record
+    await database.query(deleteMeetingQuery, [meetingId]);
 
     res.status(200).json({ message: 'Meeting deleted successfully' });
   } catch (error) {
@@ -156,3 +158,4 @@ export const deleteMeeting = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+

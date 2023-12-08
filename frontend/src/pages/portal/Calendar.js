@@ -115,34 +115,37 @@ const MyCalendar = (props) => {
 
         // Map meetings to the format expected by the calendar
         // Map meetings to the format expected by the calendar
-        const mappedMeetings = meetingsArray.flatMap((meeting) => {
-          // Check if the current user is a participant in the meeting
-          const currentUserParticipant = meeting.participants.find(
-            (participant) => participant.user_id === userId
-          );
+        const mappedMeetings =
+          meetingsArray.length > 0
+            ? meetingsArray.flatMap((meeting) => {
+                // Check if the current user is a participant in the meeting
+                const currentUserParticipant = meeting.participants.find(
+                  (participant) => participant.user_id === userId
+                );
 
-          if (currentUserParticipant) {
-            // Only add the meeting details if the current user is a participant
-            return [
-              {
-                title: meeting.title,
-                start: new Date(meeting.start_time),
-                end: new Date(meeting.end_time),
-                meeting_id: meeting.meeting_id,
-                participant: {
-                  user_id: currentUserParticipant.user_id,
-                  first_name: currentUserParticipant.first_name,
-                  last_name: currentUserParticipant.last_name,
-                  email: currentUserParticipant.email,
-                  // Add other participant properties as needed
-                },
-                type: "meeting",
-              },
-            ];
-          } else {
-            return []; // Return an empty array if the current user is not a participant
-          }
-        });
+                if (currentUserParticipant) {
+                  // Only add the meeting details if the current user is a participant
+                  return [
+                    {
+                      title: meeting.title,
+                      start: new Date(meeting.start_time),
+                      end: new Date(meeting.end_time),
+                      meeting_id: meeting.meeting_id,
+                      participant: {
+                        user_id: currentUserParticipant.user_id,
+                        first_name: currentUserParticipant.first_name,
+                        last_name: currentUserParticipant.last_name,
+                        email: currentUserParticipant.email,
+                        // Add other participant properties as needed
+                      },
+                      type: "meeting",
+                    },
+                  ];
+                } else {
+                  return []; // Return an empty array if the current user is not a participant
+                }
+              })
+            : [];
 
         // Combine availabilities and meetings
         const updatedCombinedEvents = [
@@ -270,6 +273,25 @@ const MyCalendar = (props) => {
       })
       .catch((error) => {
         console.error("Error removing availability:", error);
+      });
+  };
+
+  const handleRemoveMeeting = (event) => {
+    const meetingId = event.meeting_id;
+    const user_id = user?.user_id;
+
+    axios
+      .delete(`/api/meeting/${meetingId}`)
+      .then((response) => {
+        console.log(response.data.message);
+
+        // Updates the events list
+        setMyEventsList((prevEvents) =>
+          prevEvents.filter((e) => e.meeting_id !== event.meeting_id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error removing meeting:", error);
       });
   };
 
@@ -402,30 +424,52 @@ const MyCalendar = (props) => {
           <Modal.Title>Event Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-  {selectedEvent && (
-    <div>
-      <p>Title: {selectedEvent.title}</p>
-      <p>Start Time: {selectedEvent.start.toLocaleString()}</p>
-      <p>End Time: {selectedEvent.end.toLocaleString()}</p>
-      {/* Display participants for meetings */}
-      {selectedEvent.type === "meeting" && meetingDetails && (
-        <div>
-          <p>Participants:</p>
-          {meetingDetails.participants &&
-          meetingDetails.participants.length > 0 ? (
-            meetingDetails.participants.map((participant, index) => (
-              <p
-                key={index}
-              >{`${participant.first_name} ${participant.last_name} - ${participant.email}`}</p>
-            ))
-          ) : (
-            <p>No participants</p>
+          {selectedEvent && (
+            <div>
+              <p>Title: {selectedEvent.title}</p>
+              <p>Start Time: {selectedEvent.start.toLocaleString()}</p>
+              <p>End Time: {selectedEvent.end.toLocaleString()}</p>
+              {/* Display participants for meetings */}
+              {selectedEvent.type === "meeting" && meetingDetails && (
+                <div>
+                  <p>Participants:</p>
+                  {meetingDetails.participants &&
+                  meetingDetails.participants.length > 0 ? (
+                    meetingDetails.participants.map((participant, index) => (
+                      <p
+                        key={index}
+                      >{`${participant.first_name} ${participant.last_name} - ${participant.email}`}</p>
+                    ))
+                  ) : (
+                    <p>No participants</p>
+                  )}
+                </div>
+              )}
+              {selectedEvent.type === "availability" && (
+                <div>
+                  {/* Add Remove button for availability */}
+                  <Button
+                    variant="danger"
+                    onClick={() => handleRemoveAvailability(selectedEvent)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              )}
+              {selectedEvent.type === "meeting" && (
+                <div>
+                  {/* Add Remove button for meeting */}
+                  <Button
+                    variant="danger"
+                    onClick={() => handleRemoveMeeting(selectedEvent)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
-        </div>
-      )}
-    </div>
-  )}
-</Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDetailsModal}>
             Close
@@ -485,21 +529,6 @@ const MyCalendar = (props) => {
           Select Week or Day to pick a specific time.
         </Offcanvas.Body>
       </Offcanvas>
-      <div>
-        <p>Selected Availabilities:</p>
-        {myEventsList.map((event, index) => (
-          <div key={index}>
-            {event.title} - {event.start.toLocaleString()} to{" "}
-            {event.end.toLocaleString()}
-            <Button
-              variant="primary"
-              onClick={() => handleRemoveAvailability(event)}
-            >
-              Remove
-            </Button>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };

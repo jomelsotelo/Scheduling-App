@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Calendar, dayjsLocalizer, Toolbar } from "react-big-calendar";
+import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
 import { createAvailability } from "../../components/availability";
@@ -9,68 +9,6 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 const localizer = dayjsLocalizer(dayjs);
-
-//Toolbar
-const CustomToolbar = (toolbar) => {
-  const goToToday = () => {
-    toolbar.onNavigate("TODAY");
-  };
-
-  const goToPrev = () => {
-    toolbar.onNavigate("PREV");
-  };
-
-  const goToNext = () => {
-    toolbar.onNavigate("NEXT");
-  };
-
-  return (
-    <div className="custom-toolbar">
-      <div className="toolbar-section">
-        <div className="current-month">
-          {localizer.format(toolbar.date, "MMMM YYYY")}
-        </div>
-        <Button
-          variant="primary"
-          onClick={() => toolbar.onView("month")}
-          disabled={toolbar.view === "month"}
-        >
-          Month
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => toolbar.onView("week")}
-          disabled={toolbar.view === "week"}
-        >
-          Week
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => toolbar.onView("day")}
-          disabled={toolbar.view === "day"}
-        >
-          Day
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => toolbar.onView("agenda")}
-          disabled={toolbar.view === "agenda"}
-        >
-          Agenda
-        </Button>
-        <Button variant="primary" onClick={goToToday}>
-          Today
-        </Button>
-        <Button variant="primary" onClick={goToPrev}>
-          Back
-        </Button>
-        <Button variant="primary" onClick={goToNext}>
-          Next
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 const MyCalendar = (props) => {
   const [show, setShow] = useState(false);
@@ -159,6 +97,7 @@ const MyCalendar = (props) => {
           start: new Date(availability.start_time),
           end: new Date(availability.end_time),
           availability_id: availability.availability_id,
+          type: "availability",
         }));
 
         const newAvailabilityMap = {};
@@ -219,6 +158,7 @@ const MyCalendar = (props) => {
           title: "Available",
           start: formatToMySQLTimestamp(selectedAvailabilitySlot.start),
           end: formatToMySQLTimestamp(selectedAvailabilitySlot.end),
+          type: "availability",
         };
         const user_id = user?.user_id;
 
@@ -290,10 +230,10 @@ const MyCalendar = (props) => {
       // Update the state with the new common availabilities, specifying the color
       setAvailableTimeSlots(
         commonAvailabilities.map((availability, index) => ({
-          title: "Common Availability",
-          start: new Date(availability.start_time),
-          end: new Date(availability.end_time),
-          color: `rgba(83, 203, 23, ${index / commonAvailabilities.length})`,
+          title: "Free",
+  start: new Date(availability.start_time),
+  end: new Date(availability.end_time),
+  type: "commonAvailability", // Add a type property for common availabilities
         }))
       );
 
@@ -305,10 +245,6 @@ const MyCalendar = (props) => {
   };
 
   const handleCreateMeeting = async (meetingData) => {
-    // console.log(meetingData.title)
-    // console.log(meetingData.start)
-    // console.log(meetingData.end)
-    // console.log(meetingData.participants)
     if (meetingData.title && meetingData.participants.length > 0) {
       try {
         const user_id = user?.user_id;
@@ -329,8 +265,9 @@ const MyCalendar = (props) => {
         // Update the calendar with the new meeting
         const newEvent = {
           title: meetingData.title,
-          start: new Date(createdMeeting.start_time),
-          end: new Date(createdMeeting.end_time),
+  start: new Date(createdMeeting.start_time),
+  end: new Date(createdMeeting.end_time),
+  type: "meeting", // Add a type property for meetings
         };
 
         setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
@@ -382,8 +319,17 @@ const MyCalendar = (props) => {
         style={{ height: 500 }}
         step={5}
         onSelectEvent={(event, e) => handleRemoveAvailability(event)}
-        components={{
-          toolbar: CustomToolbar,
+        eventPropGetter={(event) => {
+          // Use different colors based on the event type
+          if (event.type === "availability") {
+            return { style: { backgroundColor: 'blue' } }; // Adjust the color for availability events
+          } else if (event.type === "commonAvailability") {
+            return { style: { backgroundColor: 'green' } }; // Adjust the color for common availability events
+          } else if (event.type === "meeting") {
+            return { style: { backgroundColor: 'red' } }; // Adjust the color for meeting events
+          } else {
+            return {}; // Default style for other events
+          }
         }}
       />
       {selectedAvailabilitySlot && (

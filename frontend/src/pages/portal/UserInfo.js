@@ -33,7 +33,7 @@ const UserInfo = () => {
                 setUser(userData);
 
                 // Check for notifications
-                const notificationsResponse = await axiosInstance.get(`/api/notifications/1`);
+                const notificationsResponse = await axiosInstance.get(`/api/notifications/${userId}`);
                 const hasNotifications = notificationsResponse.data.length > 0;
                 setHasNotifications(hasNotifications);
 
@@ -165,7 +165,7 @@ const UserInfo = () => {
                     />
                 </Link>
 
-                {/* New button to link to /extra */}
+                {/* Info button link to /extra */}
                 <Link to="/extra" style={{ position: 'absolute', top: '250px', left: '-60px', width: '52px', height: '52px', transition: 'transform 0.2s' }}>
                     <img
                         src={loading ? loadingImage : InfoImage}

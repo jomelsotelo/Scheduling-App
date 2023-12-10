@@ -1,4 +1,5 @@
 @import '~react-big-calendar/lib/css/react-big-calendar.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Rubik:wght@800&display=swap');
 
 body {
   /* background-color: aquamarine; */
@@ -137,43 +138,6 @@ body {
   background: #E8BCB9;
 }
 
-.rbc-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 100%;
-  overflow-x: auto;
-  /* Add horizontal scrolling if necessary */
-  padding: 0 10px;
-  /* Add padding for better aesthetics */
-}
-
-.rbc-btn-group {
-  display: flex;
-  align-items: center;
-}
-
-.rbc-toolbar-label {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.rbc-btn-group button {
-  background-color: gray;
-  background-image: gray;
-  color: #fff;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  padding: 5px 5px;
-  margin: 0 5px;
-  cursor: pointer;
-}
-
-.rbc-btn-group button.active {
-  background-color: #dd6a62;
-}
-
 /* React buttons*/
 .btn-primary:hover,
 .btn-primary:focus,
@@ -236,6 +200,59 @@ progress {
 }
 
 /*CSS for Calendar.js page*/
+
+.rbc-calendar {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Styling the toolbar */
+.rbc-toolbar {
+  background-color: #f0f0f0;
+}
+
+/* Styling the date header */
+.rbc-header {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.rbc-agenda-view .rbc-agenda-time-cell,
+.rbc-agenda-view .rbc-agenda-event-cell,
+.rbc-agenda-view .rbc-agenda-date-cell {
+  color: #fff;
+}
+
+
+/* Styling individual days in day and week views */
+.rbc-day-bg {
+  border-top: 1px solid #ccc;  /* Set the top border */
+  border-bottom: none;         /* Clear the bottom border */
+  border-left: none;           /* Clear the left border */
+  border-right: none;          /* Clear the right border */
+}
+
+/* Styling individual events */
+.rbc-event {
+  background-color: #4285f4;
+  color: #fff;
+  border: 0px solid #4285f4;
+}
+
+/* Styling selected time slot */
+.rbc-slot-selection {
+  background-color: rgba(66, 133, 244, 0.3);
+}
+.rbc-slot {
+  border:none;
+}
+
+/* Custom styling for a specific event */
+#my-custom-event {
+  background-color: #ff7043;
+  color: #fff;
+}
+
+
 .rbc-toolbar-label {
   font-weight: bold;
   margin-top: 5.5px;
@@ -243,6 +260,56 @@ progress {
 
 .rbc-button-group {
   margin-top: 60px;
+}
+
+.containerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+h3 {
+  /* ... your existing styles */
+  font-family: 'Rubik', sans-serif;
+  font-size: 40px;
+}
+
+.contain-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; /* Adjust the top margin as needed */
+}
+
+.transparent-button {
+  background-color: transparent !important;
+  border: none !important;
+  color: #007bff; /* Set the text color to the desired color */
+}
+.transparent-button:hover {
+  background-color: transparent !important;
+  border: none !important;
+  color: #0056b3; /* Set the text color when hovered */
+}
+
+.button-bottom {
+  outline: none;
+  outline-color: #000000;
+  box-shadow: none;
+  background-color: none;
+  color: #000000; /* Text color for "Next" button */
+}
+.button-bottom:hover {
+  background-color: #333;
+  color: #000000;
+}
+
+.button-top {
+  outline: none;
+  box-shadow: none;
+  background-color: #854F6C;
+  color: #ffffff; /* Text color for "Next" button */
 }
 
 /*Create Meeting Button and help button*/

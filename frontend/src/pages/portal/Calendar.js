@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Calendar, dayjsLocalizer } from "react-big-calendar";
+import { Calendar, Views, Navigate } from "react-big-calendar";
+import { dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Modal from "react-bootstrap/Modal";
-import { createAvailability } from "../../components/availability";
-import CreateMeetingForm from "../../components/CreateMeetingForm";
+import { createAvailability } from "../../components/calendar/availability";
+import CreateMeetingForm from "../../components/calendar/CreateMeetingForm";
+import NavigationControls from "../../components/calendar/NavigationControl";
+import ViewOptions from "../../components/calendar/ViewOptions";
 
 const localizer = dayjsLocalizer(dayjs);
 
 const MyCalendar = (props) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentView, setCurrentView] = useState(Views.MONTH);
   // State variables
   const [show, setShow] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -21,11 +26,14 @@ const MyCalendar = (props) => {
   const [myEventsList, setMyEventsList] = useState([]);
   const [user, setUser] = useState(null);
   const [userOptions, setUserOptions] = useState([]);
-  const [isCreateMeetingFormVisible, setCreateMeetingFormVisible] = useState(false);
+  const [isCreateMeetingFormVisible, setCreateMeetingFormVisible] =
+    useState(false);
   const [isAddingAvailability, setAddingAvailability] = useState(true);
   const [isCreatingMeeting, setCreatingMeeting] = useState(false);
-  const [isMeetingCreationCanceled, setMeetingCreationCanceled] = useState(false);
-  const [selectedAvailabilitySlot, setSelectedAvailabilitySlot] = useState(null);
+  const [isMeetingCreationCanceled, setMeetingCreationCanceled] =
+    useState(false);
+  const [selectedAvailabilitySlot, setSelectedAvailabilitySlot] =
+    useState(null);
   const [selectedMeetingSlot, setSelectedMeetingSlot] = useState(null);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
@@ -86,15 +94,12 @@ const MyCalendar = (props) => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.userId;
 
-        const [
-          userDataResponse,
-          availabilitiesResponse,
-          meetingsResponse,
-        ] = await Promise.all([
-          axiosInstance.get(`/api/users/${userId}`),
-          axiosInstance.get(`/api/user/${userId}/availability`),
-          axiosInstance.get(`/api/meeting/${userId}`),
-        ]);
+        const [userDataResponse, availabilitiesResponse, meetingsResponse] =
+          await Promise.all([
+            axiosInstance.get(`/api/users/${userId}`),
+            axiosInstance.get(`/api/user/${userId}/availability`),
+            axiosInstance.get(`/api/meeting/${userId}`),
+          ]);
 
         const userData = userDataResponse.data;
         const availabilitiesData = availabilitiesResponse.data;
@@ -138,7 +143,10 @@ const MyCalendar = (props) => {
           }
         });
 
-        const updatedCombinedEvents = [...mappedAvailabilities, ...mappedMeetings];
+        const updatedCombinedEvents = [
+          ...mappedAvailabilities,
+          ...mappedMeetings,
+        ];
         setCombinedEvents(updatedCombinedEvents);
         setMyEventsList(updatedCombinedEvents);
       }
@@ -374,8 +382,76 @@ const MyCalendar = (props) => {
     }
   };
 
+  const handleNavigate = (action) => {
+    let targetDate = currentDate;
+
+    switch (action) {
+      case Navigate.PREVIOUS:
+        targetDate = localizer.add(targetDate, -1, getViewUnit());
+        break;
+
+      case Navigate.NEXT:
+        targetDate = localizer.add(targetDate, 1, getViewUnit());
+        break;
+
+      case Navigate.TODAY:
+        targetDate = new Date(); // Reset to today's date
+        break;
+
+      case Navigate.DATE:
+        // Use the date passed from the onNavigate callback for daily navigation
+        break;
+
+      default:
+        break;
+    }
+
+    // Update the current date
+    setCurrentDate(targetDate);
+    console.log(`Navigating: ${action}`);
+  };
+
+  const handleViewChange = (view) => {
+    // Update the current view when the view changes
+    setCurrentView(view);
+    console.log(`Changing view: ${view}`);
+  };
+
+  const getViewUnit = () => {
+    switch (currentView) {
+      case Views.DAY:
+        return "day";
+      case Views.WEEK:
+        return "week";
+      default:
+        return "month";
+    }
+  };
+
+  const renderDayInformation = () => {
+    if (currentView === Views.DAY) {
+      return <h3>{dayjs(currentDate).format("MMMM D, YYYY")}</h3>;
+    }
+    return <h3>{dayjs(currentDate).format("MMMM YYYY")}</h3>;
+  };
+
   return (
     <div>
+      <div className="containerTop">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ marginRight: "20px" }}>{renderDayInformation()}</div>
+          <NavigationControls onNavigate={(action) => handleNavigate(action)} />
+        </div>
+        <div>
+          <ViewOptions onViewChange={(view) => handleViewChange(view)} />
+        </div>
+      </div>
       <Calendar
         localizer={localizer}
         events={[...myEventsList, ...availableTimeSlots]} // Merge current events with available time slots
@@ -394,12 +470,17 @@ const MyCalendar = (props) => {
             return { style: { backgroundColor: "green" } }; // Adjust the color for common availability events
           } else if (event.type === "meeting") {
             return {
-              style: { backgroundColor: event.color || "red" }, // Use the event's color or default to red
+              style: { backgroundColor: "#854F6C" }, // Use the event's color or default to red
             };
           } else {
             return {}; // Default style for other events
           }
         }}
+        toolbar={null}
+        view={currentView} // Set the current view
+        onView={(view) => handleViewChange(view)} // Handle view changes
+        date={currentDate} // Set the current date
+        onNavigate={(action, newDate) => handleNavigate(action, newDate)}
       />
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
@@ -466,23 +547,24 @@ const MyCalendar = (props) => {
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
           <Button
-            variant="primary"
+            variant="dark"
             onClick={() => handleConfirmSelection(selectedAvailabilitySlot)}
           >
             Confirm
           </Button>
-          <button onClick={handleCancelSelection}>Cancel</button>
+          <Button variant="dark" onClick={handleCancelSelection}>
+            Cancel
+          </Button>
         </div>
       )}
 
-      <div>
-        <button
-          id="meetingButton"
-          className="meetingModificationButton"
+      <div className="contain-bottom">
+        <Button
+          variant="light button-top"
           onClick={toggleCreateMeetingForm}
         >
-          Create Meeting
-        </button>
+          + Create
+        </Button>
 
         {/* Create Meeting Form */}
         {isCreateMeetingFormVisible && (
@@ -494,13 +576,12 @@ const MyCalendar = (props) => {
             onParticipantsChange={handleParticipantsChange}
           />
         )}
-        <button
-          id="helpButton"
-          className="meetingModificationButton"
+        <Button
+          variant="light button-top"
           onClick={handleShow}
         >
           Need Help?
-        </button>
+        </Button>
       </div>
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>

@@ -67,17 +67,34 @@ export const getUsers = async (req, res) => {
 //Edit user info.
 export const editUser = async (req, res) => {
   const { id } = req.params;
-  const { first_name, last_name, password_hash } = req.body;
+  const { first_name, last_name, password } = req.body;
 
   // Check if the user object contains the required fields
-  if (!first_name || !last_name || !password_hash) {
-    return res.status(400).send('All required fields (first_name, last_name, password_hash) must be provided.');
+  if (!first_name || !last_name || !password) {
+    return res.status(400).send('All required fields (first_name, last_name, password) must be provided.');
   }
 
   try {
+    // If a new password is provided, hash it
+    const saltRounds = 10;
+    const password_hash = password ? await bcrypt.hash(password, saltRounds) : undefined;
+
     // Update user data in the database
-    const query = `UPDATE users SET first_name = ?, last_name = ?, password_hash = ? WHERE user_id = ?`;
-    const values = [first_name, last_name, password_hash, id];
+    const query = `
+      UPDATE users 
+      SET first_name = ?, last_name = ?, ${password_hash ? 'password_hash = ?,' : ''} updated_at = CURRENT_TIMESTAMP
+      WHERE user_id = ?
+    `;
+
+    const values = [first_name, last_name];
+    
+    // Add password_hash to values if provided
+    if (password_hash) {
+      values.push(password_hash);
+    }
+
+    values.push(id);
+
     const result = await database.query(query, values);
 
     if (result.affectedRows === 0) {

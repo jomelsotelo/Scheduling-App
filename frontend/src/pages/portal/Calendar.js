@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
 import axios from "axios";
-import { createAvailability } from "../../components/availability";
 import { jwtDecode } from "jwt-decode";
-import CreateMeetingForm from "../../components/CreateMeetingForm";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Modal from "react-bootstrap/Modal";
-import randomColor from "randomcolor";
+import { createAvailability } from "../../components/availability";
+import CreateMeetingForm from "../../components/CreateMeetingForm";
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -170,14 +169,16 @@ const MyCalendar = (props) => {
 
     if (event.type === "meeting") {
       try {
-        const response = await axios.get(`/api/meeting/${event.meeting_id}`);
+        const response = await axios.get(`/api/meeting/${user.user_id}`);
         const meetingDetails = response.data;
-
         // Log the meeting details and participants to the console
-        console.log("Meeting Details:", meetingDetails);
+        const selectedMeeting = meetingDetails.find(
+          (meeting) => meeting.meeting_id === event.meeting_id
+        );
+        console.log("Meeting Details:", selectedMeeting);
 
         // Update the state with the meeting details
-        setMeetingDetails(meetingDetails);
+        setMeetingDetails(selectedMeeting);
       } catch (error) {
         console.error("Error fetching meeting details:", error);
       }
@@ -346,8 +347,6 @@ const MyCalendar = (props) => {
       ) {
         const user_id = user?.user_id;
 
-        // Generate a random color for the meeting
-        const meetingColor = randomColor();
         // Prepare data for API request
         const requestData = {
           title: meetingData.title,
@@ -356,7 +355,6 @@ const MyCalendar = (props) => {
           participants: meetingData.participants.map(
             (participant) => participant.value
           ),
-          color: meetingColor,
         };
 
         const response = await axios.post("/api/meeting", requestData);
@@ -368,7 +366,6 @@ const MyCalendar = (props) => {
           start: new Date(createdMeeting.start_time),
           end: new Date(createdMeeting.end_time),
           type: "meeting", // Add a type property for meetings
-          color: meetingColor,
         };
 
         setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
@@ -382,7 +379,7 @@ const MyCalendar = (props) => {
       // Display an error message to the user
       // setErrorMsg("Error creating meeting");
     } finally {
-      handleCancelCreateMeeting()
+      handleCancelCreateMeeting();
     }
   };
 
@@ -453,9 +450,9 @@ const MyCalendar = (props) => {
                   {meetingDetails.participants &&
                   meetingDetails.participants.length > 0 ? (
                     meetingDetails.participants.map((participant, index) => (
-                      <p
-                        key={index}
-                      >{`${participant.first_name} ${participant.last_name} - ${participant.email}`}</p>
+                      <p key={index}>
+                        {`${participant.first_name} ${participant.last_name} - ${participant.email}`}
+                      </p>
                     ))
                   ) : (
                     <p>No participants</p>
@@ -495,7 +492,9 @@ const MyCalendar = (props) => {
       </Modal>
       {selectedAvailabilitySlot && (
         <div>
-          <p><strong>Selected Availability Slot:</strong></p>
+          <p>
+            <strong>Selected Availability Slot:</strong>
+          </p>
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
           <Button
@@ -540,12 +539,14 @@ const MyCalendar = (props) => {
           <Offcanvas.Title>Directions</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-        <strong>Availability:</strong>
+          <strong>Availability:</strong>
           <p>To create your availability, follow these steps:</p>
 
           <p>
             1. <strong>Select a timeslot on the calendar:</strong> Drag your
-            cursor to choose a time range when you are available. You can also click on the "Week" or "Day" view to select a specific time for that day.
+            cursor to choose a time range when you are available. You can also
+            click on the "Week" or "Day" view to select a specific time for that
+            day.
           </p>
 
           <p>
@@ -563,7 +564,7 @@ const MyCalendar = (props) => {
             Note: Your availability will be visible to other participants when
             scheduling meetings.
           </p>
-          <br/>
+          <br />
           <strong>Meeting:</strong>
           <p>To schedule a meeting, follow these steps:</p>
 

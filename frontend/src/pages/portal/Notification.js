@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import CrossImage from '../../assets/images/cross.png'; // I
+import CrossImage from '../../assets/images/cross.png';
 import TrashCanImage from '../../assets/images/trashcan.png';
 
 const Notification = () => {
@@ -120,91 +120,102 @@ const Notification = () => {
       backgroundBlendMode: 'screen',
       overflow: 'hidden',
     }}>
+
+      {/* Parent div for Notification Box and Clear All Button */}
       <div style={{
-        height: '500px',
-        overflowY: 'auto',
-        background: 'rgba(0, 0, 0, 0.8)',
-        borderRadius: '10px',
-        marginBottom: '20px',
-        color: 'white',
-        textAlign: 'center',
-        margin: 'auto',
-        opacity: 0.65,
-        padding: '20px',
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        height: '500px', // Set a fixed height for the black box
-        width: '300px',
+        top: '50px'
       }}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <div style={{ width: '100%', maxWidth: '400px' }}>
-            {notifications.length > 0 ? (
-              notifications.map((notification, index) => (
-                <div key={notification.notifications_id} style={{ marginBottom: '10px' }}>
-                  <button
-                    style={{
-                      fontSize: '1.2em',
-                      margin: '0',
-                      padding: '10px',
-                      border: 'none',
-                      borderRadius: '5px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.3s',
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: 'white',
-                    }}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleNotificationClick(notification)}
-                  >
-                    {notification.entityId === 1 ? 'Message' : 'Update'} - {new Date(notification.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p style={{ textAlign: 'center' }}>No notifications :(</p>
-            )}
-          </div>
+
+        {/* Notification Box */}
+        <div style={{
+          height: '500px',
+          overflowY: 'auto',
+          background: 'rgba(0, 0, 0, 0.8)',
+          borderRadius: '10px',
+          marginBottom: '20px',
+          color: 'white',
+          textAlign: 'center',
+          margin: 'auto',
+          opacity: 0.65,
+          padding: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '300px', // Set a fixed width for the black box
+        }}>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <div style={{ width: '100%', maxWidth: '400px' }}>
+              {notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                  <div key={notification.notifications_id} style={{ marginBottom: '10px' }}>
+                    <button
+                      style={{
+                        fontSize: '1.2em',
+                        margin: '0',
+                        padding: '10px',
+                        border: 'none',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.3s',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        color: 'white',
+                      }}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => handleNotificationClick(notification)}
+                    >
+                      {notification.entityId === 1 ? 'Message' : 'Update'} - {new Date(notification.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p style={{ textAlign: 'center' }}>No notifications :(</p>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Clear All Notifications Button */}
+        {showClearNotification && (
+          <button
+            style={{
+              marginTop: '20px',
+              width: '50px',
+              height: '50px',
+              cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+              borderRadius: '5px',
+              overflow: 'hidden',
+            }}
+            onClick={handleDeleteAllNotifications}
+          >
+            <img
+              src={TrashCanImage}
+              alt="Clear All"
+              style={{
+                width: '85%',
+                height: '85%',
+                objectFit: 'cover',
+                transition: 'transform 0.3s',
+                transform: isTrashCanHovered ? 'scale(1.2)' : 'scale(1)',
+              }}
+              onMouseEnter={() => setIsTrashCanHovered(true)}
+              onMouseLeave={() => setIsTrashCanHovered(false)}
+            />
+          </button>
         )}
+
       </div>
 
-      {showClearNotification && (
-        <button
-          style={{
-            marginTop: '20px',
-            position: 'absolute',
-            bottom: '20px',
-            left: '740px',
-            width: '50px', // Adjust the width to the desired size
-            height: '50px', // Adjust the height to the desired size
-            cursor: 'pointer',
-            background: 'none',
-            border: 'none',
-            borderRadius: '5px',
-            overflow: 'hidden',
-          }}
-          onClick={handleDeleteAllNotifications}
-        >
-          <img
-            src={TrashCanImage}
-            alt="Clear All"
-            style={{
-              width: '85%',
-              height: '85%',
-              objectFit: 'cover',
-              transition: 'transform 0.3s', // Add transition property for smooth scaling
-              transform: isTrashCanHovered ? 'scale(1.2)' : 'scale(1)', // Apply scale based on hover state
-            }}
-            onMouseEnter={() => setIsTrashCanHovered(true)} // Set hover state to true on mouse enter
-            onMouseLeave={() => setIsTrashCanHovered(false)} // Set hover state to false on mouse leave
-          />
-        </button>
-      )}
-
+      {/* Selected Notification Dialog */}
       {selectedNotification && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '150px', borderRadius: '10px', position: 'relative', width: '70%', maxWidth: '400px' }}>
@@ -245,6 +256,7 @@ const Notification = () => {
         </div>
       )}
 
+      {/* Confirmation Dialog */}
       {showConfirmation && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '20px', borderRadius: '10px', position: 'relative', width: '50%', maxWidth: '300px' }}>

@@ -14,32 +14,27 @@ const PortalNavbar = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get the token from local storage
         const token = localStorage.getItem("user-token");
 
         if (token) {
           const decodedToken = jwtDecode(token);
           const userId = decodedToken.userId;
-          // Send a request to the server to get user data
+
           const response = await axios.get(`/api/users/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
 
-          // Assuming the server responds with user data
           const userData = response.data;
-          // Update the state to store the user data
           setUser(userData);
           setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle error
       }
     };
 
-    // Call the function to fetch user data when the component mounts
     fetchUserData();
   }, []);
 
@@ -47,14 +42,13 @@ const PortalNavbar = () => {
     localStorage.clear();
     navigate("/auth/login");
   };
+
   const navigateToCalendar = () => {
     navigate("/calendar");
   };
+
   const navigateToUserProfile = () => {
     navigate("/user");
-  };
-  const navigateToExtra = () => {
-    navigate("/extra");
   };
 
   return (
@@ -62,10 +56,10 @@ const PortalNavbar = () => {
       <Navbar bg="dark" expand="lg" className="navbar-dark">
         <Link
           to="/"
-          className="navbar-brand"
+          className="navbar-brand glow-on-hover"
           style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "0px 10px" }}
         >
-          JoinIn
+          Home
         </Link>
         <Nav className="ml-auto justify-content-center">
           <Nav.Link
@@ -73,12 +67,6 @@ const PortalNavbar = () => {
             style={{ fontSize: "1rem", margin: "5px 10px" }}
           >
             Calendar
-          </Nav.Link>
-          <Nav.Link
-            onClick={navigateToExtra}
-            style={{ fontSize: "1rem", margin: "5px 5px" }}
-          >
-            Extra
           </Nav.Link>
         </Nav>
         <Container />
@@ -88,6 +76,7 @@ const PortalNavbar = () => {
             <span>
               Signed in as:
               <span
+                className="glow-on-hover"
                 style={{ cursor: "pointer", color: "white", marginLeft: "5px" }}
                 onClick={navigateToUserProfile}
               >
@@ -107,4 +96,5 @@ const PortalNavbar = () => {
     </React.Fragment>
   );
 };
+
 export default PortalNavbar;

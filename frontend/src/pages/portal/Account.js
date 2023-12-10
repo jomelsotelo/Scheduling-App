@@ -9,7 +9,7 @@ function Account(){
           <div className="form">
             <div className="account">
               <div className="account-header">
-                <h3>Account Information</h3>
+                <h3>Account Edit</h3>
                 <p>Here is all the information you can edit!</p>
               </div>
             </div>

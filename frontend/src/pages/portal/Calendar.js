@@ -8,6 +8,7 @@ import CreateMeetingForm from "../../components/CreateMeetingForm";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Modal from "react-bootstrap/Modal";
+import randomColor from "randomcolor";
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -270,6 +271,8 @@ const MyCalendar = (props) => {
         setMyEventsList((prevEvents) =>
           prevEvents.filter((e) => e.availability_id !== event.availability_id)
         );
+        // Close the details modal after successful removal
+        handleCloseDetailsModal();
       })
       .catch((error) => {
         console.error("Error removing availability:", error);
@@ -289,6 +292,8 @@ const MyCalendar = (props) => {
         setMyEventsList((prevEvents) =>
           prevEvents.filter((e) => e.meeting_id !== event.meeting_id)
         );
+        // Close the details modal after successful removal
+        handleCloseDetailsModal();
       })
       .catch((error) => {
         console.error("Error removing meeting:", error);
@@ -317,7 +322,7 @@ const MyCalendar = (props) => {
       // Update the state with the new common availabilities, specifying the color
       setAvailableTimeSlots(
         commonAvailabilities.map((availability, index) => ({
-          title: "Free",
+          title: "Available",
           start: new Date(availability.start_time),
           end: new Date(availability.end_time),
           type: "commonAvailability", // Add a type property for common availabilities
@@ -332,10 +337,17 @@ const MyCalendar = (props) => {
   };
 
   const handleCreateMeeting = async (meetingData) => {
-    if (meetingData.title && meetingData.participants.length > 0) {
-      try {
+    try {
+      if (
+        meetingData.title &&
+        meetingData.participants.length > 0 &&
+        meetingData.start &&
+        meetingData.end
+      ) {
         const user_id = user?.user_id;
 
+        // Generate a random color for the meeting
+        const meetingColor = randomColor();
         // Prepare data for API request
         const requestData = {
           title: meetingData.title,
@@ -344,6 +356,7 @@ const MyCalendar = (props) => {
           participants: meetingData.participants.map(
             (participant) => participant.value
           ),
+          color: meetingColor,
         };
 
         const response = await axios.post("/api/meeting", requestData);
@@ -355,20 +368,22 @@ const MyCalendar = (props) => {
           start: new Date(createdMeeting.start_time),
           end: new Date(createdMeeting.end_time),
           type: "meeting", // Add a type property for meetings
+          color: meetingColor,
         };
 
         setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
-      } catch (error) {
-        console.error("Error creating meeting:", error);
+      } else {
+        // Handle case where meeting details are incomplete or participants are not selected
+        console.error("Incomplete meeting details or no participants selected");
       }
-    } else {
-      // Handle case where meeting details are incomplete or participants are not selected
-      console.error("Incomplete meeting details or no participants selected");
+    } catch (error) {
+      // Handles error
+      console.error("Error creating meeting:", error);
+      // Display an error message to the user
+      // setErrorMsg("Error creating meeting");
+    } finally {
+      handleCancelCreateMeeting()
     }
-
-    setCreateMeetingFormVisible(false);
-    setAddingAvailability(false);
-    setMeetingCreationCanceled(false);
   };
 
   const handleCancelCreateMeeting = async () => {
@@ -413,7 +428,9 @@ const MyCalendar = (props) => {
           } else if (event.type === "commonAvailability") {
             return { style: { backgroundColor: "green" } }; // Adjust the color for common availability events
           } else if (event.type === "meeting") {
-            return { style: { backgroundColor: "red" } }; // Adjust the color for meeting events
+            return {
+              style: { backgroundColor: event.color || "red" }, // Use the event's color or default to red
+            };
           } else {
             return {}; // Default style for other events
           }
@@ -478,7 +495,7 @@ const MyCalendar = (props) => {
       </Modal>
       {selectedAvailabilitySlot && (
         <div>
-          <p>Selected Availability Slot:</p>
+          <p><strong>Selected Availability Slot:</strong></p>
           <p>Start: {selectedAvailabilitySlot.start.toLocaleString()}</p>
           <p>End: {selectedAvailabilitySlot.end.toLocaleString()}</p>
           <Button
@@ -523,10 +540,65 @@ const MyCalendar = (props) => {
           <Offcanvas.Title>Directions</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Drag your cursor to select your available time.
-        </Offcanvas.Body>
-        <Offcanvas.Body>
-          Select Week or Day to pick a specific time.
+        <strong>Availability:</strong>
+          <p>To create your availability, follow these steps:</p>
+
+          <p>
+            1. <strong>Select a timeslot on the calendar:</strong> Drag your
+            cursor to choose a time range when you are available. You can also click on the "Week" or "Day" view to select a specific time for that day.
+          </p>
+
+          <p>
+            2. <strong>Confirm your selection:</strong> Click the "Confirm"
+            button to save your availability.
+          </p>
+
+          <p>
+            3. <strong>Review and remove if needed:</strong> After confirmation,
+            you can review your availabilities in the calendar. To remove an
+            availability, click the "Remove" button in the event details.
+          </p>
+
+          <p>
+            Note: Your availability will be visible to other participants when
+            scheduling meetings.
+          </p>
+          <br/>
+          <strong>Meeting:</strong>
+          <p>To schedule a meeting, follow these steps:</p>
+
+          <p>
+            1. <strong>Type in the Title:</strong> Enter a descriptive title for
+            your meeting.
+          </p>
+
+          <p>
+            2. <strong>Select at least two participants:</strong> Choose
+            participants from the list to invite to the meeting.
+          </p>
+
+          <p>
+            3.{" "}
+            <strong>Available timeslots will display on the calendar:</strong>{" "}
+            Once you've selected participants, the calendar will show available
+            timeslots when they overlap. If nothing is displayed, it means there
+            are no common availabilities.
+          </p>
+
+          <p>
+            4.{" "}
+            <strong>
+              Select the meeting date based on the available timeslot:
+            </strong>{" "}
+            Click and drag your cursor on the calendar to choose a suitable date
+            and time for the meeting. You can also click on the "Week" or "Day"
+            view to select a specific time for that day.
+          </p>
+
+          <p>
+            Note: If no available timeslots are shown, consider adjusting the
+            participants' schedules or trying different meeting times.
+          </p>
         </Offcanvas.Body>
       </Offcanvas>
     </div>

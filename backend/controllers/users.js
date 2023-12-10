@@ -66,42 +66,53 @@ export const getUsers = async (req, res) => {
 
 //Edit user info.
 export const editUser = async (req, res) => {
-  const { id } = req.params
-  const { first_name, last_name, email, salt, password_hash } = req.body
+  const { id } = req.params;
+  const { first_name, last_name, password_hash } = req.body;
 
   // Check if the user object contains the required fields
-  if (!first_name || !last_name || !email || !password_hash) {
-    return res.status(400).send('All required fields must be provided.')
+  if (!first_name || !last_name || !password_hash) {
+    return res.status(400).send('All required fields (first_name, last_name, password_hash) must be provided.');
   }
 
   try {
     // Update user data in the database
-    const query = `UPDATE users SET first_name = ?, last_name = ?, email = ?, password_hash = ? WHERE user_id = ?`
-    const values = [first_name, last_name, email, password_hash, id]
-    const result = await database.query(query, values)
+    const query = `UPDATE users SET first_name = ?, last_name = ?, password_hash = ? WHERE user_id = ?`;
+    const values = [first_name, last_name, password_hash, id];
+    const result = await database.query(query, values);
 
     if (result.affectedRows === 0) {
-      return res.status(404).send(`User with ID ${id} not found.`)
+      return res.status(404).send(`User with ID ${id} not found.`);
     }
-    res.status(200).send(`User with ID ${id} has been updated.`)
+
+    res.status(200).send(`User with ID ${id} has been updated.`);
   } catch (error) {
-    console.error("Error updating user:", error)
-    res.status(500).send('Server Error')
+    console.error('Error updating user:', error);
+    res.status(500).send('Server Error');
   }
-}
+};
 
 //Delete user.
 export const deleteUser = async (req, res) => {
-  const { id } = req.params
-  try {
-      const result = await database.query("DELETE FROM users WHERE user_id = ?", [id])
+  const userId = req.params.id;
 
-      if (result.affectedRows === 0) {
-          return res.status(404).send(`User with ID ${id} not found.`)
-      }
-      res.send(`User with ID ${id} has been deleted.`)
+  try {
+    // Delete meeting_participants records first
+    const deleteMeetingParticipantsQuery =
+      'DELETE FROM meeting_participants WHERE user_id = ?';
+    await database.query(deleteMeetingParticipantsQuery, [userId]);
+
+    // Delete user_availability records
+    const deleteUserAvailabilityQuery =
+      'DELETE FROM user_availability WHERE user_id = ?';
+    await database.query(deleteUserAvailabilityQuery, [userId]);
+
+    // Delete user record
+    const deleteUserQuery = 'DELETE FROM users WHERE user_id = ?';
+    await database.query(deleteUserQuery, [userId]);
+
+    res.status(200).json({ message: 'User and references deleted successfully' });
   } catch (error) {
-      console.error("Error deleting user:", error)
-      res.status(500).send('Server Error')
+    console.error('Error deleting user and references:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};

@@ -41,3 +41,11 @@ CREATE TABLE meeting_participants(
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE notifications (
+  notifications_id INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(255) NOT NULL,
+   entityId INT, 
+  content TEXT NOT NULL,
+  user_id INT,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

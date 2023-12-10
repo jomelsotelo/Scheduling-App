@@ -1,5 +1,5 @@
-import database from '../config/database.js'
-import dayjs from 'dayjs';
+import database from "../config/database.js";
+import dayjs from "dayjs";
 
 // Create a new meeting
 export const createMeeting = async (req, res) => {
@@ -7,27 +7,38 @@ export const createMeeting = async (req, res) => {
 
   try {
     // Format the date strings to match the MySQL datetime format
-    const formattedStartTime = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss');
-    const formattedEndTime = dayjs(end_time).format('YYYY-MM-DD HH:mm:ss');
+    const formattedStartTime = dayjs(start_time).format("YYYY-MM-DD HH:mm:ss");
+    const formattedEndTime = dayjs(end_time).format("YYYY-MM-DD HH:mm:ss");
 
     // Insert into meetings table
-    const meetingQuery = 'INSERT INTO meetings (title, start_time, end_time) VALUES (?, ?, ?)';
-    const [meetingResults] = await database.query(meetingQuery, [title, formattedStartTime, formattedEndTime]);
+    const meetingQuery =
+      "INSERT INTO meetings (title, start_time, end_time) VALUES (?, ?, ?)";
+    const [meetingResults] = await database.query(meetingQuery, [
+      title,
+      formattedStartTime,
+      formattedEndTime,
+    ]);
 
     const meetingId = meetingResults.insertId;
 
     if (participants && participants.length > 0) {
       // Insert into meeting_participants table
-      const participantsQuery = 'INSERT INTO meeting_participants (meeting_id, user_id) VALUES ?';
-      const participantsValues = participants.map((participantId) => [meetingId, participantId]);
+      const participantsQuery =
+        "INSERT INTO meeting_participants (meeting_id, user_id) VALUES ?";
+      const participantsValues = participants.map((participantId) => [
+        meetingId,
+        participantId,
+      ]);
 
       await database.query(participantsQuery, [participantsValues]);
     }
 
-    res.status(201).json({ message: 'Meeting created successfully', id: meetingId });
+    res
+      .status(201)
+      .json({ message: "Meeting created successfully", id: meetingId });
   } catch (error) {
-    console.error('Error creating meeting:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error creating meeting:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -36,7 +47,8 @@ export const getMeetingDetails = async (req, res) => {
 
   try {
     // Retrieve meeting details for a specific user from the meeting_participants table
-    const [meetingResults] = await database.query(`
+    const [meetingResults] = await database.query(
+      `
       SELECT
         meetings.*,
         users.user_id as participant_user_id,
@@ -55,7 +67,9 @@ export const getMeetingDetails = async (req, res) => {
           FROM meeting_participants
           WHERE user_id = ?
         );
-    `, [userId]);
+    `,
+      [userId]
+    );
 
     // Check if there are no rows found
     if (meetingResults.length === 0) {
@@ -93,24 +107,23 @@ export const getMeetingDetails = async (req, res) => {
 
     res.status(200).json(meetingsData);
   } catch (error) {
-    console.error('Error retrieving meetings for user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error retrieving meetings for user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
-
 
 // Get all meetings
 export const getAllMeetings = async (req, res) => {
   try {
-    const query = 'SELECT * FROM meetings';
+    const query = "SELECT * FROM meetings";
     const [rows] = await database.query(query);
 
     res.status(200).json(rows);
   } catch (error) {
-    console.error('Error retrieving meetings:', error);
-    res.status(500).json({ error: 'Failed to retrieve meetings from the database.' });
+    console.error("Error retrieving meetings:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve meetings from the database." });
   }
 };
 
@@ -121,29 +134,38 @@ export const updateMeeting = async (req, res) => {
 
   try {
     if (addParticipants && addParticipants.length > 0) {
-      const addParticipantsQuery = 'INSERT INTO meeting_participants (meeting_id, user_id) VALUES ?';
-      const addParticipantsValues = addParticipants.map((participantId) => [meetingId, participantId]);
+      const addParticipantsQuery =
+        "INSERT INTO meeting_participants (meeting_id, user_id) VALUES ?";
+      const addParticipantsValues = addParticipants.map((participantId) => [
+        meetingId,
+        participantId,
+      ]);
 
       await database.query(addParticipantsQuery, [addParticipantsValues]);
     }
 
     if (removeParticipants && removeParticipants.length > 0) {
-      const removeParticipantsQuery = 'DELETE FROM meeting_participants WHERE meeting_id = ? AND user_id IN (?)';
-      await database.query(removeParticipantsQuery, [meetingId, removeParticipants]);
+      const removeParticipantsQuery =
+        "DELETE FROM meeting_participants WHERE meeting_id = ? AND user_id IN (?)";
+      await database.query(removeParticipantsQuery, [
+        meetingId,
+        removeParticipants,
+      ]);
     }
 
-    res.status(200).json({ message: 'Meeting updated successfully' });
+    res.status(200).json({ message: "Meeting updated successfully" });
   } catch (error) {
-    console.error('Error updating meeting:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating meeting:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 // Delete a meeting
 export const deleteMeeting = async (req, res) => {
   const meetingId = req.params.id;
-  const deleteParticipantsQuery = 'DELETE FROM meeting_participants WHERE meeting_id = ?';
-  const deleteMeetingQuery = 'DELETE FROM meetings WHERE meeting_id = ?';
+  const deleteParticipantsQuery =
+    "DELETE FROM meeting_participants WHERE meeting_id = ?";
+  const deleteMeetingQuery = "DELETE FROM meetings WHERE meeting_id = ?";
 
   try {
     // Delete meeting_participants records first
@@ -152,10 +174,9 @@ export const deleteMeeting = async (req, res) => {
     // Then, delete the meeting record
     await database.query(deleteMeetingQuery, [meetingId]);
 
-    res.status(200).json({ message: 'Meeting deleted successfully' });
+    res.status(200).json({ message: "Meeting deleted successfully" });
   } catch (error) {
-    console.error('Error deleting meeting or participants:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error deleting meeting or participants:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-

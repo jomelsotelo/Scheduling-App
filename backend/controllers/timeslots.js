@@ -1,21 +1,17 @@
-import database from '../config/database.js';
+import database from "../config/database.js";
 
 // Retrieve common availability slots for a list of user IDs
 export const getAvailableTime = async (req, res) => {
   try {
     const users = req.params;
-    console.log(users);
-    
     // Parse the user_ids string into an array
     const userIDs = JSON.parse(users.user_ids);
-        console.log(userIDs);
 
     // Ensure userIDs is an array and has at least two elements
-    if (!Array.isArray(userIDs) || userIDs.length <1) {
-      res.status(400).json({ error: 'Invalid user IDs provided' });
+    if (!Array.isArray(userIDs) || userIDs.length < 1) {
+      res.status(400).json({ error: "Invalid user IDs provided" });
       return;
     }
-
 
     // Generate the SQL statement dynamically with the user IDs
     const sqlStatement = `
@@ -25,8 +21,8 @@ export const getAvailableTime = async (req, res) => {
       JOIN user_availability ua2 ON ua1.user_id <> ua2.user_id
                                AND ua1.start_time < ua2.end_time
                                AND ua1.end_time > ua2.start_time
-      WHERE ua1.user_id IN (${userIDs.join(', ')})
-        AND ua2.user_id IN (${userIDs.join(', ')})
+      WHERE ua1.user_id IN (${userIDs.join(", ")})
+        AND ua2.user_id IN (${userIDs.join(", ")})
       GROUP BY start_time, end_time
       HAVING COUNT(DISTINCT ua1.user_id) = ${userIDs.length};
     `;
@@ -37,17 +33,17 @@ export const getAvailableTime = async (req, res) => {
 
       // Send the response based on the result
       if (rows.length === 0) {
-        res.status(404).json({ error: 'No common availabilities found' });
+        res.status(404).json({ error: "No common availabilities found" });
       } else {
         // Continue with the remaining logic or send the common availabilities in the response
-        res.status(200).json(rows );
+        res.status(200).json(rows);
       }
     } catch (error) {
       console.error("Error executing SQL query:", error);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   } catch (error) {
-    console.error('Error processing user availabilities:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error processing user availabilities:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

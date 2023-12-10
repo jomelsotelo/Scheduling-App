@@ -12,33 +12,34 @@ import CreateMeetingForm from "../../components/CreateMeetingForm";
 const localizer = dayjsLocalizer(dayjs);
 
 const MyCalendar = (props) => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  // State variables
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [meetingDetails, setMeetingDetails] = useState(null);
-
   const [combinedEvents, setCombinedEvents] = useState([]);
-
   const [myEventsList, setMyEventsList] = useState([]);
   const [user, setUser] = useState(null);
   const [userOptions, setUserOptions] = useState([]);
-
-  const [isCreateMeetingFormVisible, setCreateMeetingFormVisible] =
-    useState(false);
+  const [isCreateMeetingFormVisible, setCreateMeetingFormVisible] = useState(false);
   const [isAddingAvailability, setAddingAvailability] = useState(true);
   const [isCreatingMeeting, setCreatingMeeting] = useState(false);
-  const [isMeetingCreationCanceled, setMeetingCreationCanceled] =
-    useState(false);
-
-  const [selectedAvailabilitySlot, setSelectedAvailabilitySlot] =
-    useState(null);
+  const [isMeetingCreationCanceled, setMeetingCreationCanceled] = useState(false);
+  const [selectedAvailabilitySlot, setSelectedAvailabilitySlot] = useState(null);
   const [selectedMeetingSlot, setSelectedMeetingSlot] = useState(null);
-
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
 
+  const handleShow = () => {
+    setShow(true);
+  };
+
+  // Define handleClose function
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  // Fetch user options on component mount
   useEffect(() => {
     const loadUserOptions = async () => {
       const options = await fetchUsers();
@@ -53,7 +54,6 @@ const MyCalendar = (props) => {
       const response = await axios.get("/api/users");
       const users = response.data;
 
-      // Format the users as options for react-select
       const userOptions = users.map((user) => ({
         value: user.user_id,
         label: `${user.first_name} ${user.last_name} - ${user.email}`,
@@ -66,14 +66,14 @@ const MyCalendar = (props) => {
     }
   };
 
+  // Fetch user data on component mount
   useEffect(() => {
-    // Call the function to fetch user data when the component mounts
     fetchUserData();
   }, []);
 
+  // Fetch user data from the server
   const fetchUserData = async () => {
     try {
-      // Gets the token from local storage
       const token = localStorage.getItem("user-token");
 
       if (token) {
@@ -86,25 +86,24 @@ const MyCalendar = (props) => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.userId;
 
-        // Send a request to the server to get user data, availabilities, and meetings
-        const [userDataResponse, availabilitiesResponse, meetingsResponse] =
-          await Promise.all([
-            axiosInstance.get(`/api/users/${userId}`),
-            axiosInstance.get(`/api/user/${userId}/availability`),
-            axiosInstance.get(`/api/meeting/${userId}`),
-          ]);
+        const [
+          userDataResponse,
+          availabilitiesResponse,
+          meetingsResponse,
+        ] = await Promise.all([
+          axiosInstance.get(`/api/users/${userId}`),
+          axiosInstance.get(`/api/user/${userId}/availability`),
+          axiosInstance.get(`/api/meeting/${userId}`),
+        ]);
 
         const userData = userDataResponse.data;
         const availabilitiesData = availabilitiesResponse.data;
         const meetingsData = meetingsResponse.data;
 
-        // Ensure meetingsData is an array
         const meetingsArray = Array.isArray(meetingsData) ? meetingsData : [];
 
-        // Updates the state to store the user data
         setUser(userData);
 
-        // Map availabilities to the format expected by the calendar
         const mappedAvailabilities = availabilitiesData.map((availability) => ({
           title: "Available",
           start: new Date(availability.start_time),
@@ -113,56 +112,42 @@ const MyCalendar = (props) => {
           type: "availability",
         }));
 
-        // Map meetings to the format expected by the calendar
-        // Map meetings to the format expected by the calendar
-        const mappedMeetings =
-          meetingsArray.length > 0
-            ? meetingsArray.flatMap((meeting) => {
-                // Check if the current user is a participant in the meeting
-                const currentUserParticipant = meeting.participants.find(
-                  (participant) => participant.user_id === userId
-                );
+        const mappedMeetings = meetingsArray.flatMap((meeting) => {
+          const currentUserParticipant = meeting.participants.find(
+            (participant) => participant.user_id === userId
+          );
 
-                if (currentUserParticipant) {
-                  // Only add the meeting details if the current user is a participant
-                  return [
-                    {
-                      title: meeting.title,
-                      start: new Date(meeting.start_time),
-                      end: new Date(meeting.end_time),
-                      meeting_id: meeting.meeting_id,
-                      participant: {
-                        user_id: currentUserParticipant.user_id,
-                        first_name: currentUserParticipant.first_name,
-                        last_name: currentUserParticipant.last_name,
-                        email: currentUserParticipant.email,
-                        // Add other participant properties as needed
-                      },
-                      type: "meeting",
-                    },
-                  ];
-                } else {
-                  return []; // Return an empty array if the current user is not a participant
-                }
-              })
-            : [];
+          if (currentUserParticipant) {
+            return [
+              {
+                title: meeting.title,
+                start: new Date(meeting.start_time),
+                end: new Date(meeting.end_time),
+                meeting_id: meeting.meeting_id,
+                participant: {
+                  user_id: currentUserParticipant.user_id,
+                  first_name: currentUserParticipant.first_name,
+                  last_name: currentUserParticipant.last_name,
+                  email: currentUserParticipant.email,
+                },
+                type: "meeting",
+              },
+            ];
+          } else {
+            return [];
+          }
+        });
 
-        // Combine availabilities and meetings
-        const updatedCombinedEvents = [
-          ...mappedAvailabilities,
-          ...mappedMeetings,
-        ];
+        const updatedCombinedEvents = [...mappedAvailabilities, ...mappedMeetings];
         setCombinedEvents(updatedCombinedEvents);
-
-        // Updates the state to store the mapped events
         setMyEventsList(updatedCombinedEvents);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
-      // Handle error
     }
   };
 
+  // Show details of the selected event
   const handleShowDetails = async (event) => {
     setSelectedEvent(event);
     setShowDetailsModal(true);
@@ -171,13 +156,10 @@ const MyCalendar = (props) => {
       try {
         const response = await axios.get(`/api/meeting/${user.user_id}`);
         const meetingDetails = response.data;
-        // Log the meeting details and participants to the console
         const selectedMeeting = meetingDetails.find(
           (meeting) => meeting.meeting_id === event.meeting_id
         );
-        console.log("Meeting Details:", selectedMeeting);
 
-        // Update the state with the meeting details
         setMeetingDetails(selectedMeeting);
       } catch (error) {
         console.error("Error fetching meeting details:", error);
@@ -185,51 +167,54 @@ const MyCalendar = (props) => {
     }
   };
 
+  // Close the details modal
   const handleCloseDetailsModal = () => {
     setShowDetailsModal(false);
   };
 
+  // Handle slot selection in the calendar
   const handleSelectSlot = (slotInfo) => {
     const { action } = slotInfo;
+
     if (action === "select") {
-      if (isCreatingMeeting) {
-        // If creating a meeting, use handleSelectMeetingSlot
-        handleSelectMeetingSlot(slotInfo);
-      } else {
-        // If adding availability, use handleSelectAvailabilitySlot
-        handleSelectAvailabilitySlot(slotInfo);
-      }
+      isCreatingMeeting
+        ? handleSelectMeetingSlot(slotInfo)
+        : handleSelectAvailabilitySlot(slotInfo);
     }
   };
 
-  // Function to handle adding availability
+  // Handle availability slot selection
   const handleSelectAvailabilitySlot = (slotInfo) => {
     const { start, end, action } = slotInfo;
+
     if (action === "select") {
       setSelectedAvailabilitySlot({ start, end });
     }
   };
 
-  // Function to handle selecting a date for creating a meeting
+  // Handle meeting slot selection
   const handleSelectMeetingSlot = (slotInfo) => {
     const { start, end, action } = slotInfo;
+
     if (action === "select") {
       setSelectedMeetingSlot({ start, end });
     }
   };
 
+  // Confirm the selected availability or meeting slot
   const handleConfirmSelection = async () => {
     try {
       if (isAddingAvailability && selectedAvailabilitySlot) {
-        // Code for adding availability
         const formatToMySQLTimestamp = (dateTime) =>
           dayjs(dateTime).format("YYYY-MM-DD HH:mm:ss");
+
         const newEvent = {
           title: "Available",
           start: formatToMySQLTimestamp(selectedAvailabilitySlot.start),
           end: formatToMySQLTimestamp(selectedAvailabilitySlot.end),
           type: "availability",
         };
+
         const user_id = user?.user_id;
 
         const response = await createAvailability(
@@ -238,27 +223,23 @@ const MyCalendar = (props) => {
           newEvent.end
         );
 
-        // Handles success
         console.log("Availability created successfully:", response.data);
-
-        // Fetches the updated user availabilities after creation
         await fetchUserData();
       }
     } catch (error) {
-      // Handles error
       console.error("Error:", error);
     } finally {
-      // Reset the selectedAvailabilitySlot state
       setSelectedAvailabilitySlot(null);
     }
   };
 
+  // Cancel the selected availability or meeting slot
   const handleCancelSelection = () => {
-    // Reset the selectedAvailabilitySlot and selectedMeetingSlot states
     setSelectedAvailabilitySlot(null);
     setSelectedMeetingSlot(null);
   };
 
+  // Remove an availability event
   const handleRemoveAvailability = (event) => {
     const availabilityId = event.availability_id;
     const user_id = user?.user_id;
@@ -268,11 +249,10 @@ const MyCalendar = (props) => {
       .then((response) => {
         console.log(response.data.message);
 
-        // Updates the events list
         setMyEventsList((prevEvents) =>
           prevEvents.filter((e) => e.availability_id !== event.availability_id)
         );
-        // Close the details modal after successful removal
+
         handleCloseDetailsModal();
       })
       .catch((error) => {
@@ -280,6 +260,7 @@ const MyCalendar = (props) => {
       });
   };
 
+  // Remove a meeting event
   const handleRemoveMeeting = (event) => {
     const meetingId = event.meeting_id;
     const user_id = user?.user_id;
@@ -289,11 +270,10 @@ const MyCalendar = (props) => {
       .then((response) => {
         console.log(response.data.message);
 
-        // Updates the events list
         setMyEventsList((prevEvents) =>
           prevEvents.filter((e) => e.meeting_id !== event.meeting_id)
         );
-        // Close the details modal after successful removal
+
         handleCloseDetailsModal();
       })
       .catch((error) => {
@@ -301,6 +281,7 @@ const MyCalendar = (props) => {
       });
   };
 
+  // Toggle the create meeting form visibility
   const toggleCreateMeetingForm = () => {
     setMyEventsList([]);
     setCreateMeetingFormVisible(!isCreateMeetingFormVisible);
@@ -309,34 +290,30 @@ const MyCalendar = (props) => {
     setCreatingMeeting(!isCreateMeetingFormVisible);
   };
 
+  // Handle participants change for common availabilities
   const handleParticipantsChange = async (selectedOptions) => {
     setAvailableTimeSlots([]);
     try {
-      // Prepare user IDs array from the selected participants
       const userIDs = selectedOptions.map((participant) => participant.value);
-
-      // Call your API endpoint to get common availabilities using GET request
       const response = await axios.get(`/api/timeslots/[${userIDs.join(",")}]`);
-
       const commonAvailabilities = response.data;
 
-      // Update the state with the new common availabilities, specifying the color
       setAvailableTimeSlots(
         commonAvailabilities.map((availability, index) => ({
           title: "Available",
           start: new Date(availability.start_time),
           end: new Date(availability.end_time),
-          type: "commonAvailability", // Add a type property for common availabilities
+          type: "commonAvailability",
         }))
       );
 
-      // Update the state with the updated participants
       setSelectedParticipants(selectedOptions);
     } catch (error) {
       console.error("Error fetching common availabilities:", error);
     }
   };
 
+  // Handle creating a meeting
   const handleCreateMeeting = async (meetingData) => {
     try {
       if (
@@ -346,8 +323,6 @@ const MyCalendar = (props) => {
         meetingData.end
       ) {
         const user_id = user?.user_id;
-
-        // Prepare data for API request
         const requestData = {
           title: meetingData.title,
           start_time: meetingData.start,
@@ -360,46 +335,39 @@ const MyCalendar = (props) => {
         const response = await axios.post("/api/meeting", requestData);
         const createdMeeting = response.data;
 
-        // Update the calendar with the new meeting
         const newEvent = {
           title: meetingData.title,
           start: new Date(createdMeeting.start_time),
           end: new Date(createdMeeting.end_time),
-          type: "meeting", // Add a type property for meetings
+          type: "meeting",
         };
 
         setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
       } else {
-        // Handle case where meeting details are incomplete or participants are not selected
         console.error("Incomplete meeting details or no participants selected");
       }
     } catch (error) {
-      // Handles error
       console.error("Error creating meeting:", error);
-      // Display an error message to the user
-      // setErrorMsg("Error creating meeting");
     } finally {
       handleCancelCreateMeeting();
     }
   };
 
+  // Handle canceling the create meeting process
   const handleCancelCreateMeeting = async () => {
     try {
       if (isAddingAvailability) {
-        // Restore original availabilities
         await fetchUserData();
       }
     } catch (error) {
       console.error("Error canceling create meeting:", error);
     } finally {
-      // Reset the availableTimeSlots state
       setAvailableTimeSlots([]);
       setCreateMeetingFormVisible(false);
       setAddingAvailability(true);
       setCreatingMeeting(false);
       setMeetingCreationCanceled(false);
 
-      // Reset selectedMeetingSlot only if canceled
       if (isMeetingCreationCanceled) {
         setSelectedMeetingSlot(null);
       }
@@ -421,7 +389,7 @@ const MyCalendar = (props) => {
         eventPropGetter={(event) => {
           // Use different colors based on the event type
           if (event.type === "availability") {
-            return { style: { backgroundColor: "blue" } }; // Adjust the color for availability events
+            return { style: { backgroundColor: "navy" } }; // Adjust the color for availability events
           } else if (event.type === "commonAvailability") {
             return { style: { backgroundColor: "green" } }; // Adjust the color for common availability events
           } else if (event.type === "meeting") {
@@ -510,7 +478,7 @@ const MyCalendar = (props) => {
       <div>
         <button
           id="meetingButton"
-          class="meetingModificationButton"
+          className="meetingModificationButton"
           onClick={toggleCreateMeetingForm}
         >
           Create Meeting
@@ -528,7 +496,7 @@ const MyCalendar = (props) => {
         )}
         <button
           id="helpButton"
-          class="meetingModificationButton"
+          className="meetingModificationButton"
           onClick={handleShow}
         >
           Need Help?
@@ -541,25 +509,21 @@ const MyCalendar = (props) => {
         <Offcanvas.Body>
           <strong>Availability:</strong>
           <p>To create your availability, follow these steps:</p>
-
           <p>
             1. <strong>Select a timeslot on the calendar:</strong> Drag your
             cursor to choose a time range when you are available. You can also
             click on the "Week" or "Day" view to select a specific time for that
             day.
           </p>
-
           <p>
             2. <strong>Confirm your selection:</strong> Click the "Confirm"
             button to save your availability.
           </p>
-
           <p>
             3. <strong>Review and remove if needed:</strong> After confirmation,
             you can review your availabilities in the calendar. To remove an
             availability, click the "Remove" button in the event details.
           </p>
-
           <p>
             Note: Your availability will be visible to other participants when
             scheduling meetings.
@@ -567,17 +531,14 @@ const MyCalendar = (props) => {
           <br />
           <strong>Meeting:</strong>
           <p>To schedule a meeting, follow these steps:</p>
-
           <p>
             1. <strong>Type in the Title:</strong> Enter a descriptive title for
             your meeting.
           </p>
-
           <p>
             2. <strong>Select at least two participants:</strong> Choose
             participants from the list to invite to the meeting.
           </p>
-
           <p>
             3.{" "}
             <strong>Available timeslots will display on the calendar:</strong>{" "}
@@ -585,7 +546,6 @@ const MyCalendar = (props) => {
             timeslots when they overlap. If nothing is displayed, it means there
             are no common availabilities.
           </p>
-
           <p>
             4.{" "}
             <strong>
@@ -595,7 +555,6 @@ const MyCalendar = (props) => {
             and time for the meeting. You can also click on the "Week" or "Day"
             view to select a specific time for that day.
           </p>
-
           <p>
             Note: If no available timeslots are shown, consider adjusting the
             participants' schedules or trying different meeting times.

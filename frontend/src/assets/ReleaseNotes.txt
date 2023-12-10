@@ -6,19 +6,22 @@ Members: BACKEND : JOMEL SOTELO, JOSE VASQUEZ, ANGEL RAMIREZ-GARCIA
 	 FRONTEND: KATY CHAN, JENICA CHU , HECTOR YABES
 
 Product Name:
-???
+JoinIn
 
 Date of release:
-???
+12-13-23
 
 Overview:
 ???
 
 Purpose:
-???
+Our scheduling app helps you manage your time efficiently by providing a user-friendly platform for creating and organizing your schedule. Whether you're a student, professional, or anyone looking to stay organized, our app has you covered.
 
 Feature summery:
-???
+Create meeting -
+Edit user info - 
+Delete user account -
+Delete all notifications -
 
 Issue summery:
 ???
@@ -72,15 +75,14 @@ Disclaimer:
 Contact:
 
 BACKEND:
-JOMEL SOTELO - @
-JOSE VASQUEZ - @
-ANGEL RAMIREZ-GARCIA - @
+JOMEL SOTELO - jomelsotelo@csus.edu
+JOSE VASQUEZ - 
+ANGEL RAMIREZ-GARCIA - 
 
 FRONTEND:
-KATY CHAN - @
-JENICA CHU - @
-HECTOR YABES - @hec0824@gmail.com
-	       @hyabes@csus.edu
+KATY CHAN - kchan5@csus.edu
+JENICA CHU - jenicachu@csus.edu
+HECTOR YABES - hyabes@csus.edu
 
 REST API DOCUMENTS
 -every api w/ examples

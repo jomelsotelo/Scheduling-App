@@ -59,7 +59,7 @@ const PortalNavbar = () => {
           className="navbar-brand glow-on-hover"
           style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "0px 10px" }}
         >
-          Home
+          JoinIn
         </Link>
         <Nav className="ml-auto justify-content-center">
           <Nav.Link

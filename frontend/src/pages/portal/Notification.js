@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import CrossImage from '../../assets/images/cross.png';
 import TrashCanImage from '../../assets/images/trashcan.png';
 
@@ -16,7 +17,16 @@ const Notification = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/notifications/1');
+        const token = localStorage.getItem('user-token');
+        const axiosInstance = axios.create({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        const response = await axiosInstance.get(`/api/notifications/${userId}`);
         setNotifications(response.data);
       } catch (error) {
         console.error('Error fetching notification data:', error);
@@ -121,7 +131,6 @@ const Notification = () => {
       overflow: 'hidden',
     }}>
 
-      {/* Parent div for Notification Box and Clear All Button */}
       <div style={{
         position: 'relative',
         display: 'flex',
@@ -130,7 +139,6 @@ const Notification = () => {
         top: '50px'
       }}>
 
-        {/* Notification Box */}
         <div style={{
           height: '500px',
           overflowY: 'auto',
@@ -146,7 +154,7 @@ const Notification = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '300px', // Set a fixed width for the black box
+          width: '300px',
         }}>
           {loading ? (
             <p>Loading...</p>
@@ -182,7 +190,6 @@ const Notification = () => {
           )}
         </div>
 
-        {/* Clear All Notifications Button */}
         {showClearNotification && (
           <button
             style={{
@@ -215,7 +222,6 @@ const Notification = () => {
 
       </div>
 
-      {/* Selected Notification Dialog */}
       {selectedNotification && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '150px', borderRadius: '10px', position: 'relative', width: '70%', maxWidth: '400px' }}>
@@ -256,7 +262,6 @@ const Notification = () => {
         </div>
       )}
 
-      {/* Confirmation Dialog */}
       {showConfirmation && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', padding: '20px', borderRadius: '10px', position: 'relative', width: '50%', maxWidth: '300px' }}>

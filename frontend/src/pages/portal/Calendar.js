@@ -484,7 +484,16 @@ const MyCalendar = (props) => {
       />
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Event Details</Modal.Title>
+        {selectedEvent && (
+      <>
+        {selectedEvent.type === "meeting" && meetingDetails && (
+          <Modal.Title>Meeting Details</Modal.Title>
+        )}
+        {selectedEvent.type === "availability" && (
+          <Modal.Title>Available</Modal.Title>
+        )}
+      </>
+    )}
         </Modal.Header>
         <Modal.Body>
           {selectedEvent && (
@@ -559,10 +568,7 @@ const MyCalendar = (props) => {
       )}
 
       <div className="contain-bottom">
-        <Button
-          variant="light button-top"
-          onClick={toggleCreateMeetingForm}
-        >
+        <Button variant="light button-top" onClick={toggleCreateMeetingForm}>
           + Create
         </Button>
 
@@ -576,10 +582,7 @@ const MyCalendar = (props) => {
             onParticipantsChange={handleParticipantsChange}
           />
         )}
-        <Button
-          variant="light button-top"
-          onClick={handleShow}
-        >
+        <Button variant="light button-top" onClick={handleShow}>
           Need Help?
         </Button>
       </div>

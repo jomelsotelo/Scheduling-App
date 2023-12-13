@@ -75,3 +75,31 @@ export const deleteNotification = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+export const sendNotification = async (req, res) => {
+  const { type, entityId, content, user_id } = req.body;
+
+  try {
+    // Validate input
+    if (!type || !entityId || !content || !user_id) {
+      return res.status(400).send('All required fields must be provided.');
+    }
+
+    // Insert notification into the database
+    const sendNotificationQuery = `
+      INSERT INTO notifications (type, entityId, content, user_id)
+      VALUES (?, ?, ?, ?)`;
+    const notificationValues = [type, entityId, content, user_id];
+
+    const result = await database.query(sendNotificationQuery, notificationValues);
+
+    if (result.affectedRows === 0) {
+      return res.status(500).send('Failed to send the notification.');
+    }
+
+    res.status(201).json({ message: 'Notification sent successfully.' });
+  } catch (error) {
+    console.error('Error sending notification:', error);
+    res.status(500).send('Server Error');
+  }
+};

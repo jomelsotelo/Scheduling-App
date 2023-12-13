@@ -274,6 +274,22 @@ const MyCalendar = (props) => {
       });
   };
 
+  // Function to send a notification
+  const sendNotification = async (type, entityId, content, userId) => {
+    try {
+      const notificationData = {
+        type,
+        entityId,
+        content,
+        user_id: userId,
+      };
+      console.log(notificationData);
+      await axios.post("/api/notifications", notificationData);
+    } catch (error) {
+      console.error("Error sending notification:", error);
+    }
+  };
+
   // Remove a meeting event
   const handleRemoveMeeting = (event) => {
     const meetingId = event.meeting_id;
@@ -281,8 +297,17 @@ const MyCalendar = (props) => {
 
     axios
       .delete(`/api/meeting/${meetingId}`)
-      .then((response) => {
+      .then(async (response) => {
         console.log(response.data.message);
+
+        // Add code to send a notification when the meeting is removed
+        const notificationMessage = `Meeting is canceled for "${event.title}"`+`\nFrom: ${user.first_name} ${user.last_name}`;
+        await sendNotification(
+          "update_notification",
+          2,
+          notificationMessage,
+          user_id
+        );
 
         setMyEventsList((prevEvents) =>
           prevEvents.filter((e) => e.meeting_id !== event.meeting_id)
@@ -332,7 +357,6 @@ const MyCalendar = (props) => {
     setSelectedEditParticipants(selectedOptions);
   };
 
-  // Handle creating a meeting
   const handleCreateMeeting = async (meetingData) => {
     try {
       if (
@@ -362,6 +386,19 @@ const MyCalendar = (props) => {
         };
 
         setMyEventsList((prevEvents) => [...prevEvents, newEvent]);
+
+        // Send notifications to participants using sendNotification function
+        const notificationMessage = `You've been invited to a meeting: "${meetingData.title}"`+`\nFrom: ${user.first_name} ${user.last_name}`;
+        const participants = meetingData.participants;
+
+        participants.forEach(async (participant) => {
+          await sendNotification(
+            "meeting_invitation",
+            1,
+            notificationMessage,
+            participant.value
+          );
+        });
       } else {
         console.error("Incomplete meeting details or no participants selected");
       }
@@ -386,7 +423,7 @@ const MyCalendar = (props) => {
       setAddingAvailability(true);
       setCreatingMeeting(false);
       setMeetingCreationCanceled(false);
-  
+
       if (isMeetingCreationCanceled) {
         // Reset the selectedMeetingSlot to null when meeting creation is canceled
         setSelectedMeetingSlot(null);
@@ -450,17 +487,22 @@ const MyCalendar = (props) => {
   const handleToggleEditMode = () => {
     if (selectedEvent && selectedEvent.type === "availability") {
       setIsEditModal(!isEditModal);
-  
+
       if (isEditModal) {
         // If entering edit mode, set the selected availability's start and end times
-        setEditedStartTime(dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm"));
+        setEditedStartTime(
+          dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm")
+        );
         setEditedEndTime(dayjs(selectedEvent.end).format("YYYY-MM-DDTHH:mm"));
-  
+
         // Set the calendar view to the selected availability's time range
         const availabilityStart = dayjs(selectedEvent.start);
         const availabilityEnd = dayjs(selectedEvent.end);
-        const availabilityDiff = availabilityEnd.diff(availabilityStart, 'minutes');
-  
+        const availabilityDiff = availabilityEnd.diff(
+          availabilityStart,
+          "minutes"
+        );
+
         if (availabilityDiff <= 60) {
           // If the availability is less than or equal to 1 hour, set the day view
           setCurrentView(Views.DAY);
@@ -468,7 +510,7 @@ const MyCalendar = (props) => {
           // Otherwise, set the week view
           setCurrentView(Views.WEEK);
         }
-  
+
         setCurrentDate(new Date(availabilityStart));
       } else {
         // If exiting edit mode, reset the edited start and end times
@@ -479,8 +521,7 @@ const MyCalendar = (props) => {
   };
 
   const formatToMySQLTimestamp = (dateTime) =>
-  dayjs(dateTime).utc().format("YYYY-MM-DD HH:mm:ss");
-
+    dayjs(dateTime).utc().format("YYYY-MM-DD HH:mm:ss");
 
   const handleSaveEdit = async () => {
     try {
@@ -492,11 +533,11 @@ const MyCalendar = (props) => {
         console.error("Invalid datetime values");
         return;
       }
-  
+
       // Make an API request to update the availability date
       const availabilityId = selectedEvent?.availability_id;
       const user_id = user?.user_id;
-  
+
       const requestData = {
         start_time: editedStartTime
           ? formatToMySQLTimestamp(editedStartTime)
@@ -505,21 +546,21 @@ const MyCalendar = (props) => {
           ? formatToMySQLTimestamp(editedEndTime)
           : dayjs(selectedEvent.end).format("YYYY-MM-DD HH:mm:ss"),
       };
-  
+
       const response = await axios.put(
         `/api/user/${user_id}/availability/${availabilityId}`,
         requestData
       );
-  
+
       console.log(response.data.message);
-  
+
       // Update the availability date in the state
       setSelectedEvent((prevEvent) => ({
         ...prevEvent,
         start: new Date(editedStartTime || prevEvent.start),
         end: new Date(editedEndTime || prevEvent.end),
       }));
-  
+
       fetchUserData();
       handleCloseDetailsModal();
     } catch (error) {
@@ -662,19 +703,25 @@ const MyCalendar = (props) => {
                   {/* Display input fields for editing start and end time */}
                   {isEditModal && (
                     <div>
-                    <p>Edit Start Time:</p>
-                    <input
-                      type="datetime-local"
-                      value={editedStartTime || dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm")}
-                      onChange={(e) => setEditedStartTime(e.target.value)}
-                    />
-                    <p>Edit End Time:</p>
-                    <input
-                      type="datetime-local"
-                      value={editedEndTime || dayjs(selectedEvent.end).format("YYYY-MM-DDTHH:mm")}
-                      onChange={(e) => setEditedEndTime(e.target.value)}
-                    />
-                  </div>
+                      <p>Edit Start Time:</p>
+                      <input
+                        type="datetime-local"
+                        value={
+                          editedStartTime ||
+                          dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm")
+                        }
+                        onChange={(e) => setEditedStartTime(e.target.value)}
+                      />
+                      <p>Edit End Time:</p>
+                      <input
+                        type="datetime-local"
+                        value={
+                          editedEndTime ||
+                          dayjs(selectedEvent.end).format("YYYY-MM-DDTHH:mm")
+                        }
+                        onChange={(e) => setEditedEndTime(e.target.value)}
+                      />
+                    </div>
                   )}
                 </div>
               )}

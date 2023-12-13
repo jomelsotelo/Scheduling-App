@@ -39,7 +39,10 @@ const UserInfo = () => {
 
                 // Set last updated time
                 const lastUpdatedTime = userData.updated_at;
-                setLastUpdated(lastUpdatedTime);
+                // Check if userData is not null before setting lastUpdated
+                if (lastUpdatedTime) {
+                    setLastUpdated(lastUpdatedTime);
+                }
             } catch (error) {
                 console.error('Error fetching user data or notifications:', error);
             } finally {

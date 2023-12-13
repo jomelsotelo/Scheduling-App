@@ -48,8 +48,10 @@ const CreateMeetingForm = ({
           setErrorMsg(""); // Clear the error message when the user types
         }}
       />
-
-      <label>Participants:</label>
+      <br></br>
+      <center>
+        <label id="createMeetingParticipantsLabel">Participants:</label>
+      </center>
       <Select
         isMulti
         options={userOptions}

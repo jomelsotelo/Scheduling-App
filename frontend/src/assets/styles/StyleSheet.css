@@ -225,10 +225,14 @@ progress {
 
 /* Styling individual days in day and week views */
 .rbc-day-bg {
-  border-top: 1px solid #ccc;  /* Set the top border */
-  border-bottom: none;         /* Clear the bottom border */
-  border-left: none;           /* Clear the left border */
-  border-right: none;          /* Clear the right border */
+  border-top: 1px solid #ccc;
+  /* Set the top border */
+  border-bottom: none;
+  /* Clear the bottom border */
+  border-left: none;
+  /* Clear the left border */
+  border-right: none;
+  /* Clear the right border */
 }
 
 /* Styling individual events */
@@ -242,8 +246,9 @@ progress {
 .rbc-slot-selection {
   background-color: rgba(66, 133, 244, 0.3);
 }
+
 .rbc-slot {
-  border:none;
+  border: none;
 }
 
 /* Custom styling for a specific event */
@@ -269,6 +274,7 @@ progress {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 h3 {
   /* ... your existing styles */
   font-family: 'Rubik', sans-serif;
@@ -279,18 +285,22 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px; /* Adjust the top margin as needed */
+  margin-top: 10px;
+  /* Adjust the top margin as needed */
 }
 
 .transparent-button {
   background-color: transparent !important;
   border: none !important;
-  color: #007bff; /* Set the text color to the desired color */
+  color: #007bff;
+  /* Set the text color to the desired color */
 }
+
 .transparent-button:hover {
   background-color: transparent !important;
   border: none !important;
-  color: #0056b3; /* Set the text color when hovered */
+  color: #0056b3;
+  /* Set the text color when hovered */
 }
 
 .button-bottom {
@@ -298,8 +308,10 @@ h3 {
   outline-color: #000000;
   box-shadow: none;
   background-color: none;
-  color: #000000; /* Text color for "Next" button */
+  color: #000000;
+  /* Text color for "Next" button */
 }
+
 .button-bottom:hover {
   background-color: #333;
   color: #000000;
@@ -309,7 +321,8 @@ h3 {
   outline: none;
   box-shadow: none;
   background-color: #854F6C;
-  color: #ffffff; /* Text color for "Next" button */
+  color: #ffffff;
+  /* Text color for "Next" button */
 }
 
 /*Create Meeting Button and help button*/
@@ -351,4 +364,8 @@ h3 {
     linear-gradient(90deg, #451952, transparent),
     linear-gradient(-90deg, #662549, transparent);
   background-blend-mode: screen;
+}
+
+.dropdown {
+  margin-right: 8px;
 }

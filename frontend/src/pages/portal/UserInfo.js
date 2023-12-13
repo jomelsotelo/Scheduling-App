@@ -8,7 +8,6 @@ import notificationActiveImage from '../../assets/images/notificationIconActive.
 import loadingImage from '../../assets/images/loading.png';
 import TrashCanImage from '../../assets/images/trashcan.png';
 import InfoImage from '../../assets/images/info.png'
-import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import { useNavigate } from "react-router-dom";
 import backButtonImage from '../../assets/images/backButton.png'
 
@@ -110,8 +109,14 @@ const UserInfo = () => {
             <div class="backButton">
                 <button
                     style={{
-                        position: 'relative',
+                        position: 'absolute',
                         display: 'flex',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s',
+                        width: '54px',
+                        height: '54px',
                     }}
                     onClick={navigateToCalendar}
                 >
@@ -123,10 +128,8 @@ const UserInfo = () => {
                             style={{
                                 width: '100%',
                                 height: '100%',
-                                cursor: 'pointer',
                                 objectFit: 'cover',
                                 transform: 'scale(1)',
-                                float: 'left'
                             }}
                             onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
                             onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}

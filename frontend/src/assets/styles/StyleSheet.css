@@ -353,6 +353,16 @@ h3 {
   margin: 10px 0px 5px 8px;
 }
 
+.form-groupMeeting {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .form-groupMeeting {
+    margin-bottom: 5px;
+  }
+}
+
 /*Help button*/
 
 #helpButton {

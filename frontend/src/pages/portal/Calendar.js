@@ -39,6 +39,9 @@ const MyCalendar = (props) => {
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [selectedEditParticipants, setSelectedEditParticipants] = useState([]);
+  const [isEditModal, setIsEditModal] = useState(false);
+  const [editedStartTime, setEditedStartTime] = useState("");
+  const [editedEndTime, setEditedEndTime] = useState("");
 
   const handleShow = () => {
     setShow(true);
@@ -180,6 +183,7 @@ const MyCalendar = (props) => {
   // Close the details modal
   const handleCloseDetailsModal = () => {
     setShowDetailsModal(false);
+    setIsEditModal(false);
   };
 
   // Handle slot selection in the calendar
@@ -298,6 +302,7 @@ const MyCalendar = (props) => {
     setAddingAvailability(true);
     setMeetingCreationCanceled(false);
     setCreatingMeeting(!isCreateMeetingFormVisible);
+    setSelectedMeetingSlot(null); // Reset selectedMeetingSlot when canceling
   };
 
   // Handle participants change for common availabilities
@@ -381,8 +386,9 @@ const MyCalendar = (props) => {
       setAddingAvailability(true);
       setCreatingMeeting(false);
       setMeetingCreationCanceled(false);
-
+  
       if (isMeetingCreationCanceled) {
+        // Reset the selectedMeetingSlot to null when meeting creation is canceled
         setSelectedMeetingSlot(null);
       }
     }
@@ -439,6 +445,86 @@ const MyCalendar = (props) => {
       return <h3>{dayjs(currentDate).format("MMMM D, YYYY")}</h3>;
     }
     return <h3>{dayjs(currentDate).format("MMMM YYYY")}</h3>;
+  };
+
+  const handleToggleEditMode = () => {
+    if (selectedEvent && selectedEvent.type === "availability") {
+      setIsEditModal(!isEditModal);
+  
+      if (isEditModal) {
+        // If entering edit mode, set the selected availability's start and end times
+        setEditedStartTime(dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm"));
+        setEditedEndTime(dayjs(selectedEvent.end).format("YYYY-MM-DDTHH:mm"));
+  
+        // Set the calendar view to the selected availability's time range
+        const availabilityStart = dayjs(selectedEvent.start);
+        const availabilityEnd = dayjs(selectedEvent.end);
+        const availabilityDiff = availabilityEnd.diff(availabilityStart, 'minutes');
+  
+        if (availabilityDiff <= 60) {
+          // If the availability is less than or equal to 1 hour, set the day view
+          setCurrentView(Views.DAY);
+        } else {
+          // Otherwise, set the week view
+          setCurrentView(Views.WEEK);
+        }
+  
+        setCurrentDate(new Date(availabilityStart));
+      } else {
+        // If exiting edit mode, reset the edited start and end times
+        setEditedStartTime("");
+        setEditedEndTime("");
+      }
+    }
+  };
+
+  const formatToMySQLTimestamp = (dateTime) =>
+  dayjs(dateTime).utc().format("YYYY-MM-DD HH:mm:ss");
+
+
+  const handleSaveEdit = async () => {
+    try {
+      // Validate editedStartTime and editedEndTime
+      if (
+        (editedStartTime && !dayjs(editedStartTime).isValid()) ||
+        (editedEndTime && !dayjs(editedEndTime).isValid())
+      ) {
+        console.error("Invalid datetime values");
+        return;
+      }
+  
+      // Make an API request to update the availability date
+      const availabilityId = selectedEvent?.availability_id;
+      const user_id = user?.user_id;
+  
+      const requestData = {
+        start_time: editedStartTime
+          ? formatToMySQLTimestamp(editedStartTime)
+          : dayjs(selectedEvent.start).format("YYYY-MM-DD HH:mm:ss"),
+        end_time: editedEndTime
+          ? formatToMySQLTimestamp(editedEndTime)
+          : dayjs(selectedEvent.end).format("YYYY-MM-DD HH:mm:ss"),
+      };
+  
+      const response = await axios.put(
+        `/api/user/${user_id}/availability/${availabilityId}`,
+        requestData
+      );
+  
+      console.log(response.data.message);
+  
+      // Update the availability date in the state
+      setSelectedEvent((prevEvent) => ({
+        ...prevEvent,
+        start: new Date(editedStartTime || prevEvent.start),
+        end: new Date(editedEndTime || prevEvent.end),
+      }));
+  
+      fetchUserData();
+      handleCloseDetailsModal();
+    } catch (error) {
+      console.error("Error updating availability:", error);
+    }
   };
 
   return (
@@ -549,13 +635,47 @@ const MyCalendar = (props) => {
               )}
               {selectedEvent.type === "availability" && (
                 <div>
-                  {/* Add Remove button for availability */}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleRemoveAvailability(selectedEvent)}
-                  >
-                    Remove
-                  </Button>
+                  {/* Add Edit button for availability */}
+                  <div className="d-flex justify-content-between">
+                    <div
+                      className="flex-shrink-0"
+                      style={{ marginRight: "10px" }}
+                    >
+                      <Button
+                        variant="secondary"
+                        onClick={handleToggleEditMode}
+                      >
+                        {isEditModal ? "Cancel Edit" : "Edit"}
+                      </Button>
+                    </div>
+                    {/* Add Remove button for availability */}
+                    <div className="flex-shrink-0">
+                      <Button
+                        variant="danger"
+                        onClick={() => handleRemoveAvailability(selectedEvent)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Display input fields for editing start and end time */}
+                  {isEditModal && (
+                    <div>
+                    <p>Edit Start Time:</p>
+                    <input
+                      type="datetime-local"
+                      value={editedStartTime || dayjs(selectedEvent.start).format("YYYY-MM-DDTHH:mm")}
+                      onChange={(e) => setEditedStartTime(e.target.value)}
+                    />
+                    <p>Edit End Time:</p>
+                    <input
+                      type="datetime-local"
+                      value={editedEndTime || dayjs(selectedEvent.end).format("YYYY-MM-DDTHH:mm")}
+                      onChange={(e) => setEditedEndTime(e.target.value)}
+                    />
+                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -565,8 +685,15 @@ const MyCalendar = (props) => {
           <Button variant="secondary" onClick={handleCloseDetailsModal}>
             Close
           </Button>
+          {/* Display save button during edit mode */}
+          {isEditModal && (
+            <Button variant="primary" onClick={handleSaveEdit}>
+              Save
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
+
       {selectedAvailabilitySlot && (
         <div>
           <p>

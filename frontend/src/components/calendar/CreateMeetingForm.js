@@ -10,7 +10,7 @@ const CreateMeetingForm = ({
   selectedMeetingSlot,
 }) => {
   const [meetingTitle, setMeetingTitle] = useState("");
-  const [selectedParticipants, setSelectedParticipants] = useState([]); // Initialize with the current user
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const CreateMeetingForm = ({
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '400px', margin: 'auto', paddingTop: '20px' }}>
       <label>Title:</label>
       <input
         type="text"
@@ -47,32 +47,46 @@ const CreateMeetingForm = ({
           setMeetingTitle(e.target.value);
           setErrorMsg(""); // Clear the error message when the user types
         }}
+        style={{
+          width: '100%',
+          padding: '10px',
+          marginBottom: '15px',
+          borderRadius: '5px',
+          border: '1px solid #ddd',
+          boxSizing: 'border-box',
+          fontSize: '16px',
+        }}
       />
-      <br></br>
-      <center>
-        <label id="createMeetingParticipantsLabel">Participants:</label>
-      </center>
+
+      <label id="createMeetingParticipantsLabel">Participants:</label>
       <Select
         isMulti
         options={userOptions}
         value={selectedParticipants}
         onChange={handleParticipantsChange}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            marginBottom: '10px',
+          }),
+        }}
       />
 
-      {selectedMeetingSlot && (
-        <div>
-          <label>Selected Date:</label>
-          <p>
-            {selectedMeetingSlot.start.toLocaleString()} to{" "}
-            {selectedMeetingSlot.end.toLocaleString()}
-          </p>
-        </div>
-      )}
+      <div>
+        <label>Selected Date:</label>
+        <p>
+          {selectedMeetingSlot
+            ? `${selectedMeetingSlot.start.toLocaleString()} to ${selectedMeetingSlot.end.toLocaleString()}`
+            : 'Not Selected'}
+        </p>
+      </div>
 
       {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
 
-      <Button class="Calendar" variant="primary" onClick={handleCreateMeeting}>Confirm Meeting</Button>
-      <Button class="Calendar" variant="primary" onClick={onCancel}>Cancel</Button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+        <Button variant="primary" onClick={handleCreateMeeting}>Confirm Meeting</Button>
+        <Button variant="secondary" onClick={onCancel}>Cancel</Button>
+      </div>
     </div>
   );
 };

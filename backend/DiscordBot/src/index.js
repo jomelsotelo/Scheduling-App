@@ -11,6 +11,7 @@ const client = new Client({
   ],
 });
 
+//Edit this section to fit your personal information.
 const db = mysql.createPool({
   host: '127.0.0.1',
   user: 'root',
@@ -18,6 +19,7 @@ const db = mysql.createPool({
   database: 'scheduling',
 });
 
+//All commands must begin with the '!' prefix.
 const commandPrefix = '!';
 
 client.on('messageCreate', async (message) => {
@@ -65,7 +67,7 @@ client.on('messageCreate', async (message) => {
             console.error(error);
             message.reply('Error retrieving data from database.');
           }
-          // Check for the !getMeetings command by 
+          // Retrieve meetings through the Discord Bot
       } else if (command === 'getMeetings'){
         try {
             const [rows] = await db.execute('SELECT * FROM meetings');
@@ -84,7 +86,8 @@ client.on('messageCreate', async (message) => {
             console.error(error);
             message.reply('Error retrieving data from database.');
           }
-      } else if (command === 'getMeetings'){
+        //Retrieve meeting through the Discord Bot. Uses alternate '!getMeeting'.
+      } else if (command === 'getMeeting'){
         try {
             const [rows] = await db.execute('SELECT * FROM meetings');
             
@@ -102,11 +105,12 @@ client.on('messageCreate', async (message) => {
             console.error(error);
             message.reply('Error retrieving data from database.');
           }
+        
       }
-  
-      // Add other commands as needed.
+
+      
     }
   });
   
-
+//TOKEN stores the discord bots token in the .env file for safekeeping.
 client.login(process.env.TOKEN);

@@ -53,8 +53,8 @@ function Info() {
     border: 'none',
     background: `url(${dogButtonImage}) no-repeat center center`,
     backgroundSize: 'cover',
-    width: '20px', // Adjust the width as needed
-    height: '20px', // Adjust the height as needed
+    width: '30px', 
+    height: '30px', 
     position: 'absolute',
     top: '10px',
     left: '10px',
@@ -65,16 +65,16 @@ function Info() {
   };
 
   const imgStyle = {
-    width: '40%', // Adjust the width as needed
+    width: '40%', 
     height: 'auto',
     display: showDogImage ? 'block' : 'none',
     position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: 2, // Place the image above the white box
-    transition: 'opacity 3s', // Transition for opacity with a longer duration
-    opacity: showDogImage ? 1 : 0, // Set initial opacity
+    zIndex: 2,
+    transition: 'opacity 3s',
+    opacity: showDogImage ? 1 : 0, 
   };
 
   const handleButtonClick = () => {

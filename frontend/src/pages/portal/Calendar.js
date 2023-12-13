@@ -643,6 +643,21 @@ const MyCalendar = (props) => {
             Note: If no available timeslots are shown, consider adjusting the
             participants' schedules or trying different meeting times.
           </p>
+          <br />
+          <strong>Account:</strong>
+          <p>To access your account information, follow these steps:</p>
+          <p>
+            1. <strong>Access user information: </strong> On the top right corner, click on your name next to the log out button.
+          </p>
+          <p>
+            2. <strong>Edit user information:</strong> On the top left corner, there is an icon with a pencil, this will lead you to the edit account page.
+          </p>
+          <p>
+            3. <strong>Notifications:</strong> The button shaped like a bell below the edit account button redirects you to the notification page.
+          </p>
+          <p>
+            4. <strong>Delete account:</strong> On the buttom right corner, there is a trashcan icon that will ask you if you want to delete your account.
+          </p>
         </Offcanvas.Body>
       </Offcanvas>
     </div>

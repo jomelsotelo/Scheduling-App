@@ -1,4 +1,3 @@
-// Info.js
 
 import React from "react";
 
@@ -39,7 +38,21 @@ function Info() {
   };
 
   return (
-    <div style={centeredContainerStyle}>
+    <div style={{
+      width: 'calc(100vw)',
+      height: 'calc(100vh - 70px)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      background: `
+          linear-gradient(#ae445a, transparent),
+          linear-gradient(90deg, #451952, transparent),
+          linear-gradient(-90deg, #662549, transparent)`,
+      overflow: 'hidden',
+      backgroundBlendMode: 'screen',
+  }}>
       <h1>Developer Information</h1>
       <ul style={listStyle}>
         {developers.map((developer, index) => (

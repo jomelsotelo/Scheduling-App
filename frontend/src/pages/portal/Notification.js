@@ -250,7 +250,9 @@ const Notification = () => {
               )}
             </h2>
 
-            <p>{selectedNotification.content}</p>
+            <div style={{ position: 'absolute', top: '50%', left: '10px', right: '10px', bottom: '60px', overflowY: 'auto', textAlign: 'center' }}>
+               <p style={{ margin: 0 }}>{selectedNotification.content}</p>
+                </div>
 
             <img
               src={TrashCanImage}

@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/util/ProtectedRoute";
 import UserInfo from "./pages/portal/UserInfo";
 import Notification from "./pages/portal/Notification";
 import Extra from "./pages/portal/Extra";
+import Info from "./pages/portal/Info";
 
 // Use createRoot instead of ReactDOM.render
 const root = createRoot(document.getElementById('root'));
@@ -35,6 +36,7 @@ root.render(
         <Route path='user' element={<UserInfo />} />
         <Route path='notification' element={<Notification />} />
         <Route path='extra' element={<Extra />} />
+        <Route path='info' element={<Info />} />
       </Route>
     </Routes>
   </BrowserRouter>

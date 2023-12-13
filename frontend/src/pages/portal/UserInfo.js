@@ -165,8 +165,8 @@ const UserInfo = () => {
                     />
                 </Link>
 
-                {/* Info button link to /extra */}
-                <Link to="/extra" style={{ position: 'absolute', top: '250px', left: '-60px', width: '52px', height: '52px', transition: 'transform 0.2s' }}>
+                {/* Info button link to /info */}
+                <Link to="/info" style={{ position: 'absolute', top: '250px', left: '-60px', width: '52px', height: '52px', transition: 'transform 0.2s' }}>
                     <img
                         src={loading ? loadingImage : InfoImage}
                         alt="Extra Info"

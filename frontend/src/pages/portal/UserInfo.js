@@ -8,6 +8,9 @@ import notificationActiveImage from '../../assets/images/notificationIconActive.
 import loadingImage from '../../assets/images/loading.png';
 import TrashCanImage from '../../assets/images/trashcan.png';
 import InfoImage from '../../assets/images/info.png'
+import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
+import { useNavigate } from "react-router-dom";
+import backButtonImage from '../../assets/images/backButton.png'
 
 const UserInfo = () => {
     const [user, setUser] = useState(null);
@@ -15,6 +18,7 @@ const UserInfo = () => {
     const [hasNotifications, setHasNotifications] = useState(false);
     const [lastUpdated, setLastUpdated] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -82,6 +86,10 @@ const UserInfo = () => {
         setShowConfirmation(false);
     };
 
+    const navigateToCalendar = () => {
+        navigate("/calendar");
+    };
+
     return (
         <div style={{
             width: 'calc(100vw)',
@@ -98,6 +106,34 @@ const UserInfo = () => {
             overflow: 'hidden',
             backgroundBlendMode: 'screen',
         }}>
+
+            <div class="backButton">
+                <button
+                    style={{
+                        position: 'relative',
+                        display: 'flex',
+                    }}
+                    onClick={navigateToCalendar}
+                >
+
+                    <Link to="/calendar" style={{ position: 'absolute', top: '-160px', left: '-550px', transition: 'transform 0.2s' }}>
+                        <img
+                            src={loading ? loadingImage : backButtonImage}
+                            alt="Back to Calendar"
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                cursor: 'pointer',
+                                objectFit: 'cover',
+                                transform: 'scale(1)',
+                                float: 'left'
+                            }}
+                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.2)'}
+                            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                        />
+                    </Link>
+                </button>
+            </div>
 
             <div style={{
                 position: 'relative',

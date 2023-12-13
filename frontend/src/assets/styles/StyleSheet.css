@@ -325,6 +325,13 @@ h3 {
   /* Text color for "Next" button */
 }
 
+.button-modal {
+  outline: none;
+  box-shadow: none;
+  background-color: #2B124C;
+  color: #ffffff;
+}
+
 /*Create Meeting Button and help button*/
 .meetingModificationButton {
   border-radius: 8px;
@@ -368,4 +375,12 @@ h3 {
 
 .dropdown {
   margin-right: 8px;
+}
+
+.error-message {
+  color: red;
+}
+
+.success-message {
+  color: green;
 }

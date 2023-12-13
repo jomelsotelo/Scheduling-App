@@ -11,6 +11,7 @@ import { createAvailability } from "../../components/calendar/availability";
 import CreateMeetingForm from "../../components/calendar/CreateMeetingForm";
 import NavigationControls from "../../components/calendar/NavigationControl";
 import ViewOptions from "../../components/calendar/ViewOptions";
+import EditParticipantsButton from "../../components/calendar/EditParticipants";
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -37,6 +38,7 @@ const MyCalendar = (props) => {
   const [selectedMeetingSlot, setSelectedMeetingSlot] = useState(null);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedEditParticipants, setSelectedEditParticipants] = useState([]);
 
   const handleShow = () => {
     setShow(true);
@@ -321,6 +323,10 @@ const MyCalendar = (props) => {
     }
   };
 
+  const handleEditParticipantsChange = (selectedOptions) => {
+    setSelectedEditParticipants(selectedOptions);
+  };
+
   // Handle creating a meeting
   const handleCreateMeeting = async (meetingData) => {
     try {
@@ -484,16 +490,16 @@ const MyCalendar = (props) => {
       />
       <Modal show={showDetailsModal} onHide={handleCloseDetailsModal}>
         <Modal.Header closeButton>
-        {selectedEvent && (
-      <>
-        {selectedEvent.type === "meeting" && meetingDetails && (
-          <Modal.Title>Meeting Details</Modal.Title>
-        )}
-        {selectedEvent.type === "availability" && (
-          <Modal.Title>Available</Modal.Title>
-        )}
-      </>
-    )}
+          {selectedEvent && (
+            <>
+              {selectedEvent.type === "meeting" && meetingDetails && (
+                <Modal.Title>Meeting Details</Modal.Title>
+              )}
+              {selectedEvent.type === "availability" && (
+                <Modal.Title>Available</Modal.Title>
+              )}
+            </>
+          )}
         </Modal.Header>
         <Modal.Body>
           {selectedEvent && (
@@ -515,6 +521,30 @@ const MyCalendar = (props) => {
                   ) : (
                     <p>No participants</p>
                   )}
+                  <div className="d-flex justify-content-between">
+                    {/* Move the Edit button to the left */}
+                    <div
+                      className="flex-shrink-0"
+                      style={{ marginRight: "10px" }}
+                    >
+                      <EditParticipantsButton
+                        userOptions={userOptions}
+                        selectedParticipants={selectedEditParticipants}
+                        onChange={handleEditParticipantsChange}
+                        meetingId={meetingDetails.meeting_id}
+                        meetingDetails={meetingDetails}
+                      />
+                    </div>
+                    {/* Move the Remove button to the right */}
+                    <div className="flex-shrink-0">
+                      <Button
+                        variant="danger"
+                        onClick={() => handleRemoveMeeting(selectedEvent)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               )}
               {selectedEvent.type === "availability" && (
@@ -523,17 +553,6 @@ const MyCalendar = (props) => {
                   <Button
                     variant="danger"
                     onClick={() => handleRemoveAvailability(selectedEvent)}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              )}
-              {selectedEvent.type === "meeting" && (
-                <div>
-                  {/* Add Remove button for meeting */}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleRemoveMeeting(selectedEvent)}
                   >
                     Remove
                   </Button>
@@ -647,16 +666,23 @@ const MyCalendar = (props) => {
           <strong>Account:</strong>
           <p>To access your account information, follow these steps:</p>
           <p>
-            1. <strong>Access user information: </strong> On the top right corner, click on your name next to the log out button.
+            1. <strong>Access user information: </strong> On the top right
+            corner, click on your name next to the log out button.
           </p>
           <p>
-            2. <strong>Edit user information:</strong> On the top left corner, there is an icon with a pencil, this will lead you to the edit account page.
+            2. <strong>Edit user information:</strong> On the top left corner,
+            there is an icon with a pencil, this will lead you to the edit
+            account page.
           </p>
           <p>
-            3. <strong>Notifications:</strong> The button shaped like a bell below the edit account button redirects you to the notification page.
+            3. <strong>Notifications:</strong> The button shaped like a bell
+            below the edit account button redirects you to the notification
+            page.
           </p>
           <p>
-            4. <strong>Delete account:</strong> On the buttom right corner, there is a trashcan icon that will ask you if you want to delete your account.
+            4. <strong>Delete account:</strong> On the buttom right corner,
+            there is a trashcan icon that will ask you if you want to delete
+            your account.
           </p>
         </Offcanvas.Body>
       </Offcanvas>

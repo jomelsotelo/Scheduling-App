@@ -66,6 +66,7 @@ function AccountInfo() {
       setSuccessMessage("Account information updated successfully!");
       setErrorMessage(""); // Clear any previous error messages
       setLoading(false);
+      window.location.reload();
     } catch (error) {
       console.error("Update error:", error);
       setSuccessMessage(""); // Clear any previous success messages
